@@ -3,6 +3,7 @@ import { PrismaClient } from './generated/prisma/client.js';
 import { PrismaPg } from "@prisma/adapter-pg";
 import 'dotenv/config';
 import * as userEndpoints from './endpoints/userEndpoints.js';
+import * as jobEndpoints from './endpoints/jobEndpoints.js'
 
 const adapter = new PrismaPg({
   connectionString: process.env.DATABASE_URL!,
