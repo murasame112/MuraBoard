@@ -21,6 +21,7 @@ app.get('/api/health', (req, res) => {
 });
 
 app.post('/api/user/create', userEndpoints.createUser);
+app.post('/api/joboffer/create', jobEndpoints.createJobOffer);
 
 app.listen(process.env.PORT, () => {
 	console.log(`server on: http://localhost:${process.env.PORT}`);
