@@ -12,7 +12,6 @@ export const prisma = new PrismaClient({ adapter });
 
 
 const app = express();
-const PORT = 3001;
 
 app.use(express.json());
 
@@ -22,6 +21,6 @@ app.get('/api/health', (req, res) => {
 
 app.post('/api/user/create', userEndpoints.createUser);
 
-app.listen(PORT, () => {
-	console.log(`server on: http://localhost:${PORT}`);
+app.listen(process.env.PORT, () => {
+	console.log(`server on: http://localhost:${process.env.PORT}`);
 })
