@@ -19,6 +19,7 @@ model User {
   name      		String		@unique
 	passwordHash	String
 	applications 	Application[]
+	jobOffers			JobOffer[]
 }
 
 model Company { 
@@ -32,11 +33,13 @@ model Company {
 model JobOffer {
   id        		Int				@id @default(autoincrement())
 	companyId			Int
+	userId				Int
   title      		String
 	salaryMin			Int?
 	salaryMax			Int?
 	createdAt			DateTime
 	company				Company		@relation(fields: [companyId], references: [id])
+	user					User			@relation(fields: [userId], references: [id])
 	applications	Application[]
 }
 
