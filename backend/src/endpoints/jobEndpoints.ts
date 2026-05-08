@@ -1,8 +1,104 @@
 import type { Request, Response } from 'express';
 import {prisma} from '../index.js';
 import { ApplicationStatus, Prisma } from '../generated/prisma/index.js';
+import bcrypt from 'bcrypt';
+import { companiesSeed, jobOffersSeed, applicationsSeed } from './testData.js';
 
 const userId = 4; // FIXME: this shouldn't be hardcoded later on
+
+
+
+export async function generateTestData(req: Request, res: Response) {
+  try {
+    const result = await prisma.$transaction(async (tx) => {
+      const user = await tx.user.upsert({
+        where: { id: 4 },
+        update: {},
+        create: {
+          id: 4,
+          email: 'initial@email.com',
+          name: 'initial',
+          passwordHash: await bcrypt.hash('initial', 10),
+        },
+      });
+
+      await tx.application.deleteMany({});
+      await tx.jobOffer.deleteMany({});
+      await tx.company.deleteMany({});
+
+      await tx.company.createMany({
+        data: companiesSeed,
+      });
+
+      const companiesFromDb = await tx.company.findMany({
+        select: { id: true, name: true },
+      });
+
+      const companyMap = new Map(
+        companiesFromDb.map((company) => [company.name, company.id]),
+      );
+
+      const parsedJobOffers = jobOffersSeed.map((offer) => {
+        const companyId = companyMap.get(offer.companyName);
+        if (!companyId) {
+          throw new Error(`Missing company: ${offer.companyName}`);
+        }
+
+        return {
+          title: offer.title,
+          salaryMin: offer.salaryMin,
+          salaryMax: offer.salaryMax,
+          createdAt: offer.createdAt,
+          userId: user.id,
+          companyId,
+        };
+      });
+
+      await tx.jobOffer.createMany({
+        data: parsedJobOffers,
+      });
+
+      const jobOffersFromDb = await tx.jobOffer.findMany({
+        select: { id: true, title: true },
+      });
+
+      const jobOfferMap = new Map(
+        jobOffersFromDb.map((jobOffer) => [jobOffer.title, jobOffer.id]),
+      );
+
+      const parsedApplications = applicationsSeed.map((application) => {
+        const jobOfferId = jobOfferMap.get(application.jobOfferTitle);
+        if (!jobOfferId) {
+          throw new Error(`Missing job offer: ${application.jobOfferTitle}`);
+        }
+
+        return {
+          userId: user.id,
+          jobOfferId,
+          status: application.status,
+          nextStepDate: application.nextStepDate,
+          comment: application.comment,
+        };
+      });
+
+      await tx.application.createMany({
+        data: parsedApplications,
+      });
+
+      return {
+        userId: user.id,
+        companies: parsedJobOffers.length,
+        jobOffers: parsedJobOffers.length,
+        applications: parsedApplications.length,
+      };
+    });
+
+    return res.status(201).json(result);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: 'Something went wrong' });
+  }
+}
 
 // ========= Companies =========
 

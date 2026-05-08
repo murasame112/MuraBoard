@@ -21,6 +21,10 @@ app.get('/api/health', (req, res) => {
 	res.json({status: 'ok', message: 'api is running'});
 });
 
+// === test data ===
+
+app.post('/api/generate-test-data', jobEndpoints.generateTestData);
+
 // === user ===
 app.post('/api/user/create', userEndpoints.createUser);
 

@@ -24,7 +24,7 @@ export async function createUser(req: Request<{}, {}, CreateUserBody>, res: Resp
 				name,
 				passwordHash: await hashed
 			}
-		})
+		});
 
 		return res.status(201).json(newUser.id);
 	} catch (error) {
