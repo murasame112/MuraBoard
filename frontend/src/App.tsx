@@ -1,8 +1,10 @@
+import MainContent from "./components/MainContent/MainContent";
+
 function App() {
 
   return (
   <>
-    mura board
+    <MainContent/>
   </>
   );
 }
