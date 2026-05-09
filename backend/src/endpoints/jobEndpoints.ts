@@ -1,6 +1,6 @@
 import type { Request, Response } from 'express';
 import {prisma} from '../index.js';
-import { ApplicationStatus, Prisma } from '../generated/prisma/index.js';
+import { ApplicationStatus, Prisma, UserRole } from '../generated/prisma/index.js';
 import bcrypt from 'bcrypt';
 import { companiesSeed, jobOffersSeed, applicationsSeed } from './testData.js';
 
@@ -18,6 +18,7 @@ export async function generateTestData(req: Request, res: Response) {
           id: 4,
           email: 'initial@email.com',
           name: 'initial',
+					role: UserRole.ADMIN,
           passwordHash: await bcrypt.hash('initial', 10),
         },
       });

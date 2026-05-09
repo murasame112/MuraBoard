@@ -18,8 +18,14 @@ model User {
 	email     		String		@unique
   name      		String		@unique
 	passwordHash	String
+	role					UserRole	@default(MEMBER)
 	applications 	Application[]
 	jobOffers			JobOffer[]
+}
+
+enum UserRole {
+	ADMIN
+	MEMBER
 }
 
 model Company { 
