@@ -1,5 +1,13 @@
 .mainContent {
-  width: 98%;
-  height: 98%;
+  width: 93vw;
+  height: 93vh;
   background-color: var(--foreground);
+  border-radius: 10px;
+  overflow: hidden;
+
+  margin: 0;
+  display: flex;
+
+
+  
 }
