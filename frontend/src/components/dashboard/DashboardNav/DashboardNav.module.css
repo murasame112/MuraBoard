@@ -1,6 +1,51 @@
 .dashboardNav {
   height: 100%;
-  
   width: 15%;
   background-color: var(--silk);
+	display: flex;
+	flex-direction: column;
+	
 }
+
+.navElements, .accountElements {
+	display: flex;
+	flex-direction: column;
+	padding-top: 10px;
+	border-top: 1px solid var(--secondary-text);
+}
+
+.navElements {
+	margin-top: 35px;
+}
+
+h3 {
+	text-transform: uppercase;
+	color: var(--secondary-text);
+	margin: 0 8px 8px 8px;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+h3:active, .debugActive {
+	color: var(--secondary-theme);
+	background-color: var(--additional-theme);
+}
+
+h3:active:hover, .debugActive:hover {
+	cursor: default;
+}
+
+
+h3:hover {
+	color: var(--secondary-theme);
+}
+
+.accountElements {
+	margin-top: auto;
+	margin-bottom: 25px;
+}
+
+.accountElements h3{
+	text-transform: capitalize;
+}
+

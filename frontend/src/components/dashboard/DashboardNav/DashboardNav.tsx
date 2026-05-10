@@ -7,7 +7,13 @@ export default function DashboardNav() {
   return(
     <div className={styles.dashboardNav}>
       <h1 className='anta'><span style={{color:'var(--white)'}}>Mura</span><span style={{color:'var(--main-theme)'}}>Board</span></h1>
-			<p>{t('smth')}</p>
+			<div className={styles.navElements}>
+				<h3 className={styles.debugActive}>{t('jobOffers')}</h3>
+				<h3>{t('applications')}</h3>
+			</div>
+			<div className={styles.accountElements}>
+				<h3>{t('logout')}</h3>
+			</div>
     </div>
   )
 }
