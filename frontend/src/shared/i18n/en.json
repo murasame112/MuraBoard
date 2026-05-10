@@ -1,5 +1,7 @@
 {
 	"jobOffers": "job offers",
 	"applications": "applications",
-	"logout": "log out"
+	"logout": "log out",
+	"navigation": "navigation",
+	"account": "account"
 }

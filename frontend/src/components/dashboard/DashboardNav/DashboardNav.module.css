@@ -4,14 +4,21 @@
   background-color: var(--silk);
 	display: flex;
 	flex-direction: column;
-	
+}
+
+.navTitle p{
+	padding: 0 0 0 8px;
+	margin: 0 0 15px 0;
+	color: var(--additional-text);
+	font-size: 12px;
+	text-transform: capitalize;
+	text-align: left;
 }
 
 .navElements, .accountElements {
 	display: flex;
 	flex-direction: column;
-	padding-top: 10px;
-	border-top: 1px solid var(--secondary-text);
+	border-top: 1px solid var(--additional-text);
 }
 
 .navElements {
