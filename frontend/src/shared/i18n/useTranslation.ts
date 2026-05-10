@@ -5,6 +5,6 @@ export function useTranslation() {
 	const {language} = useLanguage();
 
 	return {
-		t: (key: string) => t(key, language);
+		t: (key: string) => t(key, language)
 	}
 }
