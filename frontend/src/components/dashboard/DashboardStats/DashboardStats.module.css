@@ -44,4 +44,5 @@
 	margin: 0;
 	color: var(--additional-text);
 	text-transform: capitalize;
+	font-size: 12px;
 }

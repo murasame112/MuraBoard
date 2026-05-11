@@ -1,5 +1,6 @@
 import styles from './DashboardStats.module.css';
 import type { CardsData } from '../DashboardContent/DashboardContent';
+import { useTranslation } from '../../../shared/i18n/useTranslation';
 
 type DashboardStatsProps = {
 	className: string;
@@ -8,6 +9,8 @@ type DashboardStatsProps = {
 }
 
 export default function DashboardStats({className, cardsData, summaryCount}: DashboardStatsProps) {
+	const { t } = useTranslation();
+
 	return(
 		<div className={className}>
 			<div className={styles.cardBox}>
