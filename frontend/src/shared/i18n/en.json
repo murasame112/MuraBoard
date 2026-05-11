@@ -1,7 +1,11 @@
 {
 	"jobOffers": "job offers",
 	"applications": "applications",
-	"logout": "log out",
+
 	"navigation": "navigation",
-	"account": "account"
+	"account": "account",
+	"logout": "log out",
+
+	"applied": "applied",
+	"notApplied": "not applied"
 }

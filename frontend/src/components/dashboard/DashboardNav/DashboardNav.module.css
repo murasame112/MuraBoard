@@ -25,7 +25,7 @@
 	margin-top: 35px;
 }
 
-h3 {
+.navElements h3 {
 	text-transform: uppercase;
 	color: var(--secondary-text);
 	margin: 0 8px 8px 8px;
@@ -33,17 +33,16 @@ h3 {
 	cursor: pointer;
 }
 
-h3:active, .debugActive {
+.navElements h3:active, .navElements .debugActive {
 	color: var(--secondary-theme);
 	background-color: var(--additional-theme);
 }
 
-h3:active:hover, .debugActive:hover {
+.navElements h3:active:hover, .navElements .debugActive:hover {
 	cursor: default;
 }
 
-
-h3:hover {
+.navElements h3:hover, .accountElements h3:hover {
 	color: var(--secondary-theme);
 }
 
@@ -54,5 +53,5 @@ h3:hover {
 
 .accountElements h3{
 	text-transform: capitalize;
+	cursor: pointer;
 }
-
