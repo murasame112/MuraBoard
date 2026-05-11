@@ -25,8 +25,19 @@
 }
 
 .stats {
-	height: 150px; /* TODO: % */
+	height: 10%;
+	min-height: 150px;
 	display: flex;
 	flex-direction: column;
 	justify-content: end;
+}
+
+.contentManagement {
+	height: 4%;
+	min-height: 40px;
+	border-bottom:1px solid var(--additional-text);
+	display: flex;
+	justify-content: end;
+	box-sizing: border-box;
+	padding-right: 25px;
 }

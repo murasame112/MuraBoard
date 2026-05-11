@@ -54,3 +54,26 @@ body {
   font-weight: 900;
   font-style: normal;
 }
+
+button {
+	background-color: var(--main-theme);
+	color: var(--foreground);
+	font-family: "Inter", sans-serif;
+	font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+button:hover {
+	background-color: var(--secondary-theme);
+}
+
+input {
+	font-family: "Inter", sans-serif;
+	font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+}

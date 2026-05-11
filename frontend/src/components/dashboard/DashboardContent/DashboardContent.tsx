@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useTranslation } from '../../../shared/i18n/useTranslation';
 import DashboardStats from '../DashboardStats/DashboardStats';
 import { CheckCircleIcon, ClockIcon } from '@heroicons/react/24/outline';
+import DashboardManagement from '../DashboardManagement/DashboardManagement';
 
 type DashboardMode = 'JobOffer' | 'Application';
 
@@ -33,8 +34,8 @@ export default function DashboardContent(){
     <div className={styles.dashboardContent}>
 			<div className={`${styles.title} ${styles.dshBox}`}><h3>{mode === 'JobOffer' ? t('jobOffers') : t('applications')}</h3></div>
 			<DashboardStats className={`${styles.stats} ${styles.dshBox}`} cardsData={jobOffersCardsMock} summaryCount={summaryCountMock}/>
-			<div className={`${styles.contentManagement} ${styles.dshBox}`}>content management</div>
-			<div className={`${styles.details} ${styles.dshBox}`}>details</div>
+			<DashboardManagement className={`${styles.contentManagement} ${styles.dshBox}`}/>
+			<div className={`${styles.details} ${styles.dshBox}`}>todo: details</div>
 
 			
     </div>

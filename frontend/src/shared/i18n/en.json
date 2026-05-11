@@ -7,5 +7,8 @@
 	"logout": "log out",
 
 	"applied": "applied",
-	"notApplied": "not applied"
+	"notApplied": "not applied",
+
+	"search": "search",
+	"addFilter": "add filter"
 }
