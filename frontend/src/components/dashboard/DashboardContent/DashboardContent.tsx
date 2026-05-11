@@ -5,6 +5,8 @@ import DashboardStats from '../DashboardStats/DashboardStats';
 import { CheckCircleIcon, ClockIcon } from '@heroicons/react/24/outline';
 import DashboardManagement from '../DashboardManagement/DashboardManagement';
 import type { JobOffer } from '../../../shared/models/models';
+import JobOffersDetails from '../JobOffersDetails/JobOffersDetails';
+import ApplicationsDetails from '../ApplicationsDetails/ApplicationsDetails';
 
 type DashboardMode = 'JobOffer' | 'Application';
 
@@ -21,11 +23,14 @@ export default function DashboardContent(){
 		fetch(`${host}/api/joboffer/offers-for-user/4`/* TODO: just for development purposes */)
 				.then((response) => response.json())
 				.then((data) => {
-					console.log(data);
 					setJobOffers(data);
 				})
 				.catch((error) => console.log(error));
 	}, []);
+
+	useEffect(() => {
+		console.log(jobOffers);
+	}, [jobOffers]);
 
 	const jobOffersCardsMock = [
 		{
@@ -49,7 +54,7 @@ export default function DashboardContent(){
 			<div className={`${styles.title} ${styles.dshBox}`}><h3>{mode === 'JobOffer' ? t('jobOffers') : t('applications')}</h3></div>
 			<DashboardStats className={`${styles.stats} ${styles.dshBox}`} cardsData={jobOffersCardsMock} summaryCount={summaryCountMock}/>
 			<DashboardManagement className={`${styles.contentManagement} ${styles.dshBox}`} mode={mode === 'JobOffer' ? t('jobOffer') : t('application')}/>
-			<div className={`${styles.details} ${styles.dshBox}`}>todo: details</div>
+			<div className={`${styles.details} ${styles.dshBox}`}>{mode === 'JobOffer' ? <JobOffersDetails jobOffers={jobOffers}/> : (<ApplicationsDetails/>)}</div>
 
 			
     </div>
