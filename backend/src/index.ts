@@ -3,7 +3,8 @@ import { PrismaClient } from './generated/prisma/client.js';
 import { PrismaPg } from "@prisma/adapter-pg";
 import 'dotenv/config';
 import * as userEndpoints from './endpoints/userEndpoints.js';
-import * as jobEndpoints from './endpoints/jobEndpoints.js'
+import * as jobEndpoints from './endpoints/jobEndpoints.js';
+import cors from 'cors';
 
 const adapter = new PrismaPg({
   connectionString: process.env.DATABASE_URL!,
@@ -15,6 +16,8 @@ export const prisma = new PrismaClient({ adapter });
 const app = express();
 
 app.use(express.json());
+
+app.use(cors());
 
 // === health ===
 app.get('/api/health', (req, res) => {
@@ -32,7 +35,7 @@ app.post('/api/user/create', userEndpoints.createUser);
 app.get('/api/joboffer/companies', jobEndpoints.getCompanies);
 
 // === job offers ===
-app.get('/api/joboffer/offers-for-user', jobEndpoints.getJobOffersForUser);
+app.get('/api/joboffer/offers-for-user/:id' /* TODO: < this is just for development purposes */ , jobEndpoints.getJobOffersForUser);
 app.post('/api/joboffer/create', jobEndpoints.createJobOffer);
 
 // === applications ===
