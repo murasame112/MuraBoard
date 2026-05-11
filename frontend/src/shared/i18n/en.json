@@ -1,6 +1,8 @@
 {
 	"jobOffers": "job offers",
+	"jobOffer": "job offer",
 	"applications": "applications",
+	"application": "application",
 
 	"navigation": "navigation",
 	"account": "account",
@@ -10,5 +12,6 @@
 	"notApplied": "not applied",
 
 	"search": "search",
-	"addFilter": "add filter"
+	"addFilter": "add filter",
+	"add": "add"
 }
