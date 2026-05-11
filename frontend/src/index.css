@@ -3,11 +3,20 @@
   --secondary-text: #393E41;
 	--additional-text: #656768;
   --background: #D4F5E2;
-  --foreground: #ECCBD9;
+  --foreground: #FFFFFF;   /*#ECCBD9;*/
   --main-theme: #0E8A5F;
   --secondary-theme: #119E6A;
   --additional-theme: #c1e0d5;
-  --silk: #F7D6E0;
+  --silk: #F3F8F2;  /*#F7D6E0;*/
+
+	--alert-green: #30CB83;
+	--alert-red: #E74C3C;
+	--alert-purple: #9B59B6;
+	--alert-yellow: #F1C40F;
+	--alert-burgund: #B33771;
+	--alert-lightblue: #54A0FF;
+	--alert-blue: #2133A1;
+	--alert-pink: #EC2A5F;	
 }
 
 
