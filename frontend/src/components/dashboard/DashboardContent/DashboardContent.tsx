@@ -1,5 +1,5 @@
 import styles from './DashboardContent.module.css';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useTranslation } from '../../../shared/i18n/useTranslation';
 import DashboardStats from '../DashboardStats/DashboardStats';
 import { CheckCircleIcon, ClockIcon } from '@heroicons/react/24/outline';
@@ -75,23 +75,40 @@ export default function DashboardContent(){
 		fetchJobOffers();
 	}, []);
 
+	const applicationStats = useMemo(() => {
+		return jobOffers.reduce(
+			(acc, offer) => {
+				if (offer.status === null) {
+					acc.notApplied += 1;
+				} else {
+					acc.applied += 1;
+				}
+
+				return acc;
+			},
+			{
+				applied: 0,
+				notApplied: 0,
+			}
+		);
+	}, [jobOffers]);
 
 	const jobOffersCardsMock = [
 		{
 			label: t('applied'),
-			count: 153,
+			count: applicationStats.applied,
 			color: '--alert-lightblue',
 			icon: CheckCircleIcon
 		},
 		{
 			label: t('notApplied'),
-			count: 27,
+			count: applicationStats.notApplied,
 			color: '--alert-burgund',
 			icon: ClockIcon
 		}
 	];
 
-	const summaryCountMock = mode === 'JobOffer' ? `180 ${t('jobOffers')}` : `180 ${t('applications')}`;
+	const summaryCountMock = mode === 'JobOffer' ? `${jobOffers.length} ${t('jobOffers')}` : `180 ${t('applications')}`;
 
   return(
     <div className={styles.dashboardContent}>
