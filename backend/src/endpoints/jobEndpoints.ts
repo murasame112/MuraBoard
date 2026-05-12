@@ -113,6 +113,22 @@ export async function getCompanies(req: Request, res: Response){
 	}
 }
 
+export async function getCompanyById(req: Request, res: Response) {
+	try {
+		const id = Number(req.params.id);
+
+		if (Number.isNaN(id)) {
+			return res.status(400).json({ message: 'Invalid id' });
+		}
+		const result = await prisma.company.findUnique({
+			where: {id: id}
+		});
+		return res.status(200).json(result);
+	} catch (error) {
+		return res.status(500).json({message: 'Something went wrong'});
+	}
+}
+
 // ========= Job Offers =========
 
 export async function getJobOffersForUser(req: Request, res: Response){
@@ -303,6 +319,24 @@ export async function getApplicationsForUser(req: Request, res: Response){
 		return res.status(500).json({message: 'Something went wrong'});
 	}
 
+}
+
+export async function getApplicationsForJobOffer(req: Request, res: Response) {
+	try {
+		const id = Number(req.params.id);
+
+		if (Number.isNaN(id)) {
+			return res.status(400).json({ message: 'Invalid id' });
+		}
+		
+		const result = await prisma.application.findUnique({
+			where: {jobOfferId: id}
+		})
+		return res.status(200).json(result);
+
+	} catch (error) {
+		return res.status(500).json({message: 'Something went wrong'});
+	}
 }
 
 

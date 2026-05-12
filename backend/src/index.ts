@@ -33,6 +33,7 @@ app.post('/api/user/create', userEndpoints.createUser);
 
 // === companies ===
 app.get('/api/joboffer/companies', jobEndpoints.getCompanies);
+app.get('/api/joboffer/company/:id', jobEndpoints.getCompanyById);
 
 // === job offers ===
 app.get('/api/joboffer/offers-for-user/:id' /* TODO: < this is just for development purposes */ , jobEndpoints.getJobOffersForUser);
@@ -40,6 +41,7 @@ app.post('/api/joboffer/create', jobEndpoints.createJobOffer);
 
 // === applications ===
 app.get('/api/joboffer/applications-for-user', jobEndpoints.getApplicationsForUser);
+app.get('/api/joboffer/applications-for-offer/:id', jobEndpoints.getApplicationsForJobOffer);
 app.post('/api/joboffer/apply', jobEndpoints.applyToJobOffer);
 app.patch('/api/joboffer/application', jobEndpoints.patchApplication);
 

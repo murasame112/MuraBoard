@@ -7,6 +7,7 @@ import DashboardManagement from '../DashboardManagement/DashboardManagement';
 import type { JobOffer } from '../../../shared/models/models';
 import JobOffersDetails from '../JobOffersDetails/JobOffersDetails';
 import ApplicationsDetails from '../ApplicationsDetails/ApplicationsDetails';
+import { ApplicationStatus } from '../../../shared/enums/enums';
 
 type DashboardMode = 'JobOffer' | 'Application';
 
@@ -18,19 +19,62 @@ export default function DashboardContent(){
 	const [jobOffers, setJobOffers] = useState<JobOffer[]>([]);
 	const host = import.meta.env.VITE_API_URL;
 
-
 	useEffect(() => {
-		fetch(`${host}/api/joboffer/offers-for-user/4`/* TODO: just for development purposes */)
-				.then((response) => response.json())
-				.then((data) => {
-					setJobOffers(data);
-				})
-				.catch((error) => console.log(error));
+		const fetchJobOffers = async () => {
+			try {
+				const offersResponse = await fetch(`${host}/api/joboffer/offers-for-user/4`);
+
+				const offersData: {
+					id: number;
+					title: string;
+					salaryMin?: number;
+					salaryMax?: number;
+					currency: string;
+					createdAt: string;
+					companyId: number;
+				}[] = await offersResponse.json();
+
+				const jobOffersWithCompany = await Promise.all(
+					offersData.map(async (offer) => {
+						const [companyResponse, applicationsResponse] = await Promise.all([
+							fetch(`${host}/api/joboffer/company/${offer.companyId}`),
+							fetch(`${host}/api/joboffer/applications-for-offer/${offer.id}`),
+						]);
+
+						const companyData: {
+							name: string;
+							location: string;
+							website?: string;
+						} = await companyResponse.json();
+
+						const applicationData: {
+							status: ApplicationStatus;
+						} = await applicationsResponse.json();
+
+						return {
+							id: offer.id,
+							title: offer.title,
+							salaryMin: offer.salaryMin,
+							salaryMax: offer.salaryMax,
+							createdAt: new Date(offer.createdAt),
+							currency: offer.currency,
+							companyName: companyData.name,
+							companyLocation: companyData.location,
+							companyWebsite: companyData.website,
+							status: applicationData?.status ?? null,
+						};
+					})
+				);
+
+				setJobOffers(jobOffersWithCompany);
+			} catch (error) {
+				console.log(error);
+			}
+		};
+
+		fetchJobOffers();
 	}, []);
 
-	useEffect(() => {
-		console.log(jobOffers);
-	}, [jobOffers]);
 
 	const jobOffersCardsMock = [
 		{

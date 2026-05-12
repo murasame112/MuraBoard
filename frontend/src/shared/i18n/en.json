@@ -13,5 +13,13 @@
 
 	"search": "search",
 	"addFilter": "add filter",
-	"add": "add"
+	"add": "add",
+
+	"select": "select",
+	"company": "company",
+	"status": "status",
+	"position": "position",
+	"salary": "salary",
+	"currency": "currency",
+	"date": "date"
 }

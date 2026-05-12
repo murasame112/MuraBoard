@@ -43,16 +43,23 @@ model JobOffer {
   title      		String
 	salaryMin			Int?
 	salaryMax			Int?
+	currency			Currency	@default(PLN)
 	createdAt			DateTime
 	company				Company		@relation(fields: [companyId], references: [id])
 	user					User			@relation(fields: [userId], references: [id])
-	applications	Application[]
+	application 	Application?
+}
+
+enum Currency {
+	PLN
+	EUR
+	USD
 }
 
 model Application {
   id        		Int				@id @default(autoincrement())
 	userId				Int
-  jobOfferId    Int
+  jobOfferId    Int				@unique
 	appliedAt			DateTime	@default(now())
 	status				ApplicationStatus
 	nextStepDate	DateTime?
