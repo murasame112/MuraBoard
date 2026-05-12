@@ -22,7 +22,7 @@ export default function DashboardContent(){
 	useEffect(() => {
 		const fetchJobOffers = async () => {
 			try {
-				const offersResponse = await fetch(`${host}/api/joboffer/offers-for-user/4`);
+				const offersResponse = await fetch(`${host}/api/joboffer/offers-for-user/4` /*TODO: < shouldn't be 4 */);
 
 				const offersData: {
 					id: number;
