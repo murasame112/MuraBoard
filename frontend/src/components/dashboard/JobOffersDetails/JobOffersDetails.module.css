@@ -33,12 +33,13 @@
 }
 
 .offerStatus {
-	width: 90px;
+	width: 110px;
 	border-radius: 10px;
 	margin: 10px auto 10px auto;
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	text-transform: uppercase;
 }
 
 .applied {
