@@ -8,7 +8,6 @@ type JobOffersDetailsProps = {
 
 export default function JobOffersDetails({jobOffers}: JobOffersDetailsProps){
 	const { t } = useTranslation();
-
 	return(
 		<div className={styles.jobOffersList}>
 
@@ -22,15 +21,16 @@ export default function JobOffersDetails({jobOffers}: JobOffersDetailsProps){
 				<h4>{t('date')}</h4>
 			</div>
 
-			{jobOffers.map((element) => (
+			{jobOffers.length === 0 ? (<p>{t('noJobOffers')}</p>) : 
+			jobOffers.map((element) => (
 				<div key={element.id} className={styles.jobOfferItem}>
 					<div className={styles.select}><input type='checkbox' name='selectItem'/></div>
-					<p className={styles.companyDetails}>{element.companyName}</p>
-					<p className={`${styles.offerStatus} ${!element.status ? styles.notApplied : styles.applied}`}>{!element.status ? t('notApplied') : t('applied')}</p>
+					<p className={styles.companyDetails}>{element.company.name}</p>
+					<p className={`${styles.offerStatus} ${element.application ? styles.applied : styles.notApplied }`}>{element.application ? t('applied'): t('notApplied') }</p>
 					<p>{element.title}</p>
 					<p>{element.salaryMin} - {element.salaryMax}</p>
 					<p>{element.currency}</p>
-					<p>{element.createdAt.toLocaleDateString('pl-PL')}</p>
+					<p>{/*element.createdAt.toLocaleDateString('pl-PL')*/}</p>
 				</div>
 			))}
 		</div>

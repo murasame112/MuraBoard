@@ -131,6 +131,7 @@ export async function getCompanyById(req: Request, res: Response) {
 
 // ========= Job Offers =========
 
+//TODO: do i need this?
 export async function getJobOffersForUser(req: Request, res: Response){
 	try {
 		const result = await prisma.$transaction(async (tx) => {
@@ -169,6 +170,47 @@ export async function getJobOffersForUser(req: Request, res: Response){
 		return res.status(500).json({message: 'Something went wrong'});
 	}
 
+}
+
+export async function getJobOffersForDashboard(req: Request, res: Response) {
+	try {
+		const id = Number(req.params.id);
+
+		if (Number.isNaN(id)) {
+			return res.status(400).json({ message: 'Invalid id' });
+		}
+
+		const result = await prisma.$transaction(async (tx) => {
+			const offers = await tx.jobOffer.findMany({
+				where: {userId: id},
+				include: {application: true, company: true}
+			});
+
+			if (!offers) return res.status(200).json([]);
+
+			const {applied, notApplied} = offers.reduce(
+				(accumulator, offer) => {
+					if (offer.application) accumulator.applied += 1;
+					else accumulator.notApplied += 1;
+
+					return accumulator;
+				},
+				{applied: 0, notApplied: 0}
+			);
+
+			return res.status(200).json({
+				offers,
+				stats: {
+					applied,
+					notApplied,
+				},
+			});
+
+		})
+
+	} catch (error) {
+		return res.status(500).json({message: 'Something went wrong'});
+	}
 }
 
 

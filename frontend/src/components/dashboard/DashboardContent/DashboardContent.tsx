@@ -11,98 +11,45 @@ import { ApplicationStatus } from '../../../shared/enums/enums';
 
 type DashboardMode = 'JobOffer' | 'Application';
 
+type Stats = {
+	applied: number;
+	notApplied: number;
+}
+
 export type CardsData = {label: string, count: number, color: string, icon: React.ElementType;};
 
 export default function DashboardContent(){
 	const { t } = useTranslation();
 	const [mode, setMode] = useState<DashboardMode>('JobOffer');
 	const [jobOffers, setJobOffers] = useState<JobOffer[]>([]);
+	const [stats, setStats] = useState<Stats>({applied: 0, notApplied: 0});
 	const host = import.meta.env.VITE_API_URL;
 
 	useEffect(() => {
-		const fetchJobOffers = async () => {
-			try {
-				const offersResponse = await fetch(`${host}/api/joboffer/offers-for-user/4` /*TODO: < shouldn't be 4 */);
-
-				const offersData: {
-					id: number;
-					title: string;
-					salaryMin?: number;
-					salaryMax?: number;
-					currency: string;
-					createdAt: string;
-					companyId: number;
-				}[] = await offersResponse.json();
-
-				const jobOffersWithCompany = await Promise.all(
-					offersData.map(async (offer) => {
-						const [companyResponse, applicationsResponse] = await Promise.all([
-							fetch(`${host}/api/joboffer/company/${offer.companyId}`),
-							fetch(`${host}/api/joboffer/applications-for-offer/${offer.id}`),
-						]);
-
-						const companyData: {
-							name: string;
-							location: string;
-							website?: string;
-						} = await companyResponse.json();
-
-						const applicationData: {
-							status: ApplicationStatus;
-						} = await applicationsResponse.json();
-
-						return {
-							id: offer.id,
-							title: offer.title,
-							salaryMin: offer.salaryMin,
-							salaryMax: offer.salaryMax,
-							createdAt: new Date(offer.createdAt),
-							currency: offer.currency,
-							companyName: companyData.name,
-							companyLocation: companyData.location,
-							companyWebsite: companyData.website,
-							status: applicationData?.status ?? null,
-						};
-					})
-				);
-
-				setJobOffers(jobOffersWithCompany);
-			} catch (error) {
-				console.log(error);
-			}
-		};
-
-		fetchJobOffers();
+		//TODO: userId shouldn't be 4, it's just for development
+		fetch(`${host}/api/joboffer/offers-for-dashboard/4`)
+			.then((response) => response.json())
+			.then((data) => {
+				if (!data.offers || data.offers.length == 0){
+					setJobOffers([]);
+					return;
+				}
+				setJobOffers(data.offers);
+				setStats(data.stats);
+			})
+			.catch((error) => console.log(error));
 	}, []);
 
-	const applicationStats = useMemo(() => {
-		return jobOffers.reduce(
-			(acc, offer) => {
-				if (offer.status === null) {
-					acc.notApplied += 1;
-				} else {
-					acc.applied += 1;
-				}
-
-				return acc;
-			},
-			{
-				applied: 0,
-				notApplied: 0,
-			}
-		);
-	}, [jobOffers]);
-
-	const jobOffersCardsMock = [
+	const jobOffersCards = [
 		{
 			label: t('applied'),
-			count: applicationStats.applied,
+			count: stats.applied,
 			color: '--alert-lightblue',
 			icon: CheckCircleIcon
 		},
 		{
 			label: t('notApplied'),
-			count: applicationStats.notApplied,
+			count: stats.notApplied,
 			color: '--alert-burgund',
 			icon: ClockIcon
 		}
@@ -113,7 +60,7 @@ export default function DashboardContent(){
   return(
     <div className={styles.dashboardContent}>
 			<div className={`${styles.title} ${styles.dshBox}`}><h3>{mode === 'JobOffer' ? t('jobOffers') : t('applications')}</h3></div>
-			<DashboardStats className={`${styles.stats} ${styles.dshBox}`} cardsData={jobOffersCardsMock} summaryCount={summaryCountMock}/>
+			<DashboardStats className={`${styles.stats} ${styles.dshBox}`} cardsData={jobOffersCards} summaryCount={summaryCountMock}/>
 			<DashboardManagement className={`${styles.contentManagement} ${styles.dshBox}`} mode={mode === 'JobOffer' ? t('jobOffer') : t('application')}/>
 			<div className={`${styles.details} ${styles.dshBox}`}>{mode === 'JobOffer' ? <JobOffersDetails jobOffers={jobOffers}/> : (<ApplicationsDetails/>)}</div>
 

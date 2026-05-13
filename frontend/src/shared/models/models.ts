@@ -7,8 +7,12 @@ export type JobOffer = {
 	salaryMax?: number;
 	currency: string;
 	createdAt: Date;
-	companyName: string;
-	companyLocation: string;
-	companyWebsite?: string;
-	status: ApplicationStatus;
+	company: {
+		name: string;
+		location: string;
+		website?: string;
+	};
+	application: {
+		status: ApplicationStatus | null;
+	};
 }
