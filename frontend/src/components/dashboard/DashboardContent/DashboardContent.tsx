@@ -1,5 +1,5 @@
 import styles from './DashboardContent.module.css';
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect} from 'react';
 import { useTranslation } from '../../../shared/i18n/useTranslation';
 import DashboardStats from '../DashboardStats/DashboardStats';
 import { CheckCircleIcon, ClockIcon } from '@heroicons/react/24/outline';
@@ -7,7 +7,6 @@ import DashboardManagement from '../DashboardManagement/DashboardManagement';
 import type { JobOffer } from '../../../shared/models/models';
 import JobOffersDetails from '../JobOffersDetails/JobOffersDetails';
 import ApplicationsDetails from '../ApplicationsDetails/ApplicationsDetails';
-import { ApplicationStatus } from '../../../shared/enums/enums';
 
 type DashboardMode = 'JobOffer' | 'Application';
 
