@@ -10,6 +10,8 @@
 
 	"applied": "applied",
 	"notApplied": "not applied",
+	"noWebsite": "no website provided",
+	"companyDetailsClose": "(click anywhere on the popup to close)",
 
 	"search": "search",
 	"addFilter": "add filter",

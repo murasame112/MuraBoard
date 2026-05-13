@@ -25,11 +25,60 @@
 .detailsHeader h4 {
 	margin: 9px 0 9px 0;
 	text-transform: capitalize;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.companyName {
+	color: var(--main-theme);
+	cursor: pointer;
+	position: relative;
+  display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.companyName:hover {
+	color: var(--alert-green);
 }
 
 .companyDetails {
-	color: var(--secondary-theme);
+	width: 200px;
+	height: 150px;
+	position: absolute;
+	left: 0px;
+	bottom: 20px;
+	border-radius: 15px;
+	border: 3px solid var(--additional-theme);
+	background-color: var(--foreground);
+	color: var(--text);
+}
+
+.companyDetailsName {
+	font-weight: bold;
+	font-size: 18px !important;
+}
+
+.companyDetailsWebsite {
+	color: var(--main-theme);
 	cursor: pointer;
+	text-decoration: none;
+	font-size: 12px;
+}
+
+.companyDetailsWebsite:hover {
+	color: var(--alert-green);
+	cursor: pointer;
+}
+
+.companyDetailsNoWebsite {
+	color: var(--additional-text);
+}
+
+.companyDetailsClose {
+	color: var(--additional-text);
+	font-size: 10px !important;
 }
 
 .offerStatus {
