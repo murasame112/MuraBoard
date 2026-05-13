@@ -2,6 +2,7 @@ import styles from './JobOffersDetails.module.css';
 import type { JobOffer } from '../../../shared/models/models';
 import { useTranslation } from '../../../shared/i18n/useTranslation';
 import { useState } from 'react';
+import MassActionPopup from '../MassActionPopup/MassActionPopup';
 
 type JobOffersDetailsProps = {
 	jobOffers: JobOffer[];
@@ -10,13 +11,26 @@ type JobOffersDetailsProps = {
 export default function JobOffersDetails({jobOffers}: JobOffersDetailsProps){
 	const { t } = useTranslation();
 	const [selectedCompany, setSelectedCompany] = useState<number | null>(null);
+	const [selectedCheckboxes, setSelectedCheckboxes] = useState<Set<number>>(new Set());
 
 	function selectCompany(id: number){
 		setSelectedCompany((prev) => {
-			console.log(prev);
 			if (!prev) return id;
-			return null;
+			else if(prev === id) return null;
+			return id;
 		})
+	}
+
+	function handleCheckboxChange(e: React.ChangeEvent<HTMLInputElement>, id: number) {
+		let val = e.currentTarget.checked;
+		setSelectedCheckboxes(prev => {
+			if (val) {
+				prev.add(id);
+			} else {
+				prev.delete(id);
+			}
+			return new Set(prev);
+		});
 	}
 
 	return(
@@ -35,7 +49,7 @@ export default function JobOffersDetails({jobOffers}: JobOffersDetailsProps){
 			{jobOffers.length === 0 ? (<p>{t('noJobOffers')}</p>) : 
 			jobOffers.map((element) => (
 				<div key={element.id} className={styles.jobOfferItem}>
-					<div className={styles.select}><input type='checkbox' name='selectItem'/></div>
+					<div className={styles.select}><input type='checkbox' name='selectItem' onChange={(e) => {handleCheckboxChange(e, element.id)}}/></div>
 
 					<div className={styles.companyName} onClick={() => {selectCompany(element.id)}}>
 					{element.id === selectedCompany && (
@@ -60,6 +74,8 @@ export default function JobOffersDetails({jobOffers}: JobOffersDetailsProps){
 					<p>{new Date(element.createdAt).toLocaleDateString('pl-PL')}</p>
 				</div>
 			))}
+			{(selectedCheckboxes.size > 0) ? <MassActionPopup selected={selectedCheckboxes} /> : ''}
+			
 		</div>
 	);
 

@@ -107,3 +107,7 @@
 	align-items: center;
 	accent-color: var(--secondary-theme);
 }
+
+.select input {
+	cursor: pointer;
+}

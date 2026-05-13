@@ -24,6 +24,11 @@
 	"salary": "salary",
 	"currency": "currency",
 	"date": "date",
+	"noJobOffers": "no job offers found - create one!",
 
-	"noJobOffers": "no job offers found - create one!"
+	"itemSelected": "item selected",
+	"itemsSelected": "items selected",
+	"selectAction": "select action",
+	"delete": "delete",
+	"edit": "edit"
 }
