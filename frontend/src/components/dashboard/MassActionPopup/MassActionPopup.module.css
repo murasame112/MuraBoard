@@ -35,3 +35,17 @@
 	height: 30px;
 	margin-top: 25px;
 }
+
+.extraPopup {
+	width: 200px;
+	height: 210px;
+	top: 35vh;
+	right: calc(4% + 203px);
+	background-color: red;
+	position: fixed;
+	display: flex;
+	flex-direction: column;
+	border-radius: 15px;
+	border: 3px solid var(--additional-theme);
+	background-color: var(--foreground);
+}
