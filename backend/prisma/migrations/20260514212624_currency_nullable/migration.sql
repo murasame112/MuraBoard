@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "JobOffer" ALTER COLUMN "currency" DROP NOT NULL,
+ALTER COLUMN "currency" DROP DEFAULT;

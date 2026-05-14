@@ -43,7 +43,7 @@ model JobOffer {
   title      		String
 	salaryMin			Int?
 	salaryMax			Int?
-	currency			Currency	@default(PLN)
+	currency			Currency?
 	createdAt			DateTime
 	company				Company		@relation(fields: [companyId], references: [id])
 	user					User			@relation(fields: [userId], references: [id])
