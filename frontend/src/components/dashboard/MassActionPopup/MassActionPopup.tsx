@@ -4,11 +4,13 @@ import { useState } from 'react';
 
 type MassActionPopupProps = {
 	selected: Set<number>;
+	onDelete: () => void;
 }
 
 type ExtraPopup = 'edit' | 'delete' | null;
 
-export default function MassActionPopup({selected}: MassActionPopupProps) {
+export default function MassActionPopup({selected, onDelete}: MassActionPopupProps) {
+	const host = import.meta.env.VITE_API_URL;
 	const { t } = useTranslation();
 	const [extraPopupVisible, setExtraPopupVisible] = useState<ExtraPopup>(null);
 
@@ -19,13 +21,26 @@ export default function MassActionPopup({selected}: MassActionPopupProps) {
 			setExtraPopupVisible(type);
 		}
 	}
+
+	const deletionOptions = {
+		method: 'DELETE',
+		headers: { 'Content-Type': 'application/json' },
+		body: JSON.stringify({ids: [...selected]}),
+  };
+
+	function handleDeletion(){
+		fetch(`${host}/api/joboffer/delete-many`, deletionOptions)
+			.then((response) => response.json())
+			.then(() => {setExtraPopupVisible(null)})
+			.then(() => {onDelete()});
+	}
 	
 	let editPopup = <div className={styles.extraPopup}>Edit</div>;
 	let deletePopup = 
 		<div className={`${styles.extraPopup} ${styles.deletePopup}`}>
 			<h4>{t('areYouSure')}?</h4>
 			<div className={styles.deletePopupButtons}>
-				<button>{t('yes')}</button>
+				<button onClick={handleDeletion}>{t('yes')}</button>
 			</div>
 			
 		</div>;

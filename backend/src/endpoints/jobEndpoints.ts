@@ -321,6 +321,34 @@ export async function createJobOffer(req: Request<{}, {}, createJobOfferBody>, r
 
 }
 
+type DeleteJobOfferBody = {
+	ids: number[];
+}
+
+export async function deleteJobOffersByIds(req: Request<{}, {}, DeleteJobOfferBody>, res: Response) {
+	try {
+		const {ids} = req.body;
+
+		const deleteApplications = prisma.application.deleteMany({
+			where: {
+				jobOfferId: {in: ids}
+			}
+		});
+
+		const deleteJobOffers = prisma.jobOffer.deleteMany({
+			where: {
+				id: {in: ids}
+			}
+		});
+
+		const result = await prisma.$transaction([deleteApplications, deleteJobOffers]);
+		return res.status(200).json(result);
+
+	} catch (error) {
+		return res.status(500).json({message: 'Something went wrong'});
+	}
+}
+
 // ========= Applications =========
 
 export async function getApplicationsForUser(req: Request, res: Response){

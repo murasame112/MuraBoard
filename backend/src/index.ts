@@ -39,6 +39,7 @@ app.get('/api/joboffer/company/:id', jobEndpoints.getCompanyById);
 app.get('/api/joboffer/offers-for-user/:id' /* TODO: < this is just for development purposes */ , jobEndpoints.getJobOffersForUser);
 app.get('/api/joboffer/offers-for-dashboard/:id' /* TODO: < this is just for development purposes */ , jobEndpoints.getJobOffersForDashboard);
 app.post('/api/joboffer/create', jobEndpoints.createJobOffer);
+app.delete('/api/joboffer/delete-many', jobEndpoints.deleteJobOffersByIds);
 
 // === applications ===
 app.get('/api/joboffer/applications-for-user', jobEndpoints.getApplicationsForUser);

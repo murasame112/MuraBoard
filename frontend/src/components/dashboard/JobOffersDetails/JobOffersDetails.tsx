@@ -6,12 +6,13 @@ import MassActionPopup from '../MassActionPopup/MassActionPopup';
 
 type JobOffersDetailsProps = {
 	jobOffers: JobOffer[];
+	refetch: () => void;
 }
 
-export default function JobOffersDetails({jobOffers}: JobOffersDetailsProps){
+export default function JobOffersDetails({jobOffers, refetch}: JobOffersDetailsProps){
 	const { t } = useTranslation();
 	const [selectedCompany, setSelectedCompany] = useState<number | null>(null);
-	const [selectedCheckboxes, setSelectedCheckboxes] = useState<Set<number>>(new Set());
+	const [selectedCheckboxes, setSelectedCheckboxes] = useState<Set<number>>(new Set<number>());
 
 	function selectCompany(id: number){
 		setSelectedCompany((prev) => {
@@ -33,6 +34,11 @@ export default function JobOffersDetails({jobOffers}: JobOffersDetailsProps){
 		});
 	}
 
+	function onDelete(){
+		setSelectedCheckboxes(new Set<number>());
+		refetch();
+	}
+
 	return(
 		<div className={styles.jobOffersList}>
 
@@ -47,7 +53,8 @@ export default function JobOffersDetails({jobOffers}: JobOffersDetailsProps){
 			</div>
 
 			{jobOffers.length === 0 ? (<p>{t('noJobOffers')}</p>) : 
-			jobOffers.map((element) => (
+			jobOffers.map((element, index) => (
+				index > 10 ?  null :
 				<div key={element.id} className={styles.jobOfferItem}>
 					<div className={styles.select}><input type='checkbox' name='selectItem' onChange={(e) => {handleCheckboxChange(e, element.id)}}/></div>
 
@@ -74,7 +81,7 @@ export default function JobOffersDetails({jobOffers}: JobOffersDetailsProps){
 					<p>{new Date(element.createdAt).toLocaleDateString('pl-PL')}</p>
 				</div>
 			))}
-			{(selectedCheckboxes.size > 0) ? <MassActionPopup selected={selectedCheckboxes} /> : ''}
+			{(selectedCheckboxes.size > 0) ? <MassActionPopup selected={selectedCheckboxes} onDelete={onDelete}/> : ''}
 			
 		</div>
 	);

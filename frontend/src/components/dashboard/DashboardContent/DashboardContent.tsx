@@ -39,6 +39,20 @@ export default function DashboardContent(){
 			.catch((error) => console.log(error));
 	}, []);
 
+	function refetch() {
+		fetch(`${host}/api/joboffer/offers-for-dashboard/4`)
+			.then((response) => response.json())
+			.then((data) => {
+				if (!data.offers || data.offers.length == 0){
+					setJobOffers([]);
+					return;
+				}
+				setJobOffers(data.offers);
+				setStats(data.stats);
+			})
+			.catch((error) => console.log(error));
+	}
+
 	const jobOffersCards = [
 		{
 			label: t('applied'),
@@ -61,7 +75,7 @@ export default function DashboardContent(){
 			<div className={`${styles.title} ${styles.dshBox}`}><h3>{mode === 'JobOffer' ? t('jobOffers') : t('applications')}</h3></div>
 			<DashboardStats className={`${styles.stats} ${styles.dshBox}`} cardsData={jobOffersCards} summaryCount={summaryCountMock}/>
 			<DashboardManagement className={`${styles.contentManagement} ${styles.dshBox}`} mode={mode === 'JobOffer' ? t('jobOffer') : t('application')}/>
-			<div className={`${styles.details} ${styles.dshBox}`}>{mode === 'JobOffer' ? <JobOffersDetails jobOffers={jobOffers}/> : (<ApplicationsDetails/>)}</div>
+			<div className={`${styles.details} ${styles.dshBox}`}>{mode === 'JobOffer' ? <JobOffersDetails jobOffers={jobOffers} refetch={refetch}/> : (<ApplicationsDetails/>)}</div>
 
 			
     </div>
