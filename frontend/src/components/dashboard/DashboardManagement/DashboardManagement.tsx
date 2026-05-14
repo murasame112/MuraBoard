@@ -1,6 +1,7 @@
 import styles from './DashboardManagement.module.css';
 import { useTranslation } from '../../../shared/i18n/useTranslation';
 import { FunnelIcon, MagnifyingGlassIcon, PlusIcon } from '@heroicons/react/24/outline';
+import DashboardJobOfferForm from '../DashboardJobOfferForm/DashboardJobOfferForm';
 
 type DashboardManagementProps = {
 	className: string;
@@ -22,6 +23,7 @@ export default function DashboardManagement({className, mode}: DashboardManageme
 			</div>
 			<button className={styles.filterButton}><FunnelIcon className={styles.filterIcon}/>{t('addFilter')}</button>
 			<button className={styles.addButton}><PlusIcon className={styles.plusIcon}/>{t('add')} {mode}</button>
+			<DashboardJobOfferForm/>
 		</div>
 	);
 }

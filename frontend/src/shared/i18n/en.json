@@ -34,5 +34,7 @@
 
 	"areYouSure": "are you sure",
 	"no": "no",
-	"yes": "yes"
+	"yes": "yes",
+	
+	"canBeLeftEmpty": "can be left empty"
 }

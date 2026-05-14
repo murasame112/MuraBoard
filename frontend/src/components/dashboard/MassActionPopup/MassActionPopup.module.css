@@ -10,6 +10,7 @@
 	border-radius: 15px;
 	border: 3px solid var(--additional-theme);
 	background-color: var(--foreground);
+	z-index: 1;
 }
 
 .buttons {
@@ -58,6 +59,7 @@
 	justify-content: space-between;
 	padding-bottom:15px;
 	box-sizing: border-box;
+	z-index: 1;
 }
 
 .deletePopup ::first-letter {

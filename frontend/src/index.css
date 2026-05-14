@@ -77,3 +77,20 @@ input {
   font-weight: 500;
   font-style: normal;
 }
+
+select {
+	font-family: "Inter", sans-serif;
+	background-color: var(--foreground);
+	border: 1px solid var(--main-theme);
+	color: var(--main-theme);
+	border-radius: 10px;
+	text-align: center;
+	appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+	cursor: pointer;
+}
+
+select:hover {
+	background-color: var(--additional-theme);
+}
