@@ -30,5 +30,9 @@
 	"itemsSelected": "items selected",
 	"selectAction": "select action",
 	"delete": "delete",
-	"edit": "edit"
+	"edit": "edit",
+
+	"areYouSure": "are you sure",
+	"no": "no",
+	"yes": "yes"
 }

@@ -14,32 +14,31 @@ export default function MassActionPopup({selected}: MassActionPopupProps) {
 
 	function handleMassActionButton(e: React.MouseEvent<HTMLButtonElement>, type: ExtraPopup){
 		if (extraPopupVisible === type) {
-			console.log(null);
 			setExtraPopupVisible(null);
 		} else {
-			console.log(type);
 			setExtraPopupVisible(type);
 		}
 	}
-
-	let extraPopup = null;
-
-	let editPopup = <div>Edit</div>;
-	let deletePopup = <div>Delete</div>;
-
-	if (extraPopupVisible) {
-		extraPopup = 
-			<div className={styles.extraPopup}>
-				{extraPopupVisible === 'edit' ? editPopup :
-					extraPopupVisible === 'delete' ?  deletePopup : null}
-			</div>;
-	}
-
-
+	
+	let editPopup = <div className={styles.extraPopup}>Edit</div>;
+	let deletePopup = 
+		<div className={`${styles.extraPopup} ${styles.deletePopup}`}>
+			<h4>{t('areYouSure')}?</h4>
+			<div className={styles.deletePopupButtons}>
+				<button>{t('yes')}</button>
+			</div>
+			
+		</div>;
 
 	return (
 		<div className={styles.massActionPopup}>
-			{extraPopup}
+			{
+				extraPopupVisible === 'edit' ? (
+					editPopup
+				) : extraPopupVisible === 'delete' ? (
+					deletePopup
+				) : null
+			}
 			<h4>{selected.size} {selected.size === 1 ? t('itemSelected') : t('itemsSelected')}</h4>
 			<h6>{t('selectAction')}</h6>
 			<div className={styles.buttons}>
