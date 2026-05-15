@@ -63,12 +63,28 @@
 	width: 150px;
 }
 
-.salaryInputs select {
-	width: 75px;
+.selectWrapper select {
+	width: 95px;
+	height: 100%;
+	text-align: left;
 }
 
 .additionalFormText {
 	color: var(--additional-text);
 	font-size: 10px;
 	margin: 0 0 0 3px;
+}
+
+.selectWrapper {
+	position: relative;
+	display: flex;
+	justify-content: start;
+}
+
+.selectArrowIcon {
+	position: absolute;
+	height: 20px;
+	top: 6px;
+	right: 6px;
+	color: var(--main-theme);
 }

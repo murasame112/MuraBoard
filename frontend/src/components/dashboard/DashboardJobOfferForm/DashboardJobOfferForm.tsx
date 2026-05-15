@@ -1,5 +1,6 @@
 import styles from './DashboardJobOfferForm.module.css';
 import { useTranslation } from '../../../shared/i18n/useTranslation';
+import { ChevronDownIcon } from '@heroicons/react/24/outline';
 
 export default function DashboardJobOfferForm() {
 	const { t } = useTranslation();
@@ -24,13 +25,17 @@ export default function DashboardJobOfferForm() {
 					<div className={styles.salaryInputs}>
 						<input id='salaryMinInput' name='salaryMinInput' type='text' />
 						<input id='salaryMaxInput' name='salaryMaxInput' type='text' />
-						<select>
-							{/*TODO: enum */}
-							<option>unknown</option>
-							<option>PLN</option>
-							<option>EUR</option>
-							<option>USD</option>
-						</select>
+						<div className={styles.selectWrapper}>
+							<ChevronDownIcon className={styles.selectArrowIcon}/>
+							<select>
+								{/*TODO: enum */}
+								<option>unknown</option>
+								<option>PLN</option>
+								<option>EUR</option>
+								<option>USD</option>
+							</select>
+						</div>
+
 					</div>
 					
 
