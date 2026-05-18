@@ -1,8 +1,8 @@
 .jobOfferForm {
 	width: 36vw;
-	height: 400px;
+	height: 500px;
 	left: 32vw;
-	height: 35vh;
+	top: 20vh;
 	display: flex;
 	flex-direction: column;
 	position: fixed;

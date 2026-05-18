@@ -1,6 +1,7 @@
 import styles from './DashboardJobOfferForm.module.css';
 import { useTranslation } from '../../../shared/i18n/useTranslation';
 import { ChevronDownIcon } from '@heroicons/react/24/outline';
+import CompanyCombobox from './CompanyCombobox/CompanyCombobox';
 
 export default function DashboardJobOfferForm() {
 	const { t } = useTranslation();
@@ -35,10 +36,11 @@ export default function DashboardJobOfferForm() {
 								<option>USD</option>
 							</select>
 						</div>
-
-					</div>
-					
-
+					</div>					
+				</div>
+				<div className={styles.jobOfferFormElement}>
+					<label htmlFor='comboboxSelect' className={styles.jobOfferFormLabel}>{t('company')}</label>
+					<CompanyCombobox/>
 				</div>
 
 			</form>
