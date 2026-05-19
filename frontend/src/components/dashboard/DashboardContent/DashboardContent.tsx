@@ -5,8 +5,8 @@ import DashboardStats from '../DashboardStats/DashboardStats';
 import { CheckCircleIcon, ClockIcon } from '@heroicons/react/24/outline';
 import DashboardManagement from '../DashboardManagement/DashboardManagement';
 import type { JobOffer } from '../../../shared/models/models';
-import JobOffersDetails from '../JobOffersDetails/JobOffersDetails';
-import ApplicationsDetails from '../ApplicationsDetails/ApplicationsDetails';
+import DashboardJobOffersDetails from '../DashboardJobOffersDetails/DashboardJobOffersDetails';
+import DashboardApplicationsDetails from '../DashboardApplicationsDetails/DashboardApplicationsDetails';
 
 type DashboardMode = 'JobOffer' | 'Application';
 
@@ -75,7 +75,7 @@ export default function DashboardContent(){
 			<div className={`${styles.title} ${styles.dshBox}`}><h3>{mode === 'JobOffer' ? t('jobOffers') : t('applications')}</h3></div>
 			<DashboardStats className={`${styles.stats} ${styles.dshBox}`} cardsData={jobOffersCards} summaryCount={summaryCountMock}/>
 			<DashboardManagement className={`${styles.contentManagement} ${styles.dshBox}`} mode={mode === 'JobOffer' ? t('jobOffer') : t('application')}/>
-			<div className={`${styles.details} ${styles.dshBox}`}>{mode === 'JobOffer' ? <JobOffersDetails jobOffers={jobOffers} refetch={refetch}/> : (<ApplicationsDetails/>)}</div>
+			<div className={`${styles.details} ${styles.dshBox}`}>{mode === 'JobOffer' ? <DashboardJobOffersDetails jobOffers={jobOffers} refetch={refetch}/> : (<DashboardApplicationsDetails/>)}</div>
 
 			
     </div>

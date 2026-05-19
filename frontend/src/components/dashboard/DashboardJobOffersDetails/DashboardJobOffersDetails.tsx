@@ -1,4 +1,4 @@
-import styles from './JobOffersDetails.module.css';
+import styles from './DashboardJobOffersDetails.module.css';
 import type { JobOffer } from '../../../shared/models/models';
 import { useTranslation } from '../../../shared/i18n/useTranslation';
 import { useState } from 'react';
@@ -9,7 +9,7 @@ type JobOffersDetailsProps = {
 	refetch: () => void;
 }
 
-export default function JobOffersDetails({jobOffers, refetch}: JobOffersDetailsProps){
+export default function DashboardJobOffersDetails({jobOffers, refetch}: JobOffersDetailsProps){
 	const { t } = useTranslation();
 	const [selectedCompany, setSelectedCompany] = useState<number | null>(null);
 	const [selectedCheckboxes, setSelectedCheckboxes] = useState<Set<number>>(new Set<number>());
