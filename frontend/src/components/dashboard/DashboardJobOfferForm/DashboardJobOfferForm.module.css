@@ -51,6 +51,7 @@
 	background-color: var(--foreground);
 	border: 1px solid var(--additional-text);
 	height: 25px;
+	border-radius: 5px;
 }
 
 .salaryInputs {

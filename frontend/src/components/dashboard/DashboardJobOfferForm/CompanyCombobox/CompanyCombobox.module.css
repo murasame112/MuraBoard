@@ -37,6 +37,8 @@
 	overflow-y: auto;
 	display: flex;
 	flex-direction: column;
+	border-bottom-left-radius: 15px;
+	border-bottom-right-radius: 15px;
 }
 
 .companyItem {
@@ -46,6 +48,8 @@
 	text-align: left;
 	padding-left: 10px;
 	box-sizing: border-box;
+	color: var(--secondary-text);
+	background-color: var(--background);
 }
 
 .companyItem:hover {
