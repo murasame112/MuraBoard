@@ -9,3 +9,13 @@ export const ApplicationStatus = {
 
 export type ApplicationStatus =
   typeof ApplicationStatus[keyof typeof ApplicationStatus];
+
+
+export const Currency = {
+	PLN: 'PLN',
+	EUR: 'EUR',
+	USD: 'USD'
+}
+
+export type Currency = 
+	typeof Currency[keyof typeof Currency];

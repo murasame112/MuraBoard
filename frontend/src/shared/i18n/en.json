@@ -7,6 +7,7 @@
 	"navigation": "navigation",
 	"account": "account",
 	"logout": "log out",
+	"submit": "submit",
 
 	"applied": "applied",
 	"notApplied": "not applied",
@@ -37,8 +38,11 @@
 	"yes": "yes",
 	
 	"canBeLeftEmpty": "can be left empty",
+	"unknown": "unknown",
 	"findACompany": "Find a company",
 	"noCompanyAddOne": "Missing company? Add one",
-	"companyListEmpty": "no companies found - add one!"
+	"companyListEmpty": "no companies found - add one!",
+	"addCompany": "add company",
+	"submitJobOffer": "submit job offer"
 
 }
