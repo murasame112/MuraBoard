@@ -1,5 +1,5 @@
 import styles from './CompanyCombobox.module.css'
-import { useState, useEffect } from 'react';
+import { useState, useEffect, use } from 'react';
 import { useTranslation } from '../../../../shared/i18n/useTranslation';
 import { MagnifyingGlassIcon} from '@heroicons/react/24/outline';
 import type { Company } from '../../../../shared/models/models';
@@ -7,6 +7,8 @@ import type { Company } from '../../../../shared/models/models';
 export default function CompanyCombobox() {
 	const { t } = useTranslation();
 	const [companies, setCompanies] = useState<Company[]>([]);
+	const [limitedCompanies, setLimitedCompanies] = useState<Company[]>([]);
+	const [searchBox, setSearchBox] = useState<string>('');
 	const host = import.meta.env.VITE_API_URL;
 	
 	useEffect(() => {
@@ -21,9 +23,18 @@ export default function CompanyCombobox() {
 					return a.name.localeCompare(b.name);
 				});
 				setCompanies(sortedData);
+				setLimitedCompanies(sortedData);
 			})
 			.catch((error) => console.log(error));
 	}, [])
+
+	function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+		const val = e.currentTarget.value;
+		setSearchBox(val);
+		setLimitedCompanies((prev) => {
+			return companies.filter((element: Company) => element.name.startsWith(val))
+		});
+	}
 
 	return (
 		<div className={styles.comboboxContent}>
@@ -35,6 +46,8 @@ export default function CompanyCombobox() {
 					<input
 						className={styles.comboboxSearchBar}
 						placeholder={t('findACompany') + '...'}
+						onChange={handleChange}
+						value={searchBox}
 					/>
 				</div>
 				<div className={styles.newCompanyCheckbox}>
@@ -44,7 +57,7 @@ export default function CompanyCombobox() {
 			</div>
 
 			<div className={styles.companyList}>
-				{companies.map((element) => (
+				{limitedCompanies.map((element) => (
 					<div className={styles.companyItem} key={element.id}>{element.name}</div>
 				))}
 			</div>
