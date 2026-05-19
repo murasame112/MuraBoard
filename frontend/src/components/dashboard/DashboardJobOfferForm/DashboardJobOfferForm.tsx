@@ -40,7 +40,7 @@ export default function DashboardJobOfferForm() {
 				</div>
 				<div className={styles.jobOfferFormElement}>
 					<label htmlFor='comboboxSelect' className={styles.jobOfferFormLabel}>{t('company')}</label>
-					<CompanyCombobox/>
+					<CompanyCombobox labelClass={styles.jobOfferFormLabel} additionalFormTextClass={styles.additionalFormText}  />
 				</div>
 
 			</form>
