@@ -36,5 +36,7 @@
 	"no": "no",
 	"yes": "yes",
 	
-	"canBeLeftEmpty": "can be left empty"
+	"canBeLeftEmpty": "can be left empty",
+	"findACompany": "Find a company",
+	"noCompanyAddOne": "Missing company? Add one"
 }

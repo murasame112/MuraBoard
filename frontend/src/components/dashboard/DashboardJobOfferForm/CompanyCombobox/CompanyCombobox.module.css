@@ -1,0 +1,79 @@
+.comboboxContent {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: start;
+}
+
+.comboboxInputs {
+	width: 90%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.newCompanyCheckbox {
+	width: 250px;
+	display: flex;
+	justify-content: start;
+}
+
+.newCompanyCheckbox input{
+	width: 25px !important;
+	height: 100%;
+}
+
+.newCompanyCheckboxLabel {
+	color: var(--secondary-text);
+}
+
+.newCompanyCheckboxLabel::first-letter {
+	text-transform: capitalize;
+}
+
+.companyList {
+	width: 212px;
+	height: 150px;
+	overflow-y: auto;
+	display: flex;
+	flex-direction: column;
+}
+
+.companyItem {
+	width: 100%;
+	height: 65px !important;
+	cursor: pointer;
+	text-align: left;
+	padding-left: 10px;
+	box-sizing: border-box;
+}
+
+.companyItem:hover {
+	color: var(--main-theme);
+	background-color: var(--additional-theme);
+}
+
+.comboboxSearchWrapper {
+  position: relative;
+  width: 200px;
+	height: 30px;
+	margin: 0;
+	display: flex;
+	flex-direction: column;
+}
+
+.comboboxSearchIcon {
+  position: absolute;
+  left: 8px;
+  top: 6px;
+  height: 18px;
+}
+
+.comboboxSearchBar {
+	width: 100%;
+	height: 30px;
+	padding-left: 28px;
+	border: none;
+	background-color: var(--background);
+	border-radius: 5px;
+}
