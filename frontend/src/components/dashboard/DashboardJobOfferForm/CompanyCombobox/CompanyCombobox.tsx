@@ -52,12 +52,13 @@ export default function CompanyCombobox({labelClass, additionalFormTextClass}: C
 			sam input robi za searchbar i na biezaco ogranicza liste*/}
 			<div className={styles.comboboxInputs}>
 				<div className={styles.comboboxSearchWrapper}>
-					<MagnifyingGlassIcon className={styles.comboboxSearchIcon} />
+					<MagnifyingGlassIcon className={addingCompany ? `${styles.comboboxSearchIconDisabled} ${styles.comboboxSearchIcon} ` : styles.comboboxSearchIcon} />
 					<input
 						className={styles.comboboxSearchBar}
 						placeholder={t('findACompany') + '...'}
 						onChange={handleChangeSearch}
 						value={searchBox}
+						disabled={addingCompany}
 					/>
 				</div>
 				<div className={styles.newCompanyCheckbox}>
