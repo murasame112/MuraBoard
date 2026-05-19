@@ -74,7 +74,7 @@ export default function DashboardContent(){
     <div className={styles.dashboardContent}>
 			<div className={`${styles.title} ${styles.dshBox}`}><h3>{mode === 'JobOffer' ? t('jobOffers') : t('applications')}</h3></div>
 			<DashboardStats className={`${styles.stats} ${styles.dshBox}`} cardsData={jobOffersCards} summaryCount={summaryCountMock}/>
-			<DashboardManagement className={`${styles.contentManagement} ${styles.dshBox}`} mode={mode === 'JobOffer' ? t('jobOffer') : t('application')}/>
+			<DashboardManagement className={`${styles.contentManagement} ${styles.dshBox}`} mode={mode}/>
 			<div className={`${styles.details} ${styles.dshBox}`}>{mode === 'JobOffer' ? <DashboardJobOffersDetails jobOffers={jobOffers} refetch={refetch}/> : (<DashboardApplicationsDetails/>)}</div>
 
 			

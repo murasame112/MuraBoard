@@ -38,6 +38,10 @@
 	position: absolute;
 }
 
+.closeButton p:hover{
+	color: var(--alert-pink);
+}
+
 .jobOfferFormElement {
 	display: flex;
 	flex-direction: column;

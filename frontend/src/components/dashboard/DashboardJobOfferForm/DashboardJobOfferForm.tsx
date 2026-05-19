@@ -4,13 +4,18 @@ import { ChevronDownIcon } from '@heroicons/react/24/outline';
 import CompanyCombobox from './CompanyCombobox/CompanyCombobox';
 import { Currency } from '../../../shared/enums/enums';
 
-export default function DashboardJobOfferForm() {
+type DashboardJobOfferFormProps = {
+	close: () => void;
+}
+
+
+export default function DashboardJobOfferForm({close}: DashboardJobOfferFormProps) {
 	const { t } = useTranslation();
 
 	return(
 		<div className={styles.jobOfferForm}>
 			<form>
-				<div className={styles.closeButton}><p>X</p></div>
+				<div className={styles.closeButton}><button type='button' onClick={close}>X</button></div>
 
 				<div className={styles.jobOfferFormElement}>
 					<label htmlFor='positionInput' className={styles.jobOfferFormLabel}>
@@ -44,7 +49,7 @@ export default function DashboardJobOfferForm() {
 				</div>
 
 				<div className={styles.jobOfferFormSubmit}>
-					<button>{t('submitJobOffer')}</button>
+					<button type='submit'>{t('submitJobOffer')}</button>
 				</div>
 
 			</form>

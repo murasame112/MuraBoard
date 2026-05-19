@@ -40,7 +40,7 @@ export default function MassActionPopup({selected, onDelete}: MassActionPopupPro
 		<div className={`${styles.extraPopup} ${styles.deletePopup}`}>
 			<h4>{t('areYouSure')}?</h4>
 			<div className={styles.deletePopupButtons}>
-				<button onClick={handleDeletion}>{t('yes')}</button>
+				<button type='button' onClick={handleDeletion}>{t('yes')}</button>
 			</div>
 			
 		</div>;
@@ -57,8 +57,8 @@ export default function MassActionPopup({selected, onDelete}: MassActionPopupPro
 			<h4>{selected.size} {selected.size === 1 ? t('itemSelected') : t('itemsSelected')}</h4>
 			<h6>{t('selectAction')}</h6>
 			<div className={styles.buttons}>
-				<button className={styles.editButton} onClick={(e) => {handleMassActionButton(e, 'edit')}}>{t('edit')}</button>
-				<button className={styles.deleteButton} onClick={(e) => {handleMassActionButton(e, 'delete')}}>{t('delete')}</button>
+				<button type='button' className={styles.editButton} onClick={(e) => {handleMassActionButton(e, 'edit')}}>{t('edit')}</button>
+				<button type='button' className={styles.deleteButton} onClick={(e) => {handleMassActionButton(e, 'delete')}}>{t('delete')}</button>
 			</div>
 		</div>
 		

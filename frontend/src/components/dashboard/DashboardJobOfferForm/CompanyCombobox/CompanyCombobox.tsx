@@ -77,7 +77,7 @@ export default function CompanyCombobox({labelClass, additionalFormTextClass}: C
 					<p className={additionalFormTextClass}>{t('canBeLeftEmpty')}</p>
 					<input type='text' name='companyWebsite' id='companyWebsite'/>
 
-					<button className={styles.comboboxSubmit}>{t('addCompany')}</button>
+					<button type='button' className={styles.comboboxSubmit}>{t('addCompany')}</button>
 				</div> 
 			: 
 				<div className={styles.companyList}>

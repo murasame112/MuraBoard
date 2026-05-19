@@ -1,4 +1,5 @@
 import styles from './DashboardManagement.module.css';
+import { useState } from 'react';
 import { useTranslation } from '../../../shared/i18n/useTranslation';
 import { FunnelIcon, MagnifyingGlassIcon, PlusIcon } from '@heroicons/react/24/outline';
 import DashboardJobOfferForm from '../DashboardJobOfferForm/DashboardJobOfferForm';
@@ -11,6 +12,11 @@ type DashboardManagementProps = {
 
 export default function DashboardManagement({className, mode}: DashboardManagementProps) {
 	const { t } = useTranslation();
+	const [formVisible, setFormVisible] = useState<boolean>(false);
+
+	function closeFunc(){
+		setFormVisible(false);
+	}
 	
 	return(
 		<div className={`${className}`}>
@@ -21,9 +27,10 @@ export default function DashboardManagement({className, mode}: DashboardManageme
 					placeholder={t('search')}
 				/>
 			</div>
-			<button className={styles.filterButton}><FunnelIcon className={styles.filterIcon}/>{t('addFilter')}</button>
-			<button className={styles.addButton}><PlusIcon className={styles.plusIcon}/>{t('add')} {mode}</button>
-			<DashboardJobOfferForm/>
+			<button type='button' className={styles.filterButton}><FunnelIcon className={styles.filterIcon}/>{t('addFilter')}</button>
+			<button type='button' className={styles.addButton} onClick={() => setFormVisible(true)}><PlusIcon className={styles.plusIcon}/>{t('add')} {t(mode)}</button>
+			{mode === 'JobOffer' && formVisible ? <DashboardJobOfferForm close={closeFunc}/> : null }
+			
 		</div>
 	);
 }
