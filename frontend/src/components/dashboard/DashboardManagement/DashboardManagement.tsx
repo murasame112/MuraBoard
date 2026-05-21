@@ -1,5 +1,5 @@
 import styles from './DashboardManagement.module.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useTranslation } from '../../../shared/i18n/useTranslation';
 import { FunnelIcon, MagnifyingGlassIcon, PlusIcon } from '@heroicons/react/24/outline';
 import DashboardJobOfferForm from '../DashboardJobOfferForm/DashboardJobOfferForm';
@@ -7,16 +7,23 @@ import DashboardJobOfferForm from '../DashboardJobOfferForm/DashboardJobOfferFor
 type DashboardManagementProps = {
 	className: string;
 	mode: string;
+	addJobOfferCalled: boolean;
+	onFormClose: () => void;
 }
 
 
-export default function DashboardManagement({className, mode}: DashboardManagementProps) {
+export default function DashboardManagement({className, mode, addJobOfferCalled, onFormClose}: DashboardManagementProps) {
 	const { t } = useTranslation();
 	const [formVisible, setFormVisible] = useState<boolean>(false);
 
 	function closeFunc(){
 		setFormVisible(false);
+		onFormClose();
 	}
+
+	useEffect(() => {
+		if (addJobOfferCalled) setFormVisible(true);
+	}, [addJobOfferCalled]);
 	
 	return(
 		<div className={`${className}`}>

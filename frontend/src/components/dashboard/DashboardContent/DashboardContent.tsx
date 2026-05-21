@@ -20,6 +20,8 @@ export type CardsData = {label: string, count: number, color: string, icon: Reac
 export default function DashboardContent(){
 	const { t } = useTranslation();
 	const [mode, setMode] = useState<DashboardMode>('JobOffer');
+	const [addJobOfferCalled, setAddJobOfferCalled] = useState<boolean>(false);
+	const [isFormOpen, setIsFormOpen] = useState<boolean>(false);
 	const [jobOffers, setJobOffers] = useState<JobOffer[]>([]);
 	const [stats, setStats] = useState<Stats>({applied: 0, notApplied: 0});
 	const host = import.meta.env.VITE_API_URL;
@@ -70,12 +72,20 @@ export default function DashboardContent(){
 
 	const summaryCountMock = mode === 'JobOffer' ? `${jobOffers.length} ${t('jobOffers')}` : `180 ${t('applications')}`;
 
+	function addJobOffer(){
+		setAddJobOfferCalled(true);
+	}
+
+	function onFormClose(){
+		setAddJobOfferCalled(false);
+	}
+
   return(
     <div className={styles.dashboardContent}>
 			<div className={`${styles.title} ${styles.dshBox}`}><h3>{mode === 'JobOffer' ? t('jobOffers') : t('applications')}</h3></div>
 			<DashboardStats className={`${styles.stats} ${styles.dshBox}`} cardsData={jobOffersCards} summaryCount={summaryCountMock}/>
-			<DashboardManagement className={`${styles.contentManagement} ${styles.dshBox}`} mode={mode}/>
-			<div className={`${styles.details} ${styles.dshBox}`}>{mode === 'JobOffer' ? <DashboardJobOffersDetails jobOffers={jobOffers} refetch={refetch}/> : (<DashboardApplicationsDetails/>)}</div>
+			<DashboardManagement className={`${styles.contentManagement} ${styles.dshBox}`} mode={mode} addJobOfferCalled={addJobOfferCalled} onFormClose={onFormClose}/>
+			<div className={`${styles.details} ${styles.dshBox}`}>{mode === 'JobOffer' ? <DashboardJobOffersDetails jobOffers={jobOffers} refetch={refetch} addJobOffer={addJobOffer}/> : (<DashboardApplicationsDetails/>)}</div>
 
 			
     </div>

@@ -111,3 +111,8 @@
 .select input {
 	cursor: pointer;
 }
+
+.createOne { 
+	color: var(--main-theme);
+	cursor: pointer;
+}

@@ -7,9 +7,10 @@ import MassActionPopup from '../MassActionPopup/MassActionPopup';
 type JobOffersDetailsProps = {
 	jobOffers: JobOffer[];
 	refetch: () => void;
+	addJobOffer: () => void;
 }
 
-export default function DashboardJobOffersDetails({jobOffers, refetch}: JobOffersDetailsProps){
+export default function DashboardJobOffersDetails({jobOffers, refetch, addJobOffer}: JobOffersDetailsProps){
 	const { t } = useTranslation();
 	const [selectedCompany, setSelectedCompany] = useState<number | null>(null);
 	const [selectedCheckboxes, setSelectedCheckboxes] = useState<Set<number>>(new Set<number>());
@@ -52,7 +53,7 @@ export default function DashboardJobOffersDetails({jobOffers, refetch}: JobOffer
 				<h4>{t('date')}</h4>
 			</div>
 
-			{jobOffers.length === 0 ? (<p>{t('noJobOffers')}</p>) : 
+			{jobOffers.length === 0 ? (<p>{t('noJobOffersFound')} - <span className={styles.createOne} onClick={addJobOffer}>{t('createOne')}</span>!</p>) : 
 			jobOffers.map((element, index) => (
 				index > 10 ?  null :
 				<div key={element.id} className={styles.jobOfferItem}>

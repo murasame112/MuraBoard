@@ -25,7 +25,8 @@
 	"salary": "salary",
 	"currency": "currency",
 	"date": "date",
-	"noJobOffers": "no job offers found - create one!",
+	"noJobOffersFound": "no job offers found",
+	"createOne": "create one",
 
 	"itemSelected": "item selected",
 	"itemsSelected": "items selected",
