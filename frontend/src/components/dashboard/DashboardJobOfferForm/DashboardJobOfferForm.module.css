@@ -1,3 +1,9 @@
+.jobOfferFormWrapper {
+	width: 100%;
+	height: 100%;
+	opacity: 0.2;
+}
+
 .jobOfferForm {
 	width: 36vw;
 	height: 500px;
@@ -36,10 +42,11 @@
 	font-weight: bold;
 	color: var(--additional-text);
 	position: absolute;
+	margin-top: 2%;
 }
 
-.closeButton p:hover{
-	color: var(--alert-pink);
+.closeButton button:hover{
+	background-color: var(--alert-pink);
 }
 
 .jobOfferFormElement {

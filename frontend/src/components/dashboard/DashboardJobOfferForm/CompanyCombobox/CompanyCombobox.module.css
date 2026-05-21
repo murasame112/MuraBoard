@@ -45,7 +45,8 @@
 
 .companyItem {
 	width: 100%;
-	height: 65px !important;
+	min-height: 25px !important;
+	height: 25px !important;
 	cursor: pointer;
 	text-align: left;
 	padding-left: 10px;
@@ -118,6 +119,7 @@
 	height: 25px;
 	margin-top: 2%;
 	cursor: pointer;
+	
 }
 
 .comboboxSubmit::first-letter {
