@@ -44,6 +44,9 @@
 	"noCompanyAddOne": "Missing company? Add one",
 	"companyListEmpty": "no companies found - add one!",
 	"addCompany": "add company",
-	"submitJobOffer": "submit job offer"
+	"submitJobOffer": "submit job offer",
+
+	"formError.positionRequired": "position is required",
+	"formError.companyRequired": "company is required"
 
 }
