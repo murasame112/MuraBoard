@@ -1,5 +1,5 @@
 import styles from './DashboardJobOfferForm.module.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useTranslation } from '../../../shared/i18n/useTranslation';
 import { ChevronDownIcon } from '@heroicons/react/24/outline';
 import CompanyCombobox from './CompanyCombobox/CompanyCombobox';
@@ -38,12 +38,18 @@ export default function DashboardJobOfferForm({close}: DashboardJobOfferFormProp
 	}
 
 	const [errors, setErrors] = useState<Record<FormFields, string | null>>({
-		position: t('formError.positionRequired'),
+		position: null,
 		salaryMin: null,
 		salaryMax: null,
 		currency: null,
-		company: t('formError.companyRequired')
+		company: null
 	});
+
+	//TODO: display errors properly
+	useEffect(() => {
+		//console.log(Object.values(errors).map((element) => element !== null).join(', '));
+		console.log(errors);
+	}, [errors]);
 
 	const [values, setValues] = useState<FormValues>({
 		position: '',
@@ -59,20 +65,14 @@ export default function DashboardJobOfferForm({close}: DashboardJobOfferFormProp
 
 		switch (name) {
 			case 'position':
-				//TODO: first validation (no numbers)
-				// value = value.replace(positionReplaceRegex, '');
+				value = value.replace(/[^a-zA-ZÀ-ÿąĄćĆęĘłŁńŃóÓśŚżŻźŹ\s\-+.#()/]/g, '');
 				break;
 			case 'salaryMin':
 			case 'salaryMax':
-				// value = value.replace()		numbers and ,. only
-				break;
-			case 'currency':
-				//TODO: is this needed?
-				break;
-			case 'company':
-				//TODO: is this needed? it should probably be done in <CompanyCombobox/>
+				value = value.replace(/\D/g, '');
 				break;
 		}
+
 		setValues(prev => ({...prev, [name]: value}));
 	}
 
@@ -84,27 +84,102 @@ export default function DashboardJobOfferForm({close}: DashboardJobOfferFormProp
 	}
 
 	function validateSubmit() {
-		//TODO:
+		//TODO: runs through errors
 	}
 
 	function validatePosition() {
-		//TODO:
+		let value = values.position.trim();
+
+		if (value.length === 0) {
+			setErrors(prev => ({...prev, position: t('formError.positionRequired')}));
+			return;
+		}
+
+		if (value.length < 5) {
+			setErrors(prev => ({...prev, position: t('formError.positionTooShort')}));
+			return;
+		}
+
+		if (value.length > 80){
+			setErrors(prev => ({...prev, position: t('formError.positionTooLong')}));
+			return;
+		}
+
+		setErrors(prev => ({...prev, position: null}));
 	}
 
 	function validateSalaryMin() {
-		//TODO:
+		let value = Number(values.salaryMin);
+		
+		if (!isNaN(value) || value === 0) {
+			setErrors(prev => ({...prev, salaryMin: null}));
+		}
+
+		if (value < 0) {
+			setErrors(prev => ({...prev, salaryMin: t('formError.salaryNegative')}));
+			return;
+		}
+
+		if (value > 999999999) {
+			setErrors(prev => ({...prev, salaryMin: t('formError.salaryTooHigh')}));
+			return;
+		}
+
+		if (
+			!isNaN(Number(values.salaryMax)) &&
+			Number(values.salaryMax) !== 0 &&
+			Number(values.salaryMax) < value
+		) {
+			setErrors(prev => ({...prev, salaryMax: t('formError.salaryMinMustBeLower')}));
+			return;
+		}
+
+		setErrors(prev => ({...prev, salaryMin: null}));
 	}
 
 	function validateSalaryMax() {
-		//TODO:
+		let value = Number(values.salaryMax);
+
+		if (!isNaN(value) || value === 0) {
+			setErrors(prev => ({...prev, salaryMax: null}));
+		}
+
+		if (value < 0) {
+			setErrors(prev => ({...prev, salaryMax: t('formError.salaryNegative')}));
+			return;
+		}
+
+		if (value > 999999999) {
+			setErrors(prev => ({...prev, salaryMax: t('formError.salaryTooHigh')}));
+			return;
+		}
+
+		if (
+			!isNaN(Number(values.salaryMin)) &&
+			Number(values.salaryMin) !== 0 &&
+			Number(values.salaryMin) > value
+		) {
+			setErrors(prev => ({...prev, salaryMax: t('formError.salaryMinMustBeLower')}));
+			return;
+		}
+
+		setErrors(prev => ({...prev, salaryMax: null}));
 	}
 
 	function validateCurrency() {
-		//TODO:
+		let value = values.currency;
+
+		if (
+			value !== 'unknown' &&
+			!Object.values(Currency).includes(value as Currency)
+		) {
+			setErrors(prev => ({...prev, currency: t('formError.wrongCurrency')}));
+			return;
+		}
 	}
 
 	function validateCompany() { 
-		//TODO:
+		// validate name, validate location, validate website
 	}
 	
 
@@ -118,7 +193,7 @@ export default function DashboardJobOfferForm({close}: DashboardJobOfferFormProp
 						<label htmlFor='positionInput' className={styles.jobOfferFormLabel}>
 							{t('position')}
 						</label>
-						<input id='positionInput' name='positionInput' type='text' onChange={handleChange} onBlur={validate} value={values.position}/>
+						<input id='positionInput' name='position' type='text' onChange={handleChange} onBlur={validate} value={values.position}/>
 					</div>
 					
 					<div className={styles.jobOfferFormElement}>
@@ -127,11 +202,11 @@ export default function DashboardJobOfferForm({close}: DashboardJobOfferFormProp
 						</label>
 						<p className={styles.additionalFormText}>{t('canBeLeftEmpty')}</p>
 						<div className={styles.salaryInputs}>
-							<input id='salaryMinInput' name='salaryMinInput' type='text' onChange={handleChange} onBlur={validate} value={values.salaryMin}/>
-							<input id='salaryMaxInput' name='salaryMaxInput' type='text' onChange={handleChange} onBlur={validate} value={values.salaryMax}/>
+							<input id='salaryMinInput' name='salaryMin' type='text' onChange={handleChange} onBlur={validate} value={values.salaryMin}/>
+							<input id='salaryMaxInput' name='salaryMax' type='text' onChange={handleChange} onBlur={validate} value={values.salaryMax}/>
 							<div className={styles.selectWrapper}>
 								<ChevronDownIcon className={styles.selectArrowIcon}/>
-								<select onChange={handleChange} onBlur={validate} value={values.currency}>
+								<select name='currency' onChange={handleChange} onBlur={validate} value={values.currency}>
 									<option value='unknown'>{t('unknown')}</option>
 									{Object.values(Currency).map((element) => 
 										<option key={element} value={element}>{element}</option>

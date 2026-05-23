@@ -48,8 +48,6 @@ export default function CompanyCombobox({labelClass, additionalFormTextClass}: C
 
 	return (
 		<div className={styles.comboboxContent}>
-			{/*input ktory wyswietla pod spodem pop up z firmami
-			sam input robi za searchbar i na biezaco ogranicza liste*/}
 			<div className={styles.comboboxInputs}>
 				<div className={styles.comboboxSearchWrapper}>
 					<MagnifyingGlassIcon className={addingCompany ? `${styles.comboboxSearchIconDisabled} ${styles.comboboxSearchIcon} ` : styles.comboboxSearchIcon} />

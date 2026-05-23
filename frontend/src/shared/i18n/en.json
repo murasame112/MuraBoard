@@ -47,6 +47,12 @@
 	"submitJobOffer": "submit job offer",
 
 	"formError.positionRequired": "position is required",
+	"formError.positionTooShort": "position is too short",
+	"formError.positionTooLong": "position is too long",
+	"formError.salaryNegative": "salary cannot be negative",
+	"formError.salaryTooHigh": "salary is too high",
+	"formError.salaryMinMustBeLower": "Maximum salary cannot be lower than minimum salary",
+	"formError.wrongCurrency": "wrong currency",
 	"formError.companyRequired": "company is required"
 
 }
