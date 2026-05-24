@@ -196,7 +196,7 @@ export default function DashboardJobOfferForm({close}: DashboardJobOfferFormProp
 						</label>
 						<div className={styles.inputWrapper}>
 							<input id='positionInput' name='position' type='text' onChange={handleChange} onBlur={validate} value={values.position}/>
-							<ErrorBox message={'error: something went wrong'} />
+							{errors.position ? <ErrorBox message={errors.position} /> : ''}
 						</div>
 						
 					</div>
