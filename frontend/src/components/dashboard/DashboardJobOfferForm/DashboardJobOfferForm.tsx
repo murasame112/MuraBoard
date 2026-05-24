@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { useTranslation } from '../../../shared/i18n/useTranslation';
 import { ChevronDownIcon } from '@heroicons/react/24/outline';
 import CompanyCombobox from './CompanyCombobox/CompanyCombobox';
+import ErrorBox from './ErrorBox/ErrorBox';
 import { Currency } from '../../../shared/enums/enums';
 import type { Company } from '../../../shared/models/models';
 
@@ -195,7 +196,7 @@ export default function DashboardJobOfferForm({close}: DashboardJobOfferFormProp
 						</label>
 						<div className={styles.inputWrapper}>
 							<input id='positionInput' name='position' type='text' onChange={handleChange} onBlur={validate} value={values.position}/>
-							<div className={styles.jobOfferFormError}>error: something wrong happend</div>
+							<ErrorBox message={'error: something went wrong'} />
 						</div>
 						
 					</div>
