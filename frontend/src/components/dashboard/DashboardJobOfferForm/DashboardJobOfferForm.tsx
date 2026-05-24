@@ -195,7 +195,7 @@ export default function DashboardJobOfferForm({close}: DashboardJobOfferFormProp
 							{t('position')}
 						</label>
 						<div className={styles.inputWrapper}>
-							<input id='positionInput' name='position' type='text' onChange={handleChange} onBlur={validate} value={values.position}/>
+							<input className={styles.positionInput} id='positionInput' name='position' type='text' onChange={handleChange} onBlur={validate} value={values.position}/>
 							{errors.position ? <ErrorBox message={errors.position} /> : ''}
 						</div>
 						
@@ -206,9 +206,15 @@ export default function DashboardJobOfferForm({close}: DashboardJobOfferFormProp
 							{t('salary')}
 						</label>
 						<p className={styles.additionalFormText}>{t('canBeLeftEmpty')}</p>
-						<div className={styles.salaryInputs}>
-							<input id='salaryMinInput' name='salaryMin' type='text' onChange={handleChange} onBlur={validate} value={values.salaryMin}/>
-							<input id='salaryMaxInput' name='salaryMax' type='text' onChange={handleChange} onBlur={validate} value={values.salaryMax}/>
+						<div className={styles.salaryInputsBox}>
+							<div className={styles.inputWrapper}>
+								<input className={styles.salaryInput} id='salaryMinInput' name='salaryMin' type='text' onChange={handleChange} onBlur={validate} value={values.salaryMin}/>
+								{errors.salaryMin ? <ErrorBox message={errors.salaryMin} /> : ''}
+							</div>
+							<div className={styles.inputWrapper}>
+								<input className={styles.salaryInput} id='salaryMaxInput' name='salaryMax' type='text' onChange={handleChange} onBlur={validate} value={values.salaryMax}/>
+								{errors.salaryMax ? <ErrorBox message={errors.salaryMax} /> : ''}
+							</div>
 							<div className={styles.selectWrapper}>
 								<ChevronDownIcon className={styles.selectArrowIcon}/>
 								<select name='currency' onChange={handleChange} onBlur={validate} value={values.currency}>

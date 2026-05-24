@@ -92,11 +92,14 @@
 }
 
 .comboboxSearchBar {
-	width: 100%;
+	width: 90%;
 	height: 30px;
 	padding-left: 28px;
 	border: none;
-	background-color: var(--background);
+	border-radius: 5px;
+	background-color: var(--foreground);
+	border: 1px solid var(--additional-text);
+	height: 25px;
 	border-radius: 5px;
 }
 

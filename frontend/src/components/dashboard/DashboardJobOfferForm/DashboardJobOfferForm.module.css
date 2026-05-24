@@ -66,15 +66,6 @@
 	width: 100%;
 }
 
-.jobOfferFormElement input{
-	/* TODO: to delete */
-	width: 90%;
-	background-color: var(--foreground);
-	border: 1px solid var(--additional-text);
-	height: 25px;
-	border-radius: 5px;
-}
-
 .inputWrapper {
 	width: 100%;
 	text-align: left;
@@ -82,20 +73,23 @@
 }
 
 .inputWrapper input{
-	width: 90%;
 	background-color: var(--foreground);
 	border: 1px solid var(--additional-text);
 	height: 25px;
 	border-radius: 5px;
 }
 
-.salaryInputs {
+.positionInput {
+	width: 90%;
+}
+
+.salaryInputsBox {
 	display: flex;
 	width: 90%;
 	justify-content: space-around;	
 }
 
-.salaryInputs input {
+.salaryInput {
 	width: 150px;
 }
 
