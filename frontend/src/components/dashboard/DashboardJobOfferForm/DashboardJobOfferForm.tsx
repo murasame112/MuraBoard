@@ -193,7 +193,11 @@ export default function DashboardJobOfferForm({close}: DashboardJobOfferFormProp
 						<label htmlFor='positionInput' className={styles.jobOfferFormLabel}>
 							{t('position')}
 						</label>
-						<input id='positionInput' name='position' type='text' onChange={handleChange} onBlur={validate} value={values.position}/>
+						<div className={styles.inputWrapper}>
+							<input id='positionInput' name='position' type='text' onChange={handleChange} onBlur={validate} value={values.position}/>
+							<div className={styles.jobOfferFormError}>error: something wrong happend</div>
+						</div>
+						
 					</div>
 					
 					<div className={styles.jobOfferFormElement}>
