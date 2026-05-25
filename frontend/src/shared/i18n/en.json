@@ -45,6 +45,7 @@
 	"companyListEmpty": "no companies found - add one!",
 	"addCompany": "add company",
 	"noWebsiteProvided": "no website provided",
+	"withoutHttps": "without https://",
 	"submitJobOffer": "submit job offer",
 
 	"formError.positionRequired": "position is required",
@@ -54,6 +55,15 @@
 	"formError.salaryTooHigh": "salary is too high",
 	"formError.salaryMinMustBeLower": "Maximum salary cannot be lower than minimum salary",
 	"formError.wrongCurrency": "wrong currency",
-	"formError.companyRequired": "company is required"
+	"formError.companyRequired": "company is required",
+	"formError.companyNameRequired": "company name is required",
+	"formError.companyNameTooShort": "company name is too short",
+	"formError.companyNameTooLong": "company name is too long",
+	"formError.companyLocationRequired": "company location is required",
+	"formError.companyLocationTooShort": "company location is too short",
+	"formError.companyLocationTooLong": "company location is too long",
+	"formError.companyWebsiteTooShort": "company website is too short",
+	"formError.companyWebsiteTooLong": "company website is too long",
+	"formError.companyWebsiteInvalid": "company website is invalid"
 
 }

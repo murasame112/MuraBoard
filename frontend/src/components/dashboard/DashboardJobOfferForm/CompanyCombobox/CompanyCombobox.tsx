@@ -48,15 +48,88 @@ export default function CompanyCombobox({labelClass, additionalFormTextClass, ge
 	}
 
 	function validateName() {
+		let value = newCompanyValues.name.trim();
 
+		if (value.length === 0) {
+			setErrors(prev => ({...prev, name: t('formError.companyNameRequired')}));
+			return;
+		}
+
+		if (value.length < 5) {
+			setErrors(prev => ({...prev, name: t('formError.companyNameTooShort')}));
+			return;
+		}
+
+		if (value.length > 80){
+			setErrors(prev => ({...prev, name: t('formError.companyNameTooLong')}));
+			return;
+		}
+
+		setErrors(prev => ({...prev, name: null}));
 	}
 
 	function validateLocation() {
+		let value = newCompanyValues.location.trim();
+
+		if (value.length === 0) {
+			setErrors(prev => ({...prev, location: t('formError.companyLocationRequired')}));
+			return;
+		}
+
+		if (value.length < 3) {
+			setErrors(prev => ({...prev, location: t('formError.companyLocationTooShort')}));
+			return;
+		}
+
+		if (value.length > 254){
+			setErrors(prev => ({...prev, location: t('formError.companyLocationTooLong')}));
+			return;
+		}
+
+		setErrors(prev => ({...prev, location: null}));
 
 	}
 
 	function validateWebsite() {
+		if(!newCompanyValues.website) {
+			setErrors(prev => ({...prev, website: null}));
+			return;
+		}
 
+		let value = 'https://' + newCompanyValues.website.trim();
+
+		if (value.length < 5) {
+			setErrors(prev => ({...prev, website: t('formError.companyWebsiteTooShort')}));
+			return;
+		}
+
+		if (value.length > 254){
+			setErrors(prev => ({...prev, website: t('formError.companyWebsiteTooLong')}));
+			return;
+		}
+
+		try {
+			const url = new URL(value);
+			if (url.protocol !== 'https:') {
+				setErrors(prev => ({ ...prev, website: t('formError.companyWebsiteInvalid') }));
+				return;
+			}
+			
+			if (!url.hostname.includes('.')) {
+				setErrors(prev => ({
+					...prev,
+					website: t('formError.companyWebsiteInvalid')
+				}));
+				return;
+			}
+
+			setErrors(prev => ({...prev, website: null}));
+			
+		} catch {
+			console.log('catch');
+			setErrors(prev => ({ ...prev, website: t('formError.companyWebsiteInvalid') }));
+			return;
+		}
 	}
 	
 	useEffect(() => {
@@ -153,7 +226,7 @@ export default function CompanyCombobox({labelClass, additionalFormTextClass, ge
 						</div>
 						<label className={labelClass} htmlFor='companyWebsite'>{t('website')}</label>
 						<div className={styles.inputWrapper}>
-							<p className={additionalFormTextClass}>{t('canBeLeftEmpty')}</p>
+							<p className={additionalFormTextClass}>{`${t('canBeLeftEmpty')}, ${t('withoutHttps')}`}</p>
 							<input type='text' name='website' id='companyWebsite' value={newCompanyValues?.website ?? ''} onChange={handleChange} onBlur={validate}/>
 							{errors.website ? <ErrorBox message={errors.website} /> : ''}
 						</div>

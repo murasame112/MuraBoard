@@ -115,6 +115,7 @@ export default function DashboardJobOfferForm({close}: DashboardJobOfferFormProp
 		
 		if (!isNaN(value) || value === 0) {
 			setErrors(prev => ({...prev, salaryMin: null}));
+			return;
 		}
 
 		if (value < 0) {
@@ -144,6 +145,7 @@ export default function DashboardJobOfferForm({close}: DashboardJobOfferFormProp
 
 		if (!isNaN(value) || value === 0) {
 			setErrors(prev => ({...prev, salaryMax: null}));
+			return;
 		}
 
 		if (value < 0) {
