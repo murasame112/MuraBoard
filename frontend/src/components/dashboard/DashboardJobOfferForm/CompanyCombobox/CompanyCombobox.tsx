@@ -2,6 +2,7 @@ import styles from './CompanyCombobox.module.css'
 import { useState, useEffect, use } from 'react';
 import { useTranslation } from '../../../../shared/i18n/useTranslation';
 import { MagnifyingGlassIcon} from '@heroicons/react/24/outline';
+import ErrorBox from '../ErrorBox/ErrorBox';
 import type { Company } from '../../../../shared/models/models';
 import type { CompanyData } from '../DashboardJobOfferForm';
 
@@ -17,12 +18,46 @@ export default function CompanyCombobox({labelClass, additionalFormTextClass, ge
 	const [limitedCompanies, setLimitedCompanies] = useState<Company[]>([]);
 	const [searchBox, setSearchBox] = useState<string>('');
 	const [addingCompany, setAddingCompany] = useState<boolean>(false);
+	const emptyNewCompany = {id: null, name: '', location: '', website: null};
+	const [newCompanyValues, setNewCompanyValues] = useState<CompanyData>(emptyNewCompany);
 	const [companyValues, setCompanyValues] = useState<CompanyData | null>(null);
 	const host = import.meta.env.VITE_API_URL;
 
-	//name value = value.replace(/[^a-zA-ZÀ-ÿąĄćĆęĘłŁńŃóÓśŚżŻźŹ0-9\s\-&.]/g, '');
-	// location value = value.replace(/[^a-zA-ZÀ-ÿąĄćĆęĘłŁńŃóÓśŚżŻźŹ\s\-.,/'’]/g, '');
-	// website value = value.replace(/\s/g, '');
+	type FormFields =
+	| 'name'
+	| 'location'
+	| 'website';
+
+	const validationRegister: Record<FormFields, () => void> = {
+		name: () => validateName(),
+		location: () => validateLocation(),
+		website: () => validateWebsite()
+	}
+
+	const [errors, setErrors] = useState<Record<FormFields, string | null>>({
+		name: null,
+		location: null,
+		website: null
+	});
+
+	function validate(e: React.FocusEvent<HTMLInputElement | HTMLSelectElement>) {
+		const currentValidation = validationRegister[e.currentTarget.name as FormFields];
+		if (currentValidation){
+			currentValidation();
+		}
+	}
+
+	function validateName() {
+
+	}
+
+	function validateLocation() {
+
+	}
+
+	function validateWebsite() {
+
+	}
 	
 	useEffect(() => {
 		fetch(`${host}/api/joboffer/companies`)
@@ -43,18 +78,34 @@ export default function CompanyCombobox({labelClass, additionalFormTextClass, ge
 
 	function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
 		let value = e.currentTarget.value;
+		let name = e.currentTarget.name;
+
+		switch (name) {
+			case 'name':
+				value = value.replace(/[^a-zA-ZÀ-ÿąĄćĆęĘłŁńŃóÓśŚżŻźŹ0-9\s\-&.]/g, '');
+				break;
+			case 'location':
+				value = value.replace(/[^a-zA-ZÀ-ÿąĄćĆęĘłŁńŃóÓśŚżŻźŹ\s\-.,/'’]/g, '');
+				break;
+			case 'website':
+				value = value.replace(/\s/g, '');
+				break;
+		}
+
+		setNewCompanyValues(prev => ({...prev, [name]: value}));
 	}
 
 	function handleChangeSearch(e: React.ChangeEvent<HTMLInputElement>) {
 		const val = e.currentTarget.value;
 		setSearchBox(val);
-		setLimitedCompanies((prev) => {
+		setLimitedCompanies(() => {
 			return companies.filter((element: Company) => element.name.toLowerCase().startsWith(val.toLowerCase()));
 		});
 	}
 
 	function handleChangeCheckbox(e: React.ChangeEvent<HTMLInputElement>) {
 		setAddingCompany((prev) => !prev);
+		setNewCompanyValues(emptyNewCompany);
 		setCompanyValues(null);
 		getCompany(null);
 	}
@@ -62,6 +113,10 @@ export default function CompanyCombobox({labelClass, additionalFormTextClass, ge
 	function chooseCompany(company: CompanyData) {
 		getCompany(company);
 		setCompanyValues(company);
+	}
+
+	function handleAddingCompany() {
+		
 	}
 
 	return (
@@ -87,14 +142,23 @@ export default function CompanyCombobox({labelClass, additionalFormTextClass, ge
 				{addingCompany ? 
 					<div className={styles.newCompanyInputs}>
 						<label className={labelClass} htmlFor='companyName'>{t('name')}</label>
-						<input type='text' name='companyName' id='companyName'/>
+						<div className={styles.inputWrapper}>
+							<input type='text' name='name' id='companyName' value={newCompanyValues?.name ?? ''} onChange={handleChange} onBlur={validate}/>
+							{errors.name ? <ErrorBox message={errors.name} /> : ''}
+						</div>
 						<label className={labelClass} htmlFor='companyLocation'>{t('location')}</label>
-						<input type='text' name='companyLocation' id='companyLocation'/>
+						<div className={styles.inputWrapper}>
+							<input type='text' name='location' id='companyLocation' value={newCompanyValues?.location ?? ''} onChange={handleChange} onBlur={validate}/>
+							{errors.location ? <ErrorBox message={errors.location} /> : ''}
+						</div>
 						<label className={labelClass} htmlFor='companyWebsite'>{t('website')}</label>
-						<p className={additionalFormTextClass}>{t('canBeLeftEmpty')}</p>
-						<input type='text' name='companyWebsite' id='companyWebsite'/>
+						<div className={styles.inputWrapper}>
+							<p className={additionalFormTextClass}>{t('canBeLeftEmpty')}</p>
+							<input type='text' name='website' id='companyWebsite' value={newCompanyValues?.website ?? ''} onChange={handleChange} onBlur={validate}/>
+							{errors.website ? <ErrorBox message={errors.website} /> : ''}
+						</div>
 
-						<button type='button' className={styles.comboboxSubmit}>{t('addCompany')}</button>
+						<button type='button' onClick={handleAddingCompany} className={styles.comboboxSubmit}>{t('addCompany')}</button>
 					</div> 
 				: 
 					<div className={styles.companyList}>

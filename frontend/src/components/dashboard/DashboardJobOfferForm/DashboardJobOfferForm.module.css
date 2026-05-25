@@ -13,7 +13,7 @@
 
 .jobOfferForm {
 	width: 524px;
-	height: 500px;
+	height: 600px;
 	left: 32vw;
 	top: 20vh;
 	display: flex;
@@ -74,6 +74,7 @@
 
 .inputWrapper input{
 	background-color: var(--foreground);
+	accent-color: var(--secondary-theme);
 	border: 1px solid var(--additional-text);
 	height: 25px;
 	border-radius: 5px;
