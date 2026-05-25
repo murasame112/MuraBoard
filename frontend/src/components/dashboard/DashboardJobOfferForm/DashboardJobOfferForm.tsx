@@ -11,6 +11,13 @@ type DashboardJobOfferFormProps = {
 	close: () => void;
 }
 
+export type CompanyData = {
+	id: number | null;
+	name: string;
+	location: string;
+	website: string | null;
+}
+
 
 export default function DashboardJobOfferForm({close}: DashboardJobOfferFormProps) {
 	const { t } = useTranslation();
@@ -182,6 +189,10 @@ export default function DashboardJobOfferForm({close}: DashboardJobOfferFormProp
 	function validateCompany() { 
 		// validate name, validate location, validate website
 	}
+
+	function getCompany(company: CompanyData) {
+		console.log(company);
+	}
 	
 
 	return(
@@ -228,7 +239,7 @@ export default function DashboardJobOfferForm({close}: DashboardJobOfferFormProp
 					</div>
 					<div className={styles.jobOfferFormElement}>
 						<label htmlFor='comboboxSelect' className={styles.jobOfferFormLabel}>{t('company')}</label>
-						<CompanyCombobox labelClass={styles.jobOfferFormLabel} additionalFormTextClass={styles.additionalFormText}  />
+						<CompanyCombobox labelClass={styles.jobOfferFormLabel} additionalFormTextClass={styles.additionalFormText} getCompany={getCompany}  />
 					</div>
 
 					<div className={styles.jobOfferFormSubmit}>

@@ -12,6 +12,11 @@
 	align-items: center;
 }
 
+.comboboxDisplayWrapper {
+	width: 100%;
+	display: flex;
+}
+
 .newCompanyCheckbox {
 	width: 250px;
 	display: flex;
@@ -33,6 +38,7 @@
 	text-transform: capitalize;
 }
 
+
 .companyList {
 	width: 212px;
 	height: 190px;
@@ -41,6 +47,7 @@
 	flex-direction: column;
 	border-bottom-left-radius: 15px;
 	border-bottom-right-radius: 15px;
+	margin-right: 16px;
 }
 
 .companyItem {
@@ -127,4 +134,40 @@
 
 .comboboxSubmit::first-letter {
 	text-transform: capitalize;
+}
+
+.chosenCompany {
+	width: 266px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: start;
+	box-sizing: border-box;
+	padding-top: 15px;
+}
+
+.chosenCompany p {
+	margin: 0 0 16px 0;
+}
+
+.chosenCompanyName {
+	font-size: 20px;
+	font-weight: bold;
+}
+
+.chosenCompanyLocation {
+	color: var(--additional-text);
+	font-size: 16px;
+}
+
+.chosenCompanyWebsite {
+	color: var(--main-theme);
+	font-size: 12px;
+	cursor: pointer;
+	text-decoration: none;
+}
+
+.chosenCompanyNoWebsite {
+	color: var(--additional-text);
+	font-size: 12px;
 }
