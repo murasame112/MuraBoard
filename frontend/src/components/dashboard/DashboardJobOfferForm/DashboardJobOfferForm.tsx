@@ -190,7 +190,7 @@ export default function DashboardJobOfferForm({close}: DashboardJobOfferFormProp
 		// validate name, validate location, validate website
 	}
 
-	function getCompany(company: CompanyData) {
+	function getCompany(company: CompanyData | null) {
 		console.log(company);
 	}
 	

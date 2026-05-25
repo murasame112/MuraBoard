@@ -8,7 +8,7 @@ import type { CompanyData } from '../DashboardJobOfferForm';
 type CompanyComboboxProps = {
 	labelClass: string;
 	additionalFormTextClass: string;
-	getCompany: (company: CompanyData) => void;
+	getCompany: (company: CompanyData | null) => void;
 }
 
 export default function CompanyCombobox({labelClass, additionalFormTextClass, getCompany}: CompanyComboboxProps) {
@@ -55,6 +55,8 @@ export default function CompanyCombobox({labelClass, additionalFormTextClass, ge
 
 	function handleChangeCheckbox(e: React.ChangeEvent<HTMLInputElement>) {
 		setAddingCompany((prev) => !prev);
+		setCompanyValues(null);
+		getCompany(null);
 	}
 
 	function chooseCompany(company: CompanyData) {
