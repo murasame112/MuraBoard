@@ -53,12 +53,6 @@ export default function DashboardJobOfferForm({close}: DashboardJobOfferFormProp
 		company: null
 	});
 
-	//TODO: display errors properly
-	useEffect(() => {
-		//console.log(Object.values(errors).map((element) => element !== null).join(', '));
-		console.log(errors);
-	}, [errors]);
-
 	const [values, setValues] = useState<FormValues>({
 		position: '',
 		salaryMin: '',
