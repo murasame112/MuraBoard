@@ -21,7 +21,6 @@ export default function CompanyCombobox({labelClass, additionalFormTextClass, ge
 	const emptyNewCompany = {id: null, name: '', location: '', website: null};
 	const [newCompanyValues, setNewCompanyValues] = useState<CompanyData>(emptyNewCompany);
 	const [companyValues, setCompanyValues] = useState<CompanyData | null>(null);
-	const [isFormTouched, setIsFormTouched] = useState<boolean>(false);
 	const host = import.meta.env.VITE_API_URL;
 
 	type FormFields =
@@ -46,7 +45,6 @@ export default function CompanyCombobox({labelClass, additionalFormTextClass, ge
 		if (currentValidation){
 			currentValidation();
 		}
-		setIsFormTouched(true);
 	}
 
 	function validateName() {
@@ -200,17 +198,12 @@ export default function CompanyCombobox({labelClass, additionalFormTextClass, ge
 		return false;
 	}
 
-
 	function handleAddingCompany() {
 		const addCompanyRequestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newCompanyValues),
     };
-		
-			
-		console.log(addCompanyRequestOptions);
-		
 		
 	}
 
