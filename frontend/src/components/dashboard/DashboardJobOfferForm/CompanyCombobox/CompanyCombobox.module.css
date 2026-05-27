@@ -37,6 +37,7 @@
 	height: 25px;
 	border-radius: 5px;
 	accent-color: var(--secondary-theme);
+	margin-top: 3px;
 }
 
 .newCompanyCheckbox input{
@@ -144,6 +145,11 @@
 	height: 25px;
 	margin-top: 9%;
 	cursor: pointer;
+}
+
+.comboboxSubmit:disabled {
+	background-color: var(--secondary-text);
+	cursor: default;
 }
 
 .comboboxSubmit::first-letter {

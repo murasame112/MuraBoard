@@ -21,6 +21,7 @@ export default function CompanyCombobox({labelClass, additionalFormTextClass, ge
 	const emptyNewCompany = {id: null, name: '', location: '', website: null};
 	const [newCompanyValues, setNewCompanyValues] = useState<CompanyData>(emptyNewCompany);
 	const [companyValues, setCompanyValues] = useState<CompanyData | null>(null);
+	const [isFormTouched, setIsFormTouched] = useState<boolean>(false);
 	const host = import.meta.env.VITE_API_URL;
 
 	type FormFields =
@@ -37,7 +38,7 @@ export default function CompanyCombobox({labelClass, additionalFormTextClass, ge
 	const [errors, setErrors] = useState<Record<FormFields, string | null>>({
 		name: null,
 		location: null,
-		website: null
+		website: null,
 	});
 
 	function validate(e: React.FocusEvent<HTMLInputElement | HTMLSelectElement>) {
@@ -45,6 +46,7 @@ export default function CompanyCombobox({labelClass, additionalFormTextClass, ge
 		if (currentValidation){
 			currentValidation();
 		}
+		setIsFormTouched(true);
 	}
 
 	function validateName() {
@@ -87,7 +89,6 @@ export default function CompanyCombobox({labelClass, additionalFormTextClass, ge
 		}
 
 		setErrors(prev => ({...prev, location: null}));
-
 	}
 
 	function validateWebsite() {
@@ -187,8 +188,30 @@ export default function CompanyCombobox({labelClass, additionalFormTextClass, ge
 		setCompanyValues(company);
 	}
 
+	function areRequiredFieldsFilled(): boolean {
+		if (
+			newCompanyValues.name.trim().length > 0 &&
+			newCompanyValues.location.trim().length > 0
+		) { 
+			console.log('true');
+			return true;
+		}
+		console.log('false');
+		return false;
+	}
+
+
 	function handleAddingCompany() {
-		//TODO: adding company
+		const addCompanyRequestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newCompanyValues),
+    };
+		
+			
+		console.log(addCompanyRequestOptions);
+		
+		
 	}
 
 	return (
@@ -230,7 +253,7 @@ export default function CompanyCombobox({labelClass, additionalFormTextClass, ge
 							{errors.website ? <ErrorBox message={errors.website} /> : ''}
 						</div>
 
-						<button type='button' onClick={handleAddingCompany} className={styles.comboboxSubmit}>{t('addCompany')}</button>
+						<button disabled={Object.values(errors).some((error) => error !== null) || !areRequiredFieldsFilled()} type='button' onClick={handleAddingCompany} className={styles.comboboxSubmit}>{t('addCompany')}</button>
 					</div> 
 				: 
 					<div className={styles.companyList}>
