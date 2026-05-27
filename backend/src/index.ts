@@ -34,6 +34,7 @@ app.post('/api/user/create', userEndpoints.createUser);
 // === companies ===
 app.get('/api/joboffer/companies', jobEndpoints.getCompanies);
 app.get('/api/joboffer/company/:id', jobEndpoints.getCompanyById);
+app.post('/api/joboffer/company', jobEndpoints.createCompany);
 
 // === job offers ===
 app.get('/api/joboffer/offers-for-user/:id' /* TODO: < this is just for development purposes */ , jobEndpoints.getJobOffersForUser);

@@ -129,6 +129,37 @@ export async function getCompanyById(req: Request, res: Response) {
 	}
 }
 
+type createCompanyBody = {
+	name: string;
+	location: string;
+	website?: string;
+}
+
+export async function createCompany(req: Request<{}, {}, createCompanyBody>, res: Response) {
+	try {
+
+		const {
+			name,
+			location,
+			website
+		} = req.body;
+
+		if (!name || name.length === 0) {
+			return res.status(400).json({ message: 'No name provided' });
+		}
+
+		if (!location || location.length === 0) {
+			return res.status(400).json({ message: 'No location provided' });
+		}
+
+		if (name.length)
+			
+
+	} catch (error) {
+		return res.status(500).json({message: 'Something went wrong'});
+	}
+}
+
 // ========= Job Offers =========
 
 //TODO: do i need this?
