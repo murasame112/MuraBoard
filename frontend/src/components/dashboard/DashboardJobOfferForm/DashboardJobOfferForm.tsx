@@ -30,13 +30,19 @@ export default function DashboardJobOfferForm({close}: DashboardJobOfferFormProp
 		company: Company | null;
 	}
 
-	const validationRegister: Record<FormFields, () => void> = {
+	const validationRegister: {
+		position: () => void;
+		salaryMin: () => void;
+		salaryMax: () => void;
+		currency: () => void;
+		company: (company: Company | null) => void;
+	} = {
 		position: () => validatePosition(),
 		salaryMin: () => validateSalaryMin(),
 		salaryMax: () => validateSalaryMax(),
 		currency: () => validateCurrency(),
-		company: () => validateCompany()
-	}
+		company: (company) => validateCompany(company),
+	};
 
 	const [errors, setErrors] = useState<Record<FormFields, string | null>>({
 		position: null,
@@ -72,14 +78,10 @@ export default function DashboardJobOfferForm({close}: DashboardJobOfferFormProp
 	}
 
 	function validate(e: React.FocusEvent<HTMLInputElement | HTMLSelectElement>) {
-		const currentValidation = validationRegister[e.currentTarget.name as FormFields];
+		const currentValidation = validationRegister[e.currentTarget.name as Exclude<FormFields, 'company'>];
 		if (currentValidation){
 			currentValidation();
 		}
-	}
-
-	function validateSubmit() {
-		//TODO: runs through errors
 	}
 
 	function validatePosition() {
@@ -173,23 +175,49 @@ export default function DashboardJobOfferForm({close}: DashboardJobOfferFormProp
 			setErrors(prev => ({...prev, currency: t('formError.wrongCurrency')}));
 			return;
 		}
+		setErrors(prev => ({...prev, currency: null}));
 	}
 
-	function validateCompany() { 
-
-		//TODO: actually just check if not empty
-		// validate name, validate location, validate website
+	function validateCompany(company: Company | null) { 
+		let value = company;
+		if (!value) {
+			setErrors(prev => ({...prev, company: t('formError.companyRequired')}));
+			return
+		}
+		setErrors(prev => ({...prev, company: null}));
 	}
 
 	function getCompany(company: Company | null) {
-		//TODO: set company
+		setValues((prev) => ({...prev, company: company}));
+		validateCompany(company);
+	}
+
+	function areRequiredFieldsFilled(): boolean {
+		if (
+			values.position.trim().length > 0 &&
+			values.company
+		) { 
+			return true;
+		}
+		return false;
+	}
+
+	function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
+		e.preventDefault();
+		const addJobOfferRequestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(values),
+    };
+
+		console.log(addJobOfferRequestOptions);
 	}
 	
 
 	return(
 		<div className={styles.jobOfferFormWrapper}>
 			<div className={styles.jobOfferForm}>
-				<form>
+				<form onSubmit={handleSubmit}>
 					<div className={styles.closeButton}><button type='button' onClick={close}>X</button></div>
 
 					<div className={styles.jobOfferFormElement}>
@@ -234,7 +262,7 @@ export default function DashboardJobOfferForm({close}: DashboardJobOfferFormProp
 					</div>
 
 					<div className={styles.jobOfferFormSubmit}>
-						<button type='submit'>{t('submitJobOffer')}</button>
+						<button type='submit' disabled={Object.values(errors).some((error) => error !== null) || !areRequiredFieldsFilled()}>{t('submitJobOffer')}</button>
 					</div>
 
 				</form>

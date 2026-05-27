@@ -139,3 +139,8 @@
 .jobOfferFormSubmit button::first-letter {
 	text-transform: capitalize;
 }
+
+.jobOfferFormSubmit button:disabled {
+	background-color: var(--secondary-text);
+	cursor: default;
+}
