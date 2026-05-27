@@ -98,12 +98,12 @@ export default function CompanyCombobox({labelClass, additionalFormTextClass, ge
 
 		let value = 'https://' + newCompanyValues.website.trim();
 
-		if (value.length < 5) {
+		if (value.length < 13) {
 			setErrors(prev => ({...prev, website: t('formError.companyWebsiteTooShort')}));
 			return;
 		}
 
-		if (value.length > 254){
+		if (value.length > 269){
 			setErrors(prev => ({...prev, website: t('formError.companyWebsiteTooLong')}));
 			return;
 		}
