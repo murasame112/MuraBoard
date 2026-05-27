@@ -182,18 +182,15 @@ export async function createCompany(req: Request<{}, {}, createCompanyBody>, res
 			return res.status(400).json({ message: 'Company website is invalid' });
 		}
 
-
-
-		const company = await prisma.company.create({
-			data: {
+		const company = await prisma.company.upsert({
+			where: {name: name},
+			update: {},
+			create: {
 				name: name,
 				location: location,
 				website: website ? website.protocol + '//' + website.hostname : null
 			}
 		});
-
-		//TODO: what if name isnt unique? frontend needs this information
-		// it should also get id, so it can then auto-choose this company from the list
 
 		return res.status(201).json(company);
 
