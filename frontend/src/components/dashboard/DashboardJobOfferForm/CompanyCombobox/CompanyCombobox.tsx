@@ -191,10 +191,8 @@ export default function CompanyCombobox({labelClass, additionalFormTextClass, ge
 			newCompanyValues.name.trim().length > 0 &&
 			newCompanyValues.location.trim().length > 0
 		) { 
-			console.log('true');
 			return true;
 		}
-		console.log('false');
 		return false;
 	}
 
@@ -204,6 +202,13 @@ export default function CompanyCombobox({labelClass, additionalFormTextClass, ge
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newCompanyValues),
     };
+
+		fetch(`${host}/api/joboffer/company`, addCompanyRequestOptions)
+			.then((response) => response.json())
+			.then((data) => {
+				console.log(data);
+			})
+			.catch((error) => console.log(error));
 		
 	}
 
