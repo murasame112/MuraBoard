@@ -14,6 +14,7 @@ type DashboardJobOfferFormProps = {
 
 export default function DashboardJobOfferForm({close}: DashboardJobOfferFormProps) {
 	const { t } = useTranslation();
+	const host = import.meta.env.VITE_API_URL;
 
 	type FormFields =
     | 'position'
@@ -210,7 +211,10 @@ export default function DashboardJobOfferForm({close}: DashboardJobOfferFormProp
         body: JSON.stringify(values),
     };
 
-		console.log(addJobOfferRequestOptions);
+		fetch(`${host}/api/joboffer/create`, addJobOfferRequestOptions)
+			.then((response) => response.json())
+			.then((data) => console.log(data))
+			.catch((error) => console.log(error));
 	}
 	
 
