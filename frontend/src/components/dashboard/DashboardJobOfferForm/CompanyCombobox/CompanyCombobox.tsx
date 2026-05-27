@@ -124,9 +124,8 @@ export default function CompanyCombobox({labelClass, additionalFormTextClass, ge
 			}
 
 			setErrors(prev => ({...prev, website: null}));
-			
+
 		} catch {
-			console.log('catch');
 			setErrors(prev => ({ ...prev, website: t('formError.companyWebsiteInvalid') }));
 			return;
 		}
@@ -189,7 +188,7 @@ export default function CompanyCombobox({labelClass, additionalFormTextClass, ge
 	}
 
 	function handleAddingCompany() {
-		
+		//TODO: adding company
 	}
 
 	return (

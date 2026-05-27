@@ -112,8 +112,8 @@ export default function DashboardJobOfferForm({close}: DashboardJobOfferFormProp
 
 	function validateSalaryMin() {
 		let value = Number(values.salaryMin);
-		
-		if (!isNaN(value) || value === 0) {
+
+		if (isNaN(value) || value === 0) {
 			setErrors(prev => ({...prev, salaryMin: null}));
 			return;
 		}
@@ -143,7 +143,7 @@ export default function DashboardJobOfferForm({close}: DashboardJobOfferFormProp
 	function validateSalaryMax() {
 		let value = Number(values.salaryMax);
 
-		if (!isNaN(value) || value === 0) {
+		if (isNaN(value) || value === 0) {
 			setErrors(prev => ({...prev, salaryMax: null}));
 			return;
 		}
