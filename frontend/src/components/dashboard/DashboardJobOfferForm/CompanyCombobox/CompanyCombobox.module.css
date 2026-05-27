@@ -166,6 +166,16 @@
 	padding-top: 15px;
 }
 
+.chosenCompany h2 {
+	color: var(--additional-text);
+	font-size: 20px;
+	margin-bottom: 30px;
+}
+
+.chosenCompany h2::first-letter {
+	text-transform: capitalize;
+}
+
 .chosenCompany p {
 	margin: 0 0 16px 0;
 }

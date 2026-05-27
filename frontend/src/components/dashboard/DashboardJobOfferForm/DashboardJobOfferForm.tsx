@@ -11,13 +11,6 @@ type DashboardJobOfferFormProps = {
 	close: () => void;
 }
 
-export type CompanyData = {
-	id: number | null;
-	name: string;
-	location: string;
-	website: string | null;
-}
-
 
 export default function DashboardJobOfferForm({close}: DashboardJobOfferFormProps) {
 	const { t } = useTranslation();
@@ -183,11 +176,13 @@ export default function DashboardJobOfferForm({close}: DashboardJobOfferFormProp
 	}
 
 	function validateCompany() { 
+
+		//TODO: actually just check if not empty
 		// validate name, validate location, validate website
 	}
 
-	function getCompany(company: CompanyData | null) {
-		console.log(company);
+	function getCompany(company: Company | null) {
+		//TODO: set company
 	}
 	
 

@@ -4,12 +4,11 @@ import { useTranslation } from '../../../../shared/i18n/useTranslation';
 import { MagnifyingGlassIcon} from '@heroicons/react/24/outline';
 import ErrorBox from '../ErrorBox/ErrorBox';
 import type { Company } from '../../../../shared/models/models';
-import type { CompanyData } from '../DashboardJobOfferForm';
 
 type CompanyComboboxProps = {
 	labelClass: string;
 	additionalFormTextClass: string;
-	getCompany: (company: CompanyData | null) => void;
+	getCompany: (company: Company | null) => void;
 }
 
 export default function CompanyCombobox({labelClass, additionalFormTextClass, getCompany}: CompanyComboboxProps) {
@@ -18,9 +17,9 @@ export default function CompanyCombobox({labelClass, additionalFormTextClass, ge
 	const [limitedCompanies, setLimitedCompanies] = useState<Company[]>([]);
 	const [searchBox, setSearchBox] = useState<string>('');
 	const [addingCompany, setAddingCompany] = useState<boolean>(false);
-	const emptyNewCompany = {id: null, name: '', location: '', website: null};
-	const [newCompanyValues, setNewCompanyValues] = useState<CompanyData>(emptyNewCompany);
-	const [companyValues, setCompanyValues] = useState<CompanyData | null>(null);
+	const emptyNewCompany = {id: 0, name: '', location: '', website: null};
+	const [newCompanyValues, setNewCompanyValues] = useState<Company>(emptyNewCompany);
+	const [companyValues, setCompanyValues] = useState<Company | null>(null);
 	const host = import.meta.env.VITE_API_URL;
 
 	type FormFields =
@@ -181,7 +180,7 @@ export default function CompanyCombobox({labelClass, additionalFormTextClass, ge
 		getCompany(null);
 	}
 
-	function chooseCompany(company: CompanyData) {
+	function chooseCompany(company: Company) {
 		getCompany(company);
 		setCompanyValues(company);
 	}
@@ -205,8 +204,9 @@ export default function CompanyCombobox({labelClass, additionalFormTextClass, ge
 
 		fetch(`${host}/api/joboffer/company`, addCompanyRequestOptions)
 			.then((response) => response.json())
-			.then((data) => {
-				console.log(data);
+			.then((data: Company) => {
+				getCompany(data);
+				setCompanyValues(data);
 			})
 			.catch((error) => console.log(error));
 		
@@ -265,6 +265,7 @@ export default function CompanyCombobox({labelClass, additionalFormTextClass, ge
 
 			{companyValues ? 
 				<div className={styles.chosenCompany}>
+					<h2>{t('selectedCompany')}:</h2>
 					<p className={styles.chosenCompanyName}>{companyValues.name}</p>
 					<p className={styles.chosenCompanyLocation}>{companyValues.location}</p>
 					{companyValues.website ? <a href={companyValues.website} className={styles.chosenCompanyWebsite}>{companyValues.website}</a> : <p className={styles.chosenCompanyNoWebsite}>{t('noWebsiteProvided')}</p>}

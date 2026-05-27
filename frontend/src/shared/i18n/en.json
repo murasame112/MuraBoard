@@ -44,6 +44,7 @@
 	"noCompanyAddOne": "Missing company? Add one",
 	"companyListEmpty": "no companies found - add one!",
 	"addCompany": "add company",
+	"selectedCompany": "selected company",
 	"noWebsiteProvided": "no website provided",
 	"withoutHttps": "without https://",
 	"submitJobOffer": "submit job offer",
