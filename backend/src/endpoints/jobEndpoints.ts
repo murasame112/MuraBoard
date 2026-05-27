@@ -192,6 +192,9 @@ export async function createCompany(req: Request<{}, {}, createCompanyBody>, res
 			}
 		});
 
+		//TODO: what if name isnt unique? frontend needs this information
+		// it should also get id, so it can then auto-choose this company from the list
+
 		return res.status(201).json(company);
 
 	} catch (error) {
