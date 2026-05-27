@@ -137,23 +137,62 @@ type createCompanyBody = {
 
 export async function createCompany(req: Request<{}, {}, createCompanyBody>, res: Response) {
 	try {
-
-		const {
-			name,
-			location,
-			website
-		} = req.body;
+		const name = req.body.name.trim();
+		const location = req.body.location.trim();
+		const website = req.body.website ? new URL('https://' + req.body.website.trim()) : null;
 
 		if (!name || name.length === 0) {
-			return res.status(400).json({ message: 'No name provided' });
+			return res.status(400).json({ message: 'No company name provided' });
 		}
 
+		if (name.length < 5) {
+			return res.status(400).json({ message: 'Company name is too short' });
+		}
+
+		if (name.length > 80) {
+			return res.status(400).json({ message: 'Company name is too long' });
+		}
+
+		
 		if (!location || location.length === 0) {
-			return res.status(400).json({ message: 'No location provided' });
+			return res.status(400).json({ message: 'No company location provided' });
+		}
+			
+		if (location.length < 3) {
+			return res.status(400).json({ message: 'Company location is too short' });
 		}
 
-		if (name.length)
-			
+		if (location.length > 254) {
+			return res.status(400).json({ message: 'Company location is too long' });
+		}
+
+		if (website && website.hostname.length < 5) {
+			return res.status(400).json({ message: 'Company website is too short' });
+		}
+
+		if (website && website.hostname.length > 254) {
+			return res.status(400).json({ message: 'Company website is too long' });
+		}
+		
+		if (website && !website.hostname.includes('.')) {
+			return res.status(400).json({ message: 'Company website is invalid' });
+		}
+				
+		if (website && website.protocol !== 'https:') {
+			return res.status(400).json({ message: 'Company website is invalid' });
+		}
+
+
+
+		const company = await prisma.company.create({
+			data: {
+				name: name,
+				location: location,
+				website: website ? website.protocol + '//' + website.hostname : null
+			}
+		});
+
+		return res.status(201).json(company);
 
 	} catch (error) {
 		return res.status(500).json({message: 'Something went wrong'});
