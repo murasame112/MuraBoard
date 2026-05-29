@@ -9,101 +9,6 @@ import { Currency } from '../enums/enums.js';
 
 const userId = 4; // FIXME: this shouldn't be hardcoded later on
 
-
-
-export async function generateTestData(req: Request, res: Response) {
-  try {
-    const result = await prisma.$transaction(async (tx) => {
-      const user = await tx.user.upsert({
-        where: { id: 4 },
-        update: {},
-        create: {
-          id: 4,
-          email: 'initial@email.com',
-          name: 'initial',
-					role: UserRole.ADMIN,
-          passwordHash: await bcrypt.hash('initial', 10),
-        },
-      });
-
-      await tx.application.deleteMany({});
-      await tx.jobOffer.deleteMany({});
-      await tx.company.deleteMany({});
-
-      await tx.company.createMany({
-        data: companiesSeed,
-      });
-
-      const companiesFromDb = await tx.company.findMany({
-        select: { id: true, name: true },
-      });
-
-      const companyMap = new Map(
-        companiesFromDb.map((company) => [company.name, company.id]),
-      );
-
-      const parsedJobOffers = jobOffersSeed.map((offer) => {
-        const companyId = companyMap.get(offer.companyName);
-        if (!companyId) {
-          throw new Error(`Missing company: ${offer.companyName}`);
-        }
-
-        return {
-          title: offer.title,
-          salaryMin: offer.salaryMin,
-          salaryMax: offer.salaryMax,
-          createdAt: offer.createdAt,
-          userId: user.id,
-          companyId,
-        };
-      });
-
-      await tx.jobOffer.createMany({
-        data: parsedJobOffers,
-      });
-
-      const jobOffersFromDb = await tx.jobOffer.findMany({
-        select: { id: true, title: true },
-      });
-
-      const jobOfferMap = new Map(
-        jobOffersFromDb.map((jobOffer) => [jobOffer.title, jobOffer.id]),
-      );
-
-      const parsedApplications = applicationsSeed.map((application) => {
-        const jobOfferId = jobOfferMap.get(application.jobOfferTitle);
-        if (!jobOfferId) {
-          throw new Error(`Missing job offer: ${application.jobOfferTitle}`);
-        }
-
-        return {
-          userId: user.id,
-          jobOfferId,
-          status: application.status,
-          nextStepDate: application.nextStepDate,
-          comment: application.comment,
-        };
-      });
-
-      await tx.application.createMany({
-        data: parsedApplications,
-      });
-
-      return {
-        userId: user.id,
-        companies: parsedJobOffers.length,
-        jobOffers: parsedJobOffers.length,
-        applications: parsedApplications.length,
-      };
-    });
-
-    return res.status(201).json(result);
-  } catch (error) {
-    console.error(error);
-    return res.status(500).json({ message: 'Something went wrong' });
-  }
-}
-
 // ========= Companies =========
 
 export async function getCompanies(req: Request, res: Response){
@@ -287,6 +192,7 @@ export async function getJobOffersForDashboard(req: Request, res: Response) {
 }
 
 type createJobOfferBody = {
+	id?: number;
 	position: string;
 	salaryMin?: number;
 	salaryMax?: number;
@@ -294,25 +200,11 @@ type createJobOfferBody = {
 	company: Company;
 }
 
-/*
-{
-   "position":"Fusion Operator",
-   "salaryMin":"15000",
-   "salaryMax":"18000",
-   "currency":"PLN",
-   "company":{
-      "id":4,
-      "name":"BrightLeaf Digital",
-      "location":"Gdansk, Poland",
-      "website":"https://www.brightleafdigital.com"
-   }
-}
-*/
-
-export async function createJobOffer(req: Request<{}, {}, createJobOfferBody>, res: Response){
+export async function upsertJobOffer(req: Request<{}, {}, createJobOfferBody>, res: Response){
 	try {
 		
 		const {
+					id,
 					position,
 					salaryMin,
 					salaryMax,
@@ -342,28 +234,58 @@ export async function createJobOffer(req: Request<{}, {}, createJobOfferBody>, r
 				return 'user_not_found';
 			}
 
-			
-
-			const jobOffer = await tx.jobOffer.create({
-				data: {
-					position,
-					salaryMin: Number(salaryMin) ?? null,
-					salaryMax: Number(salaryMax) ?? null,
-					currency: currency === 'unknown' ? null : (currency as Currency),
-					company: {
-						connect: { id: company.id },
-					},
-					user: {
-						connect: {id: user.id}
+			if (!id) {
+				const jobOffer = await tx.jobOffer.create({
+					data: {
+						position,
+						salaryMin: Number(salaryMin) ?? null,
+						salaryMax: Number(salaryMax) ?? null,
+						currency: currency === 'unknown' ? null : (currency as Currency),
+						company: {
+							connect: { id: company.id },
+						},
+						user: {
+							connect: {id: user.id}
+						}
 					}
+				});
+				return jobOffer;
+
+			} else {
+
+				if (Number.isNaN(id)) {
+					return 'invalid_id';
 				}
-			});
-			return jobOffer;
+
+				const jobOffer = await tx.jobOffer.update({
+					where: {id: id},
+					data: {
+						position,
+						salaryMin: Number(salaryMin) ?? null,
+						salaryMax: Number(salaryMax) ?? null,
+						currency: currency === 'unknown' ? null : (currency as Currency),
+						company: {
+							connect: { id: company.id },
+						},
+						user: {
+							connect: {id: user.id}
+						}
+					}
+				});
+				return jobOffer;
+			}
+
 		});
 
 		if (result === 'user_not_found') {
 			return res.status(404).json({
 				message: "user not found"
+			});
+		}
+
+		if (result === 'invalid_id') {
+			return res.status(404).json({
+				message: "invalid id"
 			});
 		}
 

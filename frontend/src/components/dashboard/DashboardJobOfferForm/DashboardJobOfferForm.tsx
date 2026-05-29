@@ -211,7 +211,7 @@ export default function DashboardJobOfferForm({close}: DashboardJobOfferFormProp
         body: JSON.stringify(values),
     };
 		console.log(JSON.stringify(values));
-		fetch(`${host}/api/joboffer/create`, addJobOfferRequestOptions)
+		fetch(`${host}/api/joboffer/upsert`, addJobOfferRequestOptions)
 			.then((response) => response.json())
 			.then((data) => console.log(data))
 			.catch((error) => console.log(error));
