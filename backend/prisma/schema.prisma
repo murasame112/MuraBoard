@@ -40,11 +40,11 @@ model JobOffer {
   id        		Int				@id @default(autoincrement())
 	companyId			Int
 	userId				Int
-  title      		String
+  position   		String
 	salaryMin			Int?
 	salaryMax			Int?
 	currency			Currency?
-	createdAt			DateTime
+	createdAt			DateTime	@default(now())
 	company				Company		@relation(fields: [companyId], references: [id])
 	user					User			@relation(fields: [userId], references: [id])
 	application 	Application?

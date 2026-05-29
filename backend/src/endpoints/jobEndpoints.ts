@@ -3,6 +3,9 @@ import {prisma} from '../index.js';
 import { ApplicationStatus, Prisma, UserRole } from '../generated/prisma/index.js';
 import bcrypt from 'bcrypt';
 import { companiesSeed, jobOffersSeed, applicationsSeed } from './testData.js';
+import type { Company } from '../models/models.js';
+import { Currency } from '../enums/enums.js';
+
 
 const userId = 4; // FIXME: this shouldn't be hardcoded later on
 
@@ -283,63 +286,54 @@ export async function getJobOffersForDashboard(req: Request, res: Response) {
 	}
 }
 
-
 type createJobOfferBody = {
-	title: string;
-	salaryMin: number | undefined;
-	salaryMax: number | undefined;
-	createdAt: Date;
-	companyId: number | undefined;
-	companyName: string | undefined;
-	companyLocation: string | undefined;
-	companyWebsite: string | undefined;
+	position: string;
+	salaryMin?: number;
+	salaryMax?: number;
+	currency: Currency | string;
+	company: Company;
 }
+
+/*
+{
+   "position":"Fusion Operator",
+   "salaryMin":"15000",
+   "salaryMax":"18000",
+   "currency":"PLN",
+   "company":{
+      "id":4,
+      "name":"BrightLeaf Digital",
+      "location":"Gdansk, Poland",
+      "website":"https://www.brightleafdigital.com"
+   }
+}
+*/
 
 export async function createJobOffer(req: Request<{}, {}, createJobOfferBody>, res: Response){
 	try {
 		
 		const {
-					title,
+					position,
 					salaryMin,
 					salaryMax,
-					createdAt,
-					companyId,
-					companyName,
-					companyLocation,
-					companyWebsite,
-			} = req.body;
+					currency,
+					company,
+		} = req.body;
 
-		
-
-		if (!title || !createdAt) {
+		if (!position || !company || ! currency) {
 			return res.status(400).json({message: 'missing job offer data'});
 		}
 
+		if (Number.isNaN(salaryMin)) {
+			return res.status(400).json({ message: 'Invalid min salary' });
+		}
+
+		if (Number.isNaN(salaryMax)) {
+			return res.status(400).json({ message: 'Invalid maxsalary' });
+		}
+
 		const result = await prisma.$transaction(async (tx) => {
-			let company;
-			if (companyId) {
-				company = await tx.company.findUnique({
-					where: {id: companyId}
-				});
 
-				if (!company) {
-					return 'company_not_found';
-				}
-			} else {
-
-				if (!companyName || !companyLocation) {
-					return 'missing_company_data'
-				}
-
-				company = await tx.company.create({
-					data: {
-						name: companyName!,
-						location: companyLocation!,
-						website: companyWebsite ?? null,
-					}
-				})
-			}
-			
 			const user = await tx.user.findUnique({
 				where: {id: userId}
 			});
@@ -348,14 +342,16 @@ export async function createJobOffer(req: Request<{}, {}, createJobOfferBody>, r
 				return 'user_not_found';
 			}
 
+			
+
 			const jobOffer = await tx.jobOffer.create({
 				data: {
-					title,
-					salaryMin: salaryMin ?? null,
-					salaryMax: salaryMax ?? null,
-					createdAt,
+					position,
+					salaryMin: Number(salaryMin) ?? null,
+					salaryMax: Number(salaryMax) ?? null,
+					currency: currency === 'unknown' ? null : (currency as Currency),
 					company: {
-						connect: {id: company.id}
+						connect: { id: company.id },
 					},
 					user: {
 						connect: {id: user.id}
@@ -364,18 +360,6 @@ export async function createJobOffer(req: Request<{}, {}, createJobOfferBody>, r
 			});
 			return jobOffer;
 		});
-
-		if (result === 'company_not_found') {
-			return res.status(404).json({
-				message: "company not found"
-			});
-		}
-
-		if (result === 'missing_company_data') {
-			return res.status(400).json({
-				message: "companyName and companyLoaction aren't provided"
-			});
-		}
 
 		if (result === 'user_not_found') {
 			return res.status(404).json({
@@ -386,7 +370,7 @@ export async function createJobOffer(req: Request<{}, {}, createJobOfferBody>, r
 		return res.status(201).json(result);
 
 	} catch (error){
-		return res.status(500).json({message: 'Something went wrong'});
+		return res.status(500).json({message: error});
 	}
 
 }

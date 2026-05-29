@@ -76,7 +76,7 @@ export default function DashboardJobOffersDetails({jobOffers, refetch, addJobOff
 				</div>
 
 					<p className={`${styles.offerStatus} ${element.application ? styles.applied : styles.notApplied }`}>{element.application ? t('applied'): t('notApplied') }</p>
-					<p>{element.title}</p>
+					<p>{element.position}</p>
 					<p>{element.salaryMin} - {element.salaryMax}</p>
 					<p>{element.currency}</p>
 					<p>{new Date(element.createdAt).toLocaleDateString('pl-PL')}</p>

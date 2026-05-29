@@ -2,16 +2,12 @@ import { ApplicationStatus } from "../enums/enums";
 
 export type JobOffer = {
 	id: number;
-	title: string;
+	position: string;
 	salaryMin?: number | null;
 	salaryMax?: number | null;
 	currency: string;
 	createdAt: Date;
-	company: {
-		name: string;
-		location: string;
-		website?: string | null;
-	};
+	company: Company;
 	application: {
 		status: ApplicationStatus | null;
 	};

@@ -210,7 +210,7 @@ export default function DashboardJobOfferForm({close}: DashboardJobOfferFormProp
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(values),
     };
-
+		console.log(JSON.stringify(values));
 		fetch(`${host}/api/joboffer/create`, addJobOfferRequestOptions)
 			.then((response) => response.json())
 			.then((data) => console.log(data))
