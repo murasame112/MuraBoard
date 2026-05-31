@@ -1,11 +1,11 @@
-import MainContent from "./components/MainContent/MainContent";
 import { LanguageProvider } from "./contexts/language/LanguageProvider";
+import MainLayout from "./layouts/main-layout/MainLayout/MainLayout";
 
 function App() {
 
   return (
   <LanguageProvider>
-		<MainContent/>
+		<MainLayout/>
 	</LanguageProvider>
   );
 }

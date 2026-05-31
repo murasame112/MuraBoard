@@ -1,0 +1,57 @@
+.appNavigation {
+  height: 100%;
+  width: 15%;
+  background-color: var(--silk);
+	display: flex;
+	flex-direction: column;
+}
+
+.navTitle p{
+	padding: 0 0 0 8px;
+	margin: 0 0 15px 0;
+	color: var(--additional-text);
+	font-size: 12px;
+	text-transform: capitalize;
+	text-align: left;
+}
+
+.navElements, .accountElements {
+	display: flex;
+	flex-direction: column;
+	border-top: 1px solid var(--additional-text);
+}
+
+.navElements {
+	margin-top: 35px;
+}
+
+.navElements h3 {
+	text-transform: uppercase;
+	color: var(--secondary-text);
+	margin: 0 8px 8px 8px;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+.navElements h3:active, .navElements .debugActive {
+	color: var(--secondary-theme);
+	background-color: var(--additional-theme);
+}
+
+.navElements h3:active:hover, .navElements .debugActive:hover {
+	cursor: default;
+}
+
+.navElements h3:hover, .accountElements h3:hover {
+	color: var(--secondary-theme);
+}
+
+.accountElements {
+	margin-top: auto;
+	margin-bottom: 25px;
+}
+
+.accountElements h3{
+	text-transform: capitalize;
+	cursor: pointer;
+}
