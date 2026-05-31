@@ -203,18 +203,24 @@ export default function DashboardJobOfferForm({close}: DashboardJobOfferFormProp
 		return false;
 	}
 
-	function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
+	async	function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
 		e.preventDefault();
 		const addJobOfferRequestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(values),
     };
-		console.log(JSON.stringify(values));
-		fetch(`${host}/api/joboffer/upsert`, addJobOfferRequestOptions)
-			.then((response) => response.json())
-			.then((data) => console.log(data))
-			.catch((error) => console.log(error));
+		
+		try {
+			const response = await fetch(`${host}/api/joboffer/upsert`, addJobOfferRequestOptions);
+			
+			if (!response.ok) throw new Error(`request failed with status ${response.status}`);
+
+			close();
+
+		} catch (error) {
+			console.error(error);
+		}
 	}
 	
 

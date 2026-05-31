@@ -21,27 +21,16 @@ export default function DashboardContent(){
 	const { t } = useTranslation();
 	const [mode, setMode] = useState<DashboardMode>('JobOffer');
 	const [addJobOfferCalled, setAddJobOfferCalled] = useState<boolean>(false);
-	const [isFormOpen, setIsFormOpen] = useState<boolean>(false);
 	const [jobOffers, setJobOffers] = useState<JobOffer[]>([]);
 	const [stats, setStats] = useState<Stats>({applied: 0, notApplied: 0});
 	const host = import.meta.env.VITE_API_URL;
 
 	useEffect(() => {
-		//TODO: userId shouldn't be 4, it's just for development
-		fetch(`${host}/api/joboffer/offers-for-dashboard/4`)
-			.then((response) => response.json())
-			.then((data) => {
-				if (!data.offers || data.offers.length == 0){
-					setJobOffers([]);
-					return;
-				}
-				setJobOffers(data.offers);
-				setStats(data.stats);
-			})
-			.catch((error) => console.log(error));
+		fetchData()
 	}, []);
 
-	function refetch() {
+	function fetchData() {
+		//TODO: userId shouldn't be 4, it's just for development
 		fetch(`${host}/api/joboffer/offers-for-dashboard/4`)
 			.then((response) => response.json())
 			.then((data) => {
@@ -84,8 +73,8 @@ export default function DashboardContent(){
     <div className={styles.dashboardContent}>
 			<div className={`${styles.title} ${styles.dshBox}`}><h3>{mode === 'JobOffer' ? t('jobOffers') : t('applications')}</h3></div>
 			<DashboardStats className={`${styles.stats} ${styles.dshBox}`} cardsData={jobOffersCards} summaryCount={summaryCountMock}/>
-			<DashboardManagement className={`${styles.contentManagement} ${styles.dshBox}`} mode={mode} addJobOfferCalled={addJobOfferCalled} onFormClose={onFormClose}/>
-			<div className={`${styles.details} ${styles.dshBox}`}>{mode === 'JobOffer' ? <DashboardJobOffersDetails jobOffers={jobOffers} refetch={refetch} addJobOffer={addJobOffer}/> : (<DashboardApplicationsDetails/>)}</div>
+			<DashboardManagement className={`${styles.contentManagement} ${styles.dshBox}`} mode={mode} addJobOfferCalled={addJobOfferCalled} onFormClose={onFormClose} refetch={fetchData}/>
+			<div className={`${styles.details} ${styles.dshBox}`}>{mode === 'JobOffer' ? <DashboardJobOffersDetails jobOffers={jobOffers} refetch={fetchData} addJobOffer={addJobOffer}/> : (<DashboardApplicationsDetails/>)}</div>
 
 			
     </div>

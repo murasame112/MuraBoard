@@ -9,16 +9,18 @@ type DashboardManagementProps = {
 	mode: string;
 	addJobOfferCalled: boolean;
 	onFormClose: () => void;
+	refetch: () => void;
 }
 
 
-export default function DashboardManagement({className, mode, addJobOfferCalled, onFormClose}: DashboardManagementProps) {
+export default function DashboardManagement({className, mode, addJobOfferCalled, onFormClose, refetch}: DashboardManagementProps) {
 	const { t } = useTranslation();
 	const [formVisible, setFormVisible] = useState<boolean>(false);
 
 	function closeFunc(){
 		setFormVisible(false);
 		onFormClose();
+		refetch();
 	}
 
 	useEffect(() => {
