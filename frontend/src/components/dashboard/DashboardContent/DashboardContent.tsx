@@ -69,14 +69,36 @@ export default function DashboardContent(){
 		setAddJobOfferCalled(false);
 	}
 
-  return(
-    <div className={styles.dashboardContent}>
-			<div className={`${styles.title} ${styles.dshBox}`}><h3>{mode === 'JobOffer' ? t('jobOffers') : t('applications')}</h3></div>
-			<DashboardStats className={`${styles.stats} ${styles.dshBox}`} cardsData={jobOffersCards} summaryCount={summaryCountMock}/>
-			<DashboardManagement className={`${styles.contentManagement} ${styles.dshBox}`} mode={mode} addJobOfferCalled={addJobOfferCalled} onFormClose={onFormClose} refetch={fetchData}/>
-			<div className={`${styles.details} ${styles.dshBox}`}>{mode === 'JobOffer' ? <DashboardJobOffersDetails jobOffers={jobOffers} refetch={fetchData} addJobOffer={addJobOffer}/> : (<DashboardApplicationsDetails/>)}</div>
-
-			
-    </div>
+  return (
+      <div className={styles.dashboardContent}>
+          <div className={`${styles.title} ${styles.dshBox}`}>
+              <h3>
+                  {mode === 'JobOffer' ? t('jobOffers') : t('applications')}
+              </h3>
+          </div>
+          <DashboardStats
+              className={`${styles.stats} ${styles.dshBox}`}
+              cardsData={jobOffersCards}
+              summaryCount={summaryCountMock}
+          />
+          <DashboardManagement
+              className={`${styles.contentManagement} ${styles.dshBox}`}
+              mode={mode}
+              addJobOfferCalled={addJobOfferCalled}
+              onFormClose={onFormClose}
+              refetch={fetchData}
+          />
+          <div className={`${styles.details} ${styles.dshBox}`}>
+              {mode === 'JobOffer' ? (
+                  <DashboardJobOffersDetails
+                      jobOffers={jobOffers}
+                      refetch={fetchData}
+                      addJobOffer={addJobOffer}
+                  />
+              ) : (
+                  <DashboardApplicationsDetails />
+              )}
+          </div>
+      </div>
   );
 }
