@@ -9,10 +9,11 @@ import type { Company } from '../../../shared/models/models';
 
 type DashboardJobOfferFormProps = {
 	close: () => void;
+	refetch: () => void;
 }
 
 
-export default function DashboardJobOfferForm({close}: DashboardJobOfferFormProps) {
+export default function DashboardJobOfferForm({close, refetch}: DashboardJobOfferFormProps) {
 	const { t } = useTranslation();
 	const host = import.meta.env.VITE_API_URL;
 
@@ -215,7 +216,7 @@ export default function DashboardJobOfferForm({close}: DashboardJobOfferFormProp
 			const response = await fetch(`${host}/api/joboffer/upsert`, addJobOfferRequestOptions);
 			
 			if (!response.ok) throw new Error(`request failed with status ${response.status}`);
-
+			refetch();
 			close();
 
 		} catch (error) {

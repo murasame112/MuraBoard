@@ -20,6 +20,9 @@ export default function DashboardManagement({className, mode, addJobOfferCalled,
 	function closeFunc(){
 		setFormVisible(false);
 		onFormClose();
+	}
+
+	function callRefetch(){
 		refetch();
 	}
 
@@ -38,7 +41,7 @@ export default function DashboardManagement({className, mode, addJobOfferCalled,
 			</div>
 			<button type='button' className={styles.filterButton}><FunnelIcon className={styles.filterIcon}/>{t('addFilter')}</button>
 			<button type='button' className={styles.addButton} onClick={() => setFormVisible(true)}><PlusIcon className={styles.plusIcon}/>{t('add')} {t(mode)}</button>
-			{mode === 'JobOffer' && formVisible ? <DashboardJobOfferForm close={closeFunc}/> : null }
+			{mode === 'JobOffer' && formVisible ? <DashboardJobOfferForm close={closeFunc} refetch={callRefetch}/> : null }
 			
 		</div>
 	);
