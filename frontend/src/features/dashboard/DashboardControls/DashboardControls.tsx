@@ -8,27 +8,25 @@ type DashboardControlsProps = {
 	className: string;
 	mode: string;
 	addJobOfferCalled: boolean;
-	onFormClose: () => void;
-	refetch: () => void;
 }
 
 
-export default function DashboardControls({className, mode, addJobOfferCalled, onFormClose, refetch}: DashboardControlsProps) {
+export default function DashboardControls({className, mode, addJobOfferCalled}: DashboardControlsProps) {
 	const { t } = useTranslation();
-	const [formVisible, setFormVisible] = useState<boolean>(false);
+	const [formVisible, setFormVisible] = useState<boolean>(false); //TODO:
 
-	function closeFunc(){
-		setFormVisible(false);
-		onFormClose();
-	}
+	// function closeFunc(){
+	// 	setFormVisible(false);
+	// 	onFormClose();
+	// }
 
-	function callRefetch(){
-		refetch();
-	}
+	// function callRefetch(){
+	// 	refetch();
+	// }
 
-	useEffect(() => {
-		if (addJobOfferCalled) setFormVisible(true);
-	}, [addJobOfferCalled]);
+	// useEffect(() => {
+	// 	if (addJobOfferCalled) setFormVisible(true);
+	// }, [addJobOfferCalled]);
 	
 	return(
 		<div className={`${className}`}>

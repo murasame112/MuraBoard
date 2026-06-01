@@ -7,10 +7,9 @@ import { CheckCircleIcon, ClockIcon } from '@heroicons/react/24/outline';
 import DashboardControls from '../features/dashboard/DashboardControls/DashboardControls';
 import type { JobOffer } from '../shared/models/models';
 import DashboardList from '../features/dashboard/DashboardList/DashboardList';
+import type { DashboardMode } from '../layouts/main-layout/AppNavigation/AppNavigation';
 // import DashboardJobOffersDetails from '../DashboardJobOffersDetails/DashboardJobOffersDetails';
 // import DashboardApplicationsDetails from '../DashboardApplicationsDetails/DashboardApplicationsDetails';
-
-export type DashboardMode = 'JobOffer' | 'Application';
 
 type Stats = {
 	applied: number;
@@ -24,33 +23,19 @@ export type CardsData = {
     icon: React.ElementType;
 };
 
+type DashboardPageProps = {
+	mode: DashboardMode;
+}
 
-export default function DashboardPage(){
+//TODO: Fetch i tak powinien tu być - w końcu na Table bedzie to paginowane
+// niekoniecznie musi być to jakiś PEŁEN fetch - nie trzeba chyba pobierać wszystkich job offers, raczej po prostu tylko ich statystyki do stats xd
+
+export default function DashboardPage({mode}: DashboardPageProps){
 	const { t } = useTranslation();
-	const [mode, setMode] = useState<DashboardMode>('JobOffer');
 	const [addJobOfferCalled, setAddJobOfferCalled] = useState<boolean>(false);
 	const [jobOffers, setJobOffers] = useState<JobOffer[]>([]);
 	const [stats, setStats] = useState<Stats>({applied: 0, notApplied: 0});
 	const host = import.meta.env.VITE_API_URL;
-
-	useEffect(() => {
-		fetchData()
-	}, []);
-
-	function fetchData() {
-		//TODO: userId shouldn't be 4, it's just for development
-		fetch(`${host}/api/joboffer/offers-for-dashboard/4`)
-			.then((response) => response.json())
-			.then((data) => {
-				if (!data.offers || data.offers.length == 0){
-					setJobOffers([]);
-					return;
-				}
-				setJobOffers(data.offers);
-				setStats(data.stats);
-			})
-			.catch((error) => console.log(error));
-	}
 
 	const jobOffersCards = [
 		{
@@ -66,8 +51,6 @@ export default function DashboardPage(){
 			icon: ClockIcon
 		}
 	];
-
-	const summaryCountMock = mode === 'JobOffer' ? `${jobOffers.length} ${t('jobOffers')}` : `180 ${t('applications')}`;
 
 	function addJobOffer(){
 		setAddJobOfferCalled(true);
@@ -88,21 +71,18 @@ export default function DashboardPage(){
 			<DashboardStats
 					className={`${styles.stats} ${styles.dashboardSection}`}
 					cardsData={jobOffersCards}
-					summaryCount={summaryCountMock}
+					mode={mode}
+					summaryCount={`${jobOffers.length} ${t('jobOffers')}` }
 			/>
 			<DashboardControls
 					className={`${styles.dashboardControls} ${styles.dashboardSection}`}
 					mode={mode}
 					addJobOfferCalled={addJobOfferCalled}
-					onFormClose={onFormClose}
-					refetch={fetchData}
 			/>
 			<div className={`${styles.dashboardSection}`}>
 				<DashboardList 
-									jobOffers={jobOffers}
-									refetch={fetchData}
-									addJobOffer={addJobOffer}
-									mode={mode}/>
+						addJobOffer={addJobOffer}
+						mode={mode}/>
 			</div>
 			{/* <div className={`${styles.details} ${styles.dashboardSection}`}>
 					{mode === 'JobOffer' ? (

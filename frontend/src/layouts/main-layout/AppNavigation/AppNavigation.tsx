@@ -1,7 +1,12 @@
 import styles from './AppNavigation.module.css';
 import { useTranslation } from '../../../shared/i18n/useTranslation';
+export type DashboardMode = 'JobOffer' | 'Application';
 
-export default function AppNavigation() {
+type AppNavigationProps = {
+	setMode: React.Dispatch<React.SetStateAction<DashboardMode>>;
+}
+
+export default function AppNavigation({setMode}: AppNavigationProps) {
 	const {t} = useTranslation();
 
   return(
@@ -10,9 +15,9 @@ export default function AppNavigation() {
 
 			<div className={styles.navElements}>
 				<div className={styles.navTitle}><p>{t('navigation')}</p></div>
-				<h3 className={styles.debugActive }>{t('jobOffers')}</h3>
+				<h3 className={styles.debugActive} onClick={() => setMode('JobOffer')}>{t('jobOffers')}</h3>
 				{/* TODO: ^ active only for debugging */}
-				<h3>{t('applications')}</h3>
+				<h3 onClick={() => setMode('Application')}>{t('applications')}</h3>
 			</div>
 			<div className={styles.accountElements}>
 				<div className={styles.navTitle}><p>{t('account')}</p></div>

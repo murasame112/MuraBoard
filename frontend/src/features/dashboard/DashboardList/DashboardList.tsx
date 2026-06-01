@@ -1,21 +1,42 @@
 import styles from './DashboardList.module.css';
 import type { JobOffer } from '../../../shared/models/models';
 import { useTranslation } from '../../../shared/i18n/useTranslation';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import type { DashboardMode } from '../../../pages/DashboardPage';
 // import MassActionPopup from '../MassActionPopup/MassActionPopup'; //TODO:
 
 type DashboardListProps = {
-	jobOffers: JobOffer[];
-	refetch: () => void;
 	addJobOffer: () => void;
 	mode: DashboardMode;
 }
 
-export default function DashboardList({jobOffers, refetch, addJobOffer, mode}: DashboardListProps){
+	
+
+export default function DashboardList({addJobOffer, mode}: DashboardListProps){
 	const { t } = useTranslation();
 	const [selectedCompany, setSelectedCompany] = useState<number | null>(null);
 	const [selectedCheckboxes, setSelectedCheckboxes] = useState<Set<number>>(new Set<number>());
+	const [jobOffers, setJobOffers] = useState<JobOffer[]>([]);
+
+	const host = import.meta.env.VITE_API_URL;
+	useEffect(() => {
+		fetchData()
+	}, []);
+
+	function fetchData() {
+		//TODO: userId shouldn't be 4, it's just for development
+		fetch(`${host}/api/joboffer/offers-for-dashboard/4`)
+			.then((response) => response.json())
+			.then((data) => {
+				if (!data.offers || data.offers.length == 0){
+					setJobOffers([]);
+					return;
+				}
+				setJobOffers(data.offers);
+				setStats(data.stats);
+			})
+			.catch((error) => console.log(error));
+	}
 
 	function selectCompany(id: number){
 		setSelectedCompany((prev) => {
@@ -39,7 +60,7 @@ export default function DashboardList({jobOffers, refetch, addJobOffer, mode}: D
 
 	function onDelete(){
 		setSelectedCheckboxes(new Set<number>());
-		refetch();
+		fetchData();
 	}
 
 	return(
