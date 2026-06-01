@@ -1,0 +1,56 @@
+.searchWrapper {
+  position: relative;
+  width: 200px;
+	height: 30px;
+	margin: 0;
+	display: flex;
+	flex-direction: column;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 8px;
+  top: 6px;
+  height: 18px;
+}
+
+.searchBar {
+	width: 100%;
+	height: 30px;
+	padding-left: 28px;
+	border: none;
+	background-color: var(--background);
+	border-radius: 5px;
+}
+
+.searchBar::placeholder {
+	text-transform: capitalize;
+}
+
+.filterButton {
+	text-transform: capitalize;
+	height: 30px;
+	width: 120px;
+	margin-left: 55px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.filterIcon {
+	height: 24px;
+}
+
+.addButton {
+	text-transform: capitalize;
+	height: 30px;
+	width: 150px;
+	margin-left: 5px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.plusIcon {
+	height: 24px;
+}

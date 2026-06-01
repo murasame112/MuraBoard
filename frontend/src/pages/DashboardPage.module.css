@@ -33,8 +33,7 @@
 	justify-content: end;
 }
 
-/* TODO: rename */
-.contentManagement {
+.dashboardControls {
 	height: 4%;
 	min-height: 40px;
 	border-bottom:1px solid var(--additional-text);

@@ -4,11 +4,13 @@ import { useTranslation } from '../shared/i18n/useTranslation';
 import DashboardStats from '../features/dashboard/DashboardStats/DashboardStats';
 import { CheckCircleIcon, ClockIcon } from '@heroicons/react/24/outline';
 // import DashboardManagement from '../DashboardManagement/DashboardManagement';
+import DashboardControls from '../features/dashboard/DashboardControls/DashboardControls';
 import type { JobOffer } from '../shared/models/models';
+import DashboardList from '../features/dashboard/DashboardList/DashboardList';
 // import DashboardJobOffersDetails from '../DashboardJobOffersDetails/DashboardJobOffersDetails';
 // import DashboardApplicationsDetails from '../DashboardApplicationsDetails/DashboardApplicationsDetails';
 
-type DashboardMode = 'JobOffer' | 'Application';
+export type DashboardMode = 'JobOffer' | 'Application';
 
 type Stats = {
 	applied: number;
@@ -88,14 +90,21 @@ export default function DashboardPage(){
 					cardsData={jobOffersCards}
 					summaryCount={summaryCountMock}
 			/>
-			{/* <DashboardManagement
-					className={`${styles.contentManagement} ${styles.dashboardSection}`}
+			<DashboardControls
+					className={`${styles.dashboardControls} ${styles.dashboardSection}`}
 					mode={mode}
 					addJobOfferCalled={addJobOfferCalled}
 					onFormClose={onFormClose}
 					refetch={fetchData}
 			/>
-			<div className={`${styles.details} ${styles.dashboardSection}`}>
+			<div className={`${styles.dashboardSection}`}>
+				<DashboardList 
+									jobOffers={jobOffers}
+									refetch={fetchData}
+									addJobOffer={addJobOffer}
+									mode={mode}/>
+			</div>
+			{/* <div className={`${styles.details} ${styles.dashboardSection}`}>
 					{mode === 'JobOffer' ? (
 							<DashboardJobOffersDetails
 									jobOffers={jobOffers}
