@@ -1,12 +1,13 @@
 .card {
-	width: 220px;
+	width: 180px;
+	min-width: 180px !important;
 	height: 70px;
 	border: 1px solid var(--additional-text);
 	border-radius: 5px;
 	display:flex;
 	justify-content: space-around;
 	align-items: center;
-	padding: 0 8px 0 8px;
+	padding: 0 3px 0 3px;
 }
 
 .cardBox {
@@ -25,10 +26,13 @@
 	text-transform: capitalize;
 	font-size: 18px;
 	color: var(--additional-text);
+	width: 60px;
 }
 
 .icon {
-	height: 50px;
+	height: 35px;
+	min-height: 35px;
+	width: 35px !important;
 }
 
 .count {
@@ -43,6 +47,9 @@
 .summary p {
 	margin: 0;
 	color: var(--additional-text);
-	text-transform: capitalize;
 	font-size: 12px;
+}
+
+.summary p::first-letter {
+	text-transform: capitalize;
 }

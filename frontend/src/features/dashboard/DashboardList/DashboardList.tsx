@@ -6,13 +6,14 @@ import type { DashboardMode } from '../../../pages/DashboardPage';
 // import MassActionPopup from '../MassActionPopup/MassActionPopup'; //TODO:
 
 type DashboardListProps = {
-	addJobOffer: () => void;
 	mode: DashboardMode;
+	callForm: (type: string) => void;
+	callMassActionPopup: (selected: Set<number>) => void;
 }
 
 	
 
-export default function DashboardList({addJobOffer, mode}: DashboardListProps){
+export default function DashboardList({mode, callForm, callMassActionPopup}: DashboardListProps){
 	const { t } = useTranslation();
 	const [selectedCompany, setSelectedCompany] = useState<number | null>(null);
 	const [selectedCheckboxes, setSelectedCheckboxes] = useState<Set<number>>(new Set<number>());
@@ -76,7 +77,7 @@ export default function DashboardList({addJobOffer, mode}: DashboardListProps){
 				<h4>{t('date')}</h4>
 			</div>
 
-			{jobOffers.length === 0 ? (<p>{t('noJobOffersFound')} - <span className={styles.createOne} onClick={addJobOffer}>{t('createOne')}</span>!</p>) : 
+			{jobOffers.length === 0 ? (<p>{t('noJobOffersFound')} - <span className={styles.createOne} onClick={() => callForm('add')}>{t('createOne')}</span>!</p>) : 
 			jobOffers.map((element, index) => (
 				index > 10 ?  null :
 				<div key={element.id} className={styles.jobOfferItem}>
@@ -105,7 +106,7 @@ export default function DashboardList({addJobOffer, mode}: DashboardListProps){
 					<p>{new Date(element.createdAt).toLocaleDateString('pl-PL')}</p>
 				</div>
 			))}
-			{(selectedCheckboxes.size > 0) ? <MassActionPopup selected={selectedCheckboxes} onDelete={onDelete}/> : ''}
+			{/* {(selectedCheckboxes.size > 0) ? <MassActionPopup selected={selectedCheckboxes} onDelete={onDelete}/> : ''} */}
 			
 		</div>
 	);

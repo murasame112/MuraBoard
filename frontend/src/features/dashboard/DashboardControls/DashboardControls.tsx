@@ -7,13 +7,12 @@ import { FunnelIcon, MagnifyingGlassIcon, PlusIcon } from '@heroicons/react/24/o
 type DashboardControlsProps = {
 	className: string;
 	mode: string;
-	addJobOfferCalled: boolean;
+	callForm: (type: string) => void;
 }
 
 
-export default function DashboardControls({className, mode, addJobOfferCalled}: DashboardControlsProps) {
+export default function DashboardControls({className, mode, callForm}: DashboardControlsProps) {
 	const { t } = useTranslation();
-	const [formVisible, setFormVisible] = useState<boolean>(false); //TODO:
 
 	// function closeFunc(){
 	// 	setFormVisible(false);
@@ -38,9 +37,7 @@ export default function DashboardControls({className, mode, addJobOfferCalled}: 
 				/>
 			</div>
 			<button type='button' className={styles.filterButton}><FunnelIcon className={styles.filterIcon}/>{t('addFilter')}</button>
-			<button type='button' className={styles.addButton} onClick={() => setFormVisible(true)}><PlusIcon className={styles.plusIcon}/>{t('add')} {t(mode)}</button>
-			{/* {mode === 'JobOffer' && formVisible ? <DashboardJobOfferForm close={closeFunc} refetch={callRefetch}/> : null } TODO: */}
-			
+			<button type='button' className={styles.addButton} onClick={() => callForm('add')}><PlusIcon className={styles.plusIcon}/>{t('add')} {t(mode)}</button>
 		</div>
 	);
 }
