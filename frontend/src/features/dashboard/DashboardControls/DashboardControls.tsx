@@ -1,8 +1,6 @@
 import styles from './DashboardControls.module.css';
-import { useState, useEffect } from 'react';
 import { useTranslation } from '../../../shared/i18n/useTranslation';
 import { FunnelIcon, MagnifyingGlassIcon, PlusIcon } from '@heroicons/react/24/outline';
-// import DashboardJobOfferForm from '../DashboardJobOfferForm/DashboardJobOfferForm'; TODO:
 
 type DashboardControlsProps = {
 	className: string;
@@ -14,19 +12,6 @@ type DashboardControlsProps = {
 export default function DashboardControls({className, mode, callForm}: DashboardControlsProps) {
 	const { t } = useTranslation();
 
-	// function closeFunc(){
-	// 	setFormVisible(false);
-	// 	onFormClose();
-	// }
-
-	// function callRefetch(){
-	// 	refetch();
-	// }
-
-	// useEffect(() => {
-	// 	if (addJobOfferCalled) setFormVisible(true);
-	// }, [addJobOfferCalled]);
-	
 	return(
 		<div className={`${className}`}>
 			<div className={styles.searchWrapper}>
