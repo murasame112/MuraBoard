@@ -63,7 +63,7 @@ export default function JobOffersTable({callForm, callMassActionPopup}: JobOffer
 	}
 
 	return(
-		<div className={styles.jobOffersList}>
+		<div className={styles.jobOffersTable}>
 
 			<div className={`${styles.jobOfferItem} ${styles.detailsHeader}`}>
 				<h4>{t('select')}</h4>
