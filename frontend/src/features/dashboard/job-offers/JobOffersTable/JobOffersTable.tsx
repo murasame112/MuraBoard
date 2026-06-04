@@ -1,21 +1,20 @@
-import styles from './DashboardList.module.css';
-import type { JobOffer } from '../../../shared/models/models';
-import { useTranslation } from '../../../shared/i18n/useTranslation';
-import { useState } from 'react';
-import type { DashboardMode } from '../../../pages/DashboardPage';
-// import MassActionPopup from '../MassActionPopup/MassActionPopup'; //TODO:
+import styles from './JobOffersTable.module.css';
+import type { JobOffer } from '../../../../shared/models/models';
+import { useTranslation } from '../../../../shared/i18n/useTranslation';
+import { useEffect, useState } from 'react';
 
-type DashboardListProps = {
-	jobOffers: JobOffer[];
-	refetch: () => void;
-	addJobOffer: () => void;
-	mode: DashboardMode;
+
+type JobOffersTableProps = {
+	callForm: (type: string) => void;
+	callMassActionPopup: (selected: Set<number>) => void;
 }
 
-export default function DashboardList({jobOffers, refetch, addJobOffer, mode}: DashboardListProps){
+export default function JobOffersTable({callForm, callMassActionPopup}: JobOffersTableProps){
 	const { t } = useTranslation();
 	const [selectedCompany, setSelectedCompany] = useState<number | null>(null);
 	const [selectedCheckboxes, setSelectedCheckboxes] = useState<Set<number>>(new Set<number>());
+	const [jobOffers, setJobOffers] = useState<JobOffer[]>([]);
+	const host = import.meta.env.VITE_API_URL;
 
 	function selectCompany(id: number){
 		setSelectedCompany((prev) => {
@@ -24,6 +23,10 @@ export default function DashboardList({jobOffers, refetch, addJobOffer, mode}: D
 			return id;
 		})
 	}
+
+	useEffect(() => {
+		fetchData();
+	}, []);
 
 	function handleCheckboxChange(e: React.ChangeEvent<HTMLInputElement>, id: number) {
 		let val = e.currentTarget.checked;
@@ -35,11 +38,28 @@ export default function DashboardList({jobOffers, refetch, addJobOffer, mode}: D
 			}
 			return new Set(prev);
 		});
+		callMassActionPopup(selectedCheckboxes);
 	}
+
+	function fetchData() {
+		//TODO: userId shouldn't be 4, it's just for development
+		fetch(`${host}/api/joboffer/offers-for-dashboard/4`)
+			.then((response) => response.json())
+			.then((data) => {
+				if (!data.offers || data.offers.length == 0){
+					setJobOffers([]);
+					return;
+				}
+				setJobOffers(data.offers);
+			})
+			.catch((error) => console.log(error));
+	}
+
+
 
 	function onDelete(){
 		setSelectedCheckboxes(new Set<number>());
-		refetch();
+		
 	}
 
 	return(
@@ -55,7 +75,7 @@ export default function DashboardList({jobOffers, refetch, addJobOffer, mode}: D
 				<h4>{t('date')}</h4>
 			</div>
 
-			{jobOffers.length === 0 ? (<p>{t('noJobOffersFound')} - <span className={styles.createOne} onClick={addJobOffer}>{t('createOne')}</span>!</p>) : 
+			{jobOffers.length === 0 ? (<p>{t('noJobOffersFound')} - <span className={styles.createOne} onClick={() => callForm('add')}>{t('createOne')}</span>!</p>) : 
 			jobOffers.map((element, index) => (
 				index > 10 ?  null :
 				<div key={element.id} className={styles.jobOfferItem}>
@@ -84,7 +104,6 @@ export default function DashboardList({jobOffers, refetch, addJobOffer, mode}: D
 					<p>{new Date(element.createdAt).toLocaleDateString('pl-PL')}</p>
 				</div>
 			))}
-			{(selectedCheckboxes.size > 0) ? <MassActionPopup selected={selectedCheckboxes} onDelete={onDelete}/> : ''}
 			
 		</div>
 	);
