@@ -1,5 +1,4 @@
 import styles from './DashboardPage.module.css';
-import { useState, useEffect} from 'react';
 import { useTranslation } from '../shared/i18n/useTranslation';
 import DashboardStats from '../features/dashboard/DashboardStats/DashboardStats';
 
@@ -28,8 +27,6 @@ export default function DashboardPage({mode}: DashboardPageProps){
 		//TODO: implement call mass action popup
 		console.log('mass action popup called');
 	}
-
-
 
   return(
     <div className={styles.dashboardPage}>

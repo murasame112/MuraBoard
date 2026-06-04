@@ -128,7 +128,7 @@ export default function DashboardStats({className, mode}: DashboardStatsProps) {
 	
 	useEffect(() => {
 		fetchStatsData();
-	}, [mode, t]);
+	}, [mode]);
 	
 	
 	return(
