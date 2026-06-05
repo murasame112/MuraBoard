@@ -45,10 +45,10 @@ export default function JobOffersTable({callForm, callMassActionPopup, currentPa
 
 	function fetchData() {
 		//TODO: userId shouldn't be 4, it's just for development
-		fetch(`${host}/api/joboffer/offers-for-dashboard?userId=${4}&page=${currentPage}&pageSize=${pageSize}`)
+		const userId = 4;
+		fetch(`${host}/api/joboffer/offers-for-dashboard?userId=${userId}&page=${currentPage}&pageSize=${pageSize}`)
 			.then((response) => response.json())
 			.then((data) => {
-				console.log(data);
 				if (!data || data.length == 0){
 					setJobOffers([]);
 					return;
