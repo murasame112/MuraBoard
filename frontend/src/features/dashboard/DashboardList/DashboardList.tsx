@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import type { DashboardMode } from '../../../layouts/main-layout/AppNavigation/AppNavigation';
 import JobOffersTable from '../job-offers/JobOffersTable/JobOffersTable';
 import ApplicationsTable from '../applications/ApplicationsTable/ApplicationsTable';
+import DashboardPager from '../DashboardPager/DashboardPager';
 
 type DashboardListProps = {
 	mode: DashboardMode;
@@ -12,7 +13,8 @@ type DashboardListProps = {
 
 export default function DashboardList({mode, callForm, callMassActionPopup}: DashboardListProps){
 	const [recordCount, setRecordCount] = useState<number>(0);
-	const pageLimit: number = 12;
+	const pageLimit: number = 9;
+	const [currentPage, setCurrentPage] = useState<number>(1);
 	const host = import.meta.env.VITE_API_URL;
 
 	useEffect(() => {
@@ -38,6 +40,7 @@ export default function DashboardList({mode, callForm, callMassActionPopup}: Das
                     callMassActionPopup={callMassActionPopup}
                 />
             )}
+							<DashboardPager/>
         </div>
     );
 
