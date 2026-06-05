@@ -22,10 +22,35 @@ export default function DashboardList({mode, callForm, callMassActionPopup}: Das
 	}, [mode]);
 
 	function fetchRecordCount() {
-		//TODO: implement fetchRecordCount
-		setRecordCount(25);
-	}
+		//TODO: userId shouldn't be 4, it's just for development
+		const userId = 4;
 
+		if (mode === 'JobOffer') {
+			fetch(`${host}/api/joboffer/offers-count?userId=${userId}`)
+				.then((response) => response.json())
+				.then((data) => {
+					if (!data){
+						setRecordCount(0);
+						return;
+					}
+					setRecordCount(data);
+				})
+				.catch((error) => console.log(error));
+				
+		} else if (mode === 'Application') {
+			
+			fetch(`${host}/api/application/applications-count?userId=${userId}`)
+				.then((response) => response.json())
+				.then((data) => {
+					if (!data){
+						setRecordCount(0);
+						return;
+					}
+					setRecordCount(data);
+				})
+				.catch((error) => console.log(error));
+		}
+	}
 
 	return (
         <div className={styles.dashboardList}>

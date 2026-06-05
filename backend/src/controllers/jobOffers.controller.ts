@@ -28,3 +28,20 @@ export async function getJobOffersForDashboard(req: Request, res: Response) {
 		return res.status(500).json({message: 'Something went wrong'});
 	}
 }
+
+export async function getJobOffersCount(req: Request, res: Response) {
+	try {
+		const { userId } = req.query as {
+			userId?: string;
+		}
+
+		if (!userId || Number.isNaN(userId)) {
+			return res.status(400).json({ message: 'Invalid user id' });
+		}
+
+		const data = await jobOffersService.getJobOffersCount(Number(userId));
+
+	} catch (error) {
+		return res.status(500).json({message: 'Something went wrong'});
+	}
+}

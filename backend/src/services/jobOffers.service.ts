@@ -14,3 +14,9 @@ export async function getJobOffersDashboardData(userId: number, page: number, pa
 
 	return offers;
 }
+
+export async function getJobOffersCount(userId: number) { 
+	const count = await prisma.jobOffer.count({
+		where: {userId}
+	});
+}
