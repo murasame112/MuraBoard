@@ -19,3 +19,43 @@ export async function getApplicationsCount(userId: number) {
 		where: {userId}
 	});
 }
+
+export async function getApplicationsStats(userId: number) {
+	const [
+		applied,
+		inProgress,
+		interview,
+		offer,
+		rejected,
+		summaryCount
+	] = await prisma.$transaction([
+
+		prisma.application.count({
+			where: { userId, status: 'APPLIED' }
+		}),
+
+		prisma.application.count({
+			where: { userId, status: 'IN_PROGRESS' }
+		}),
+
+		prisma.application.count({
+			where: { userId, status: 'INTERVIEW' }
+		}),
+
+		prisma.application.count({
+			where: { userId, status: 'OFFER' }
+		}),
+
+		prisma.application.count({
+			where: { userId, status: 'REJECTED' }
+		}),
+
+		prisma.application.count({
+			where: { userId }
+		})
+	]);
+
+	return {summaryCount, stats: {applied, inProgress, interview, offer, rejected}};
+
+
+}

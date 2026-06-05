@@ -69,15 +69,26 @@ export default function DashboardStats({className, mode}: DashboardStatsProps) {
 				.catch((error) => console.log(error));
 
 		} else if (mode === 'Application') {
-			//TODO: fetched data
-			const mockedData: ApplicationStats = {
-				applied: 16,
-				inProgress: 2,	
-				interview: 	3,
-				offer: 4,
-				rejected: 8 	
-			};
-			setStatsState({mode: 'Application', stats: mockedData});
+			fetch(`${host}/api/application/applications-stats?userId=${userId}`)
+				.then((response) => response.json())
+				.then((data) => {
+					if (!data){
+						setStatsState(null);
+						return;
+					}
+					setStatsState({
+						mode: 'Application',
+						stats: {
+							applied: data.stats.applied, 
+							inProgress: data.stats.inProgress,	
+							interview: data.stats.interview,
+							offer: data.stats.offer,
+							rejected: data.stats.rejected 	
+						}
+					});
+					setSummaryCount(data.summaryCount);
+				})
+				.catch((error) => console.log(error));
 		}
 		
 	}

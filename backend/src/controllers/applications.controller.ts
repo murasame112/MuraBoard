@@ -45,3 +45,21 @@ export async function getApplicationsCount(req: Request, res: Response) {
 		return res.status(500).json({message: 'Something went wrong'});
 	}
 }
+
+export async function getApplicationsStats(req: Request, res: Response) {
+	try {
+		const { userId } = req.query as {
+			userId?: string;
+		}
+
+		if (!userId || Number.isNaN(userId)) {
+			return res.status(400).json({ message: 'Invalid user id'});
+		}
+
+		const data = await applicationsService.getApplicationsStats(Number(userId));
+		return res.status(200).json(data);
+
+	} catch (error) {
+		return res.status(500).json({message: 'Something went wrong'});
+	}
+}

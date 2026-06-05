@@ -42,5 +42,5 @@ export async function getJobOffersStats(userId: number) {
 		})
 	]);
 
-	return {summaryCount, stats: {applied, notApplied}}
+	return {summaryCount, stats: {applied, notApplied}};
 }
