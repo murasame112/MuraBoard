@@ -44,16 +44,29 @@ export default function DashboardStats({className, mode}: DashboardStatsProps) {
 	const {t} = useTranslation();
 	const [summaryCount, setSummaryCount] = useState<number>(0);
 	const [statsState, setStatsState] = useState<DashboardStatsState | null>(null);
+	const host = import.meta.env.VITE_API_URL;
 	
 	function fetchStatsData() {
-		
+		//TODO: userId shouldn't be 4, it's just for development
+		const userId = 4;
 		if (mode === 'JobOffer') {
-			//TODO: fetched data
-			const mockedData: JobOfferStats = {
-				applied: 15,
-				notApplied: 27
-			};
-			setStatsState({mode: 'JobOffer', stats: mockedData});
+			fetch(`${host}/api/joboffer/offers-stats?userId=${userId}`)
+				.then((response) => response.json())
+				.then((data) => {
+					if (!data){
+						setStatsState(null);
+						return;
+					}
+					setStatsState({
+						mode: 'JobOffer',
+						stats: {
+							applied: data.stats.applied, 
+							notApplied: data.stats.notApplied
+						}
+					});
+					setSummaryCount(data.summaryCount);
+				})
+				.catch((error) => console.log(error));
 
 		} else if (mode === 'Application') {
 			//TODO: fetched data
@@ -66,7 +79,7 @@ export default function DashboardStats({className, mode}: DashboardStatsProps) {
 			};
 			setStatsState({mode: 'Application', stats: mockedData});
 		}
-		setSummaryCount(39 /* TODO: fetched data */);
+		
 	}
 
 	function buildCardsData(): CardsData[] {

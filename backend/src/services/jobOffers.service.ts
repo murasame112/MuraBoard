@@ -20,3 +20,27 @@ export async function getJobOffersCount(userId: number) {
 		where: {userId}
 	});
 }
+
+export async function getJobOffersStats(userId: number) {
+	const [applied, notApplied, summaryCount] = await prisma.$transaction([
+
+		prisma.jobOffer.count({
+			where: {
+				userId, application: { isNot: null}
+			},
+		}),
+
+		prisma.jobOffer.count({
+			where: {
+				userId,
+				application: {is: null}
+			}
+		}),
+
+		prisma.jobOffer.count({
+			where: { userId }
+		})
+	]);
+
+	return {summaryCount, stats: {applied, notApplied}}
+}
