@@ -13,7 +13,7 @@ type DashboardListProps = {
 
 export default function DashboardList({mode, callForm, callMassActionPopup}: DashboardListProps){
 	const [recordCount, setRecordCount] = useState<number>(0);
-	const pageLimit: number = 9;
+	const pageSize: number = 9;
 	const [currentPage, setCurrentPage] = useState<number>(1);
 	const host = import.meta.env.VITE_API_URL;
 
@@ -33,6 +33,8 @@ export default function DashboardList({mode, callForm, callMassActionPopup}: Das
                 <JobOffersTable
                     callForm={callForm}
                     callMassActionPopup={callMassActionPopup}
+										currentPage={currentPage}
+										pageSize={pageSize}
                 />
             ) : (
                 <ApplicationsTable

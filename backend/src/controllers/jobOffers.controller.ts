@@ -1,0 +1,30 @@
+import type { Request, Response } from 'express';
+import * as jobOffersService from '../services/jobOffers.service.js';
+
+export async function getJobOffersForDashboard(req: Request, res: Response) {
+	try {
+		const { userId, page, pageSize} = req.query as {
+			userId?: string;
+			page?: string;
+			pageSize?: string;
+		}
+
+		if (!userId || Number.isNaN(userId)) {
+			return res.status(400).json({ message: 'Invalid user id' });
+		}
+
+		if (!page || Number.isNaN(pageSize)) {
+			return res.status(400).json({ message: 'Invalid page' });
+		}
+
+		if (!page || Number.isNaN(pageSize)) {
+			return res.status(400).json({ message: 'Invalid pageSize' });
+		}
+
+		const data = await jobOffersService.getJobOffersDashboardData(Number(userId), Number(page), Number(pageSize));
+		return res.status(200).json(data);
+
+	} catch (error) {
+		return res.status(500).json({message: 'Something went wrong'});
+	}
+}

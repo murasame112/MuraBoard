@@ -7,9 +7,11 @@ import { useEffect, useState } from 'react';
 type JobOffersTableProps = {
 	callForm: (type: string) => void;
 	callMassActionPopup: (selected: Set<number>) => void;
+	currentPage: number;
+	pageSize: number;
 }
 
-export default function JobOffersTable({callForm, callMassActionPopup}: JobOffersTableProps){
+export default function JobOffersTable({callForm, callMassActionPopup, currentPage, pageSize}: JobOffersTableProps){
 	const { t } = useTranslation();
 	const [selectedCompany, setSelectedCompany] = useState<number | null>(null);
 	const [selectedCheckboxes, setSelectedCheckboxes] = useState<Set<number>>(new Set<number>());
@@ -43,14 +45,15 @@ export default function JobOffersTable({callForm, callMassActionPopup}: JobOffer
 
 	function fetchData() {
 		//TODO: userId shouldn't be 4, it's just for development
-		fetch(`${host}/api/joboffer/offers-for-dashboard/4`)
+		fetch(`${host}/api/joboffer/offers-for-dashboard?userId=${4}&page=${currentPage}&pageSize=${pageSize}`)
 			.then((response) => response.json())
 			.then((data) => {
-				if (!data.offers || data.offers.length == 0){
+				console.log(data);
+				if (!data || data.length == 0){
 					setJobOffers([]);
 					return;
 				}
-				setJobOffers(data.offers);
+				setJobOffers(data);
 			})
 			.catch((error) => console.log(error));
 	}
