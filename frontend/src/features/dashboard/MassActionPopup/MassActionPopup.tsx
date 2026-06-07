@@ -40,14 +40,14 @@ export default function MassActionPopup({mode, selected, onPopupClose, onDelete,
 
 	function handleDeletion(){
 		if (mode === 'JobOffer') {
-			fetch(`${host}/api/joboffer/offers-delete`)
+			fetch(`${host}/api/joboffer/offers-delete`, deletionOptions)
 				.then((response) => response.json())
 				.then(() => {setPopupType(null)})
 				.then(() => {onDelete()})
 				.catch((error) => console.log(error));
 
 		} else if (mode === 'Application') {
-			fetch(`${host}/api/application/applications-delete`)
+			fetch(`${host}/api/application/applications-delete`, deletionOptions)
 				.then(() => {setPopupType(null)})
 				.then(() => {onDelete()})
 				.catch((error) => console.log(error));
