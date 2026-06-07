@@ -2,10 +2,11 @@ import styles from './JobOffersTable.module.css';
 import type { JobOffer } from '../../../../shared/models/models';
 import { useTranslation } from '../../../../shared/i18n/useTranslation';
 import { useEffect, useState } from 'react';
+import type { DashboardFormType } from '../../DashboardFormWrapper/DashboardFormWrapper';
 
 
 type JobOffersTableProps = {
-	callForm: (type: string) => void;
+	callForm: (type: DashboardFormType) => void;
 	callMassActionPopup: (selected: Set<number>) => void;
 	currentPage: number;
 	pageSize: number;

@@ -1,26 +1,28 @@
 import styles from './DashboardPage.module.css';
 import { useTranslation } from '../shared/i18n/useTranslation';
-import DashboardStats from '../features/dashboard/DashboardStats/DashboardStats';
-
-// import DashboardManagement from '../DashboardManagement/DashboardManagement';
-import DashboardControls from '../features/dashboard/DashboardControls/DashboardControls';
-import type { JobOffer } from '../shared/models/models';
-import DashboardList from '../features/dashboard/DashboardList/DashboardList';
 import type { DashboardMode } from '../layouts/main-layout/AppNavigation/AppNavigation';
-// import DashboardJobOffersDetails from '../DashboardJobOffersDetails/DashboardJobOffersDetails';
-// import DashboardApplicationsDetails from '../DashboardApplicationsDetails/DashboardApplicationsDetails';
+import type { DashboardFormType } from '../features/dashboard/DashboardFormWrapper/DashboardFormWrapper';
+import { useState } from 'react';
+import DashboardStats from '../features/dashboard/DashboardStats/DashboardStats';
+import DashboardControls from '../features/dashboard/DashboardControls/DashboardControls';
+import DashboardList from '../features/dashboard/DashboardList/DashboardList';
+import DashboardFormWrapper from '../features/dashboard/DashboardFormWrapper/DashboardFormWrapper';
+
 
 type DashboardPageProps = {
 	mode: DashboardMode;
 }
 
 export default function DashboardPage({mode}: DashboardPageProps){
-	const formConfiguration = { isDisplayed: false, type: 'add', mode: mode } //TODO: state
+	const [formConfiguration, setFormConfiguration] = useState<{isDisplayed: boolean, type: DashboardFormType}>({isDisplayed: false, type: 'add'});
 	const { t } = useTranslation();
 
-	function callForm(type: string /*TODO: type it properly, either 'add' or 'edit'*/){
-		//TODO: implement call form
-		console.log('form called');
+	function callForm(type: DashboardFormType /*TODO: type it properly, either 'add' or 'edit'*/){
+		setFormConfiguration({isDisplayed: true, type});	
+	}
+
+	function onFormClose(){
+		setFormConfiguration((prev) => ({ ...prev, isDisplayed: false}))
 	}
 
 	function callMassActionPopup(selected: Set<number>){
@@ -51,7 +53,8 @@ export default function DashboardPage({mode}: DashboardPageProps){
 						callMassActionPopup={callMassActionPopup}
 				/>
 			</div>
-			{/* TODO: form with mode and type (edit/add), based on formConfig */}
+			{formConfiguration.isDisplayed ? <DashboardFormWrapper type={formConfiguration.type} mode={mode} onFormClose={onFormClose}/> : ''}
+
 			{/* <div className={`${styles.details} ${styles.dashboardSection}`}>
 					{mode === 'JobOffer' ? (
 							<DashboardJobOffersDetails

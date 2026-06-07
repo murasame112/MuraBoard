@@ -16,7 +16,6 @@ type CardsData = {
 	icon: React.ElementType;
 };
 
-
 type JobOfferStats = {
 	applied: number;
 	notApplied: number;

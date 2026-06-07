@@ -4,10 +4,11 @@ import type { DashboardMode } from '../../../layouts/main-layout/AppNavigation/A
 import JobOffersTable from '../job-offers/JobOffersTable/JobOffersTable';
 import ApplicationsTable from '../applications/ApplicationsTable/ApplicationsTable';
 import DashboardPager from '../DashboardPager/DashboardPager';
+import type { DashboardFormType } from '../DashboardFormWrapper/DashboardFormWrapper';
 
 type DashboardListProps = {
 	mode: DashboardMode;
-	callForm: (type: string) => void;
+	callForm: (type: DashboardFormType) => void;
 	callMassActionPopup: (selected: Set<number>) => void;
 }
 
