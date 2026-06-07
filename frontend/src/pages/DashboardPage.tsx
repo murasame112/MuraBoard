@@ -38,7 +38,6 @@ export default function DashboardPage({mode}: DashboardPageProps){
 
 	function onDelete(){
 		setRefreshToken((prev) => prev + 1);
-		console.log(refreshToken);
 	}
 
   return(

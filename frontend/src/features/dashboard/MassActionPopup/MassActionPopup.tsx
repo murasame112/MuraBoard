@@ -48,7 +48,6 @@ export default function MassActionPopup({mode, selected, onPopupClose, onDelete,
 
 		} else if (mode === 'Application') {
 			fetch(`${host}/api/application/applications-delete`)
-				.then((response) => response.json())
 				.then(() => {setPopupType(null)})
 				.then(() => {onDelete()})
 				.catch((error) => console.log(error));
