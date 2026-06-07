@@ -7,6 +7,7 @@ import DashboardStats from '../features/dashboard/DashboardStats/DashboardStats'
 import DashboardControls from '../features/dashboard/DashboardControls/DashboardControls';
 import DashboardList from '../features/dashboard/DashboardList/DashboardList';
 import DashboardFormWrapper from '../features/dashboard/DashboardFormWrapper/DashboardFormWrapper';
+import MassActionPopup from '../features/dashboard/MassActionPopup/MassActionPopup';
 
 
 type DashboardPageProps = {
@@ -14,11 +15,13 @@ type DashboardPageProps = {
 }
 
 export default function DashboardPage({mode}: DashboardPageProps){
-	const [formConfiguration, setFormConfiguration] = useState<{isDisplayed: boolean, type: DashboardFormType}>({isDisplayed: false, type: 'add'});
+	const [formConfiguration, setFormConfiguration] = useState<{isDisplayed: boolean, type: DashboardFormType, selected?: Set<number>}>({isDisplayed: false, type: 'add', selected: new Set<number>()});
+	const [massActionPopupConfiguration, setMassActionPopupConfiguration] = useState<{isDisplayed: boolean, selected: Set<number>}>({isDisplayed: false, selected: new Set<number>()});
+	const [refreshToken, setRefreshToken] = useState<number>(0);
 	const { t } = useTranslation();
 
-	function callForm(type: DashboardFormType /*TODO: type it properly, either 'add' or 'edit'*/){
-		setFormConfiguration({isDisplayed: true, type});	
+	function callForm(type: DashboardFormType, selected?: Set<number>){
+		setFormConfiguration({isDisplayed: true, type, selected});	
 	}
 
 	function onFormClose(){
@@ -26,8 +29,16 @@ export default function DashboardPage({mode}: DashboardPageProps){
 	}
 
 	function callMassActionPopup(selected: Set<number>){
-		//TODO: implement call mass action popup
-		console.log('mass action popup called');
+		setMassActionPopupConfiguration({isDisplayed: true, selected});
+	}
+
+	function onPopupClose(){
+		setMassActionPopupConfiguration((prev) => ({...prev, isDisplayed: false}));
+	}
+
+	function onDelete(){
+		setRefreshToken((prev) => prev + 1);
+		console.log(refreshToken);
 	}
 
   return(
@@ -40,6 +51,7 @@ export default function DashboardPage({mode}: DashboardPageProps){
 			<DashboardStats
 					className={`${styles.stats} ${styles.dashboardSection}`}
 					mode={mode}
+					refreshToken={refreshToken}
 			/>
 			<DashboardControls
 					className={`${styles.dashboardControls} ${styles.dashboardSection}`}
@@ -51,21 +63,11 @@ export default function DashboardPage({mode}: DashboardPageProps){
 						mode={mode}
 						callForm={callForm}
 						callMassActionPopup={callMassActionPopup}
+						refreshToken={refreshToken}
 				/>
 			</div>
-			{formConfiguration.isDisplayed ? <DashboardFormWrapper type={formConfiguration.type} mode={mode} onFormClose={onFormClose}/> : ''}
-
-			{/* <div className={`${styles.details} ${styles.dashboardSection}`}>
-					{mode === 'JobOffer' ? (
-							<DashboardJobOffersDetails
-									jobOffers={jobOffers}
-									refetch={fetchData}
-									addJobOffer={addJobOffer}
-							/>
-					) : (
-							<DashboardApplicationsDetails />
-					)}
-			</div> */}
+			{formConfiguration.isDisplayed ? <DashboardFormWrapper mode={mode} type={formConfiguration.type} selected={formConfiguration.selected} onFormClose={onFormClose}/> : ''}
+			{massActionPopupConfiguration.isDisplayed? <MassActionPopup mode={mode} selected={massActionPopupConfiguration.selected} callForm={callForm} onDelete={onDelete} onPopupClose={onPopupClose} />: ''}
     </div>
   )
 }

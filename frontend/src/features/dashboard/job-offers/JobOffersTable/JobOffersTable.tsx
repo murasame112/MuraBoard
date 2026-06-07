@@ -6,13 +6,14 @@ import type { DashboardFormType } from '../../DashboardFormWrapper/DashboardForm
 
 
 type JobOffersTableProps = {
-	callForm: (type: DashboardFormType) => void;
+	callForm: (type: DashboardFormType, selected?: Set<number>) => void;
 	callMassActionPopup: (selected: Set<number>) => void;
 	currentPage: number;
 	pageSize: number;
+	refreshToken: number;
 }
 
-export default function JobOffersTable({callForm, callMassActionPopup, currentPage, pageSize}: JobOffersTableProps){
+export default function JobOffersTable({callForm, callMassActionPopup, currentPage, pageSize, refreshToken}: JobOffersTableProps){
 	const { t } = useTranslation();
 	const [selectedCompany, setSelectedCompany] = useState<number | null>(null);
 	const [selectedCheckboxes, setSelectedCheckboxes] = useState<Set<number>>(new Set<number>());
@@ -29,7 +30,7 @@ export default function JobOffersTable({callForm, callMassActionPopup, currentPa
 
 	useEffect(() => {
 		fetchData();
-	}, []);
+	}, [refreshToken, currentPage]);
 
 	function handleCheckboxChange(e: React.ChangeEvent<HTMLInputElement>, id: number) {
 		let val = e.currentTarget.checked;
@@ -55,15 +56,9 @@ export default function JobOffersTable({callForm, callMassActionPopup, currentPa
 					return;
 				}
 				setJobOffers(data);
+				setSelectedCheckboxes(new Set<number>());
 			})
 			.catch((error) => console.log(error));
-	}
-
-
-
-	function onDelete(){
-		setSelectedCheckboxes(new Set<number>());
-		
 	}
 
 	return(

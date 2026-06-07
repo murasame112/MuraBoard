@@ -7,6 +7,7 @@ import { useTranslation } from '../../../shared/i18n/useTranslation';
 type DashboardStatsProps = {
 	className: string;
 	mode: DashboardMode;
+	refreshToken: number;
 }
 
 type CardsData = {
@@ -39,7 +40,7 @@ type DashboardStatsState =
 			stats: ApplicationStats;
 	  };
 
-export default function DashboardStats({className, mode}: DashboardStatsProps) {
+export default function DashboardStats({className, mode, refreshToken}: DashboardStatsProps) {
 	const {t} = useTranslation();
 	const [summaryCount, setSummaryCount] = useState<number>(0);
 	const [statsState, setStatsState] = useState<DashboardStatsState | null>(null);
@@ -151,7 +152,7 @@ export default function DashboardStats({className, mode}: DashboardStatsProps) {
 	
 	useEffect(() => {
 		fetchStatsData();
-	}, [mode]);
+	}, [mode, refreshToken]);
 	
 	
 	return(

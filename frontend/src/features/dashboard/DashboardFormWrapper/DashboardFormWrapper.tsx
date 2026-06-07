@@ -5,13 +5,14 @@ export type DashboardFormType = 'add' | 'edit';
 //type={formConfiguration.type} mode={mode} onFormClose={onFormClose}
 
 type DashboardFormWrapperProps = {
-	type: DashboardFormType;
 	mode: DashboardMode;
+	type: DashboardFormType;
+	selected?: Set<number>;
 	onFormClose: () => void;
 }
 
 
-export default function DashboardFormWrapper({type, mode, onFormClose}: DashboardFormWrapperProps){
+export default function DashboardFormWrapper({mode, type, onFormClose, selected = new Set<number>()}: DashboardFormWrapperProps){
 
 	return (
 		<>dashboard form wrapper: {type} <button onClick={onFormClose}>close</button></>

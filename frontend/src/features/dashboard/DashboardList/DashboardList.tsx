@@ -8,11 +8,12 @@ import type { DashboardFormType } from '../DashboardFormWrapper/DashboardFormWra
 
 type DashboardListProps = {
 	mode: DashboardMode;
-	callForm: (type: DashboardFormType) => void;
+	callForm: (type: DashboardFormType, selected?: Set<number>) => void;
 	callMassActionPopup: (selected: Set<number>) => void;
+	refreshToken: number;
 }
 
-export default function DashboardList({mode, callForm, callMassActionPopup}: DashboardListProps){
+export default function DashboardList({mode, callForm, callMassActionPopup, refreshToken}: DashboardListProps){
 	const [recordCount, setRecordCount] = useState<number>(0);
 	const pageSize: number = 9;
 	const [currentPage, setCurrentPage] = useState<number>(1);
@@ -36,7 +37,7 @@ export default function DashboardList({mode, callForm, callMassActionPopup}: Das
 					}
 					setRecordCount(data);
 				})
-				.catch((error) => console.log(error));
+				.catch((error) => console.log(JSON.stringify(error)));
 				
 		} else if (mode === 'Application') {
 			
@@ -61,6 +62,7 @@ export default function DashboardList({mode, callForm, callMassActionPopup}: Das
                     callMassActionPopup={callMassActionPopup}
 										currentPage={currentPage}
 										pageSize={pageSize}
+										refreshToken={refreshToken}
                 />
             ) : (
                 <ApplicationsTable

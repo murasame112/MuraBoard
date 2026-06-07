@@ -6,7 +6,7 @@ import type { DashboardFormType } from '../DashboardFormWrapper/DashboardFormWra
 type DashboardControlsProps = {
 	className: string;
 	mode: string;
-	callForm: (type: DashboardFormType) => void;
+	callForm: (type: DashboardFormType, selected?: Set<number>) => void;
 }
 
 export default function DashboardControls({className, mode, callForm}: DashboardControlsProps) {
