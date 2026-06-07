@@ -39,10 +39,20 @@ export default function MassActionPopup({mode, selected, onPopupClose, onDelete,
   };
 
 	function handleDeletion(){
-		fetch(`${host}/api/joboffer/delete-many`, deletionOptions)
-			.then((response) => response.json())
-			.then(() => {setPopupType(null)})
-			.then(() => {onDelete()});
+		if (mode === 'JobOffer') {
+			fetch(`${host}/api/joboffer/offers-delete`)
+				.then((response) => response.json())
+				.then(() => {setPopupType(null)})
+				.then(() => {onDelete()})
+				.catch((error) => console.log(error));
+
+		} else if (mode === 'Application') {
+			fetch(`${host}/api/application/applications-delete`)
+				.then((response) => response.json())
+				.then(() => {setPopupType(null)})
+				.then(() => {onDelete()})
+				.catch((error) => console.log(error));
+		}
 	}
 	
 	let deletePopup = 
