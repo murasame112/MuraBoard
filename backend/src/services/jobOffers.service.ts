@@ -44,3 +44,21 @@ export async function getJobOffersStats(userId: number) {
 
 	return {summaryCount, stats: {applied, notApplied}};
 }
+
+export async function deleteJobOffers(ids: number[]){
+	const result = await prisma.$transaction([
+		prisma.application.deleteMany({
+			where: {
+				jobOfferId: {in: ids}
+			}
+		}),
+
+		prisma.jobOffer.deleteMany({
+			where: {
+				id: {in: ids}
+			}
+		})
+	]);
+
+	return result;
+}

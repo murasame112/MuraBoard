@@ -41,15 +41,12 @@ export default function MassActionPopup({mode, selected, onPopupClose, onDelete,
 	function handleDeletion(){
 		if (mode === 'JobOffer') {
 			fetch(`${host}/api/joboffer/offers-delete`, deletionOptions)
-				.then((response) => response.json())
-				.then(() => {setPopupType(null)})
-				.then(() => {onDelete()})
+				.then(() => onDelete())
 				.catch((error) => console.log(error));
 
 		} else if (mode === 'Application') {
 			fetch(`${host}/api/application/applications-delete`, deletionOptions)
-				.then(() => {setPopupType(null)})
-				.then(() => {onDelete()})
+				.then(() => onDelete())
 				.catch((error) => console.log(error));
 		}
 	}
@@ -67,7 +64,7 @@ export default function MassActionPopup({mode, selected, onPopupClose, onDelete,
 			{
 				popupType === 'delete' ? (
 					deletePopup
-				) : null
+				) : ''
 			}
 			<h4>{selected.size} {selected.size === 1 ? t('itemSelected') : t('itemsSelected')}</h4>
 			<h6>{t('selectAction')}</h6>

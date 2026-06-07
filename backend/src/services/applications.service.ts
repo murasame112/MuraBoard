@@ -57,5 +57,14 @@ export async function getApplicationsStats(userId: number) {
 
 	return {summaryCount, stats: {applied, inProgress, interview, offer, rejected}};
 
+}
 
+export async function deleteApplications(ids: number[]){
+	const result = await prisma.application.deleteMany({
+			where: {
+				id: {in: ids}
+			}
+		});
+
+	return result;
 }

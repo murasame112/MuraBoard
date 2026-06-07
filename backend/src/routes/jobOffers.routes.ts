@@ -6,5 +6,6 @@ const router = Router();
 router.get('/offers-for-dashboard', jobOffersController.getJobOffersForDashboard);
 router.get('/offers-count', jobOffersController.getJobOffersCount);
 router.get('/offers-stats', jobOffersController.getJobOffersStats);
+router.delete('/offers-delete', jobOffersController.deleteJobOffers);
 
 export default router;

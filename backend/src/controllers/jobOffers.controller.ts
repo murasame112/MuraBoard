@@ -64,3 +64,24 @@ export async function getJobOffersStats(req: Request, res: Response) {
 		return res.status(500).json({message: 'Something went wrong'});
 	}
 }
+
+type DeleteJobOfferBody = {
+	ids: number[];
+}
+export async function deleteJobOffers(req: Request, res: Response) {
+	try {
+		const { ids } = req.body as {
+			ids: number[];
+		};
+
+		if (!ids || ids.length === 0) {
+			return res.status(400).json({ message: 'Invalid ids'});
+		}
+
+		await jobOffersService.deleteJobOffers(ids);
+
+		return res.status(204).end();
+	} catch (error) {
+		return res.status(500).json({message: 'Something went wrong'});
+	}
+}

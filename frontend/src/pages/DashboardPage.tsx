@@ -38,6 +38,7 @@ export default function DashboardPage({mode}: DashboardPageProps){
 
 	function onDelete(){
 		setRefreshToken((prev) => prev + 1);
+		setMassActionPopupConfiguration((prev) => ({...prev, isDisplayed: false}));
 	}
 
   return(
@@ -66,7 +67,7 @@ export default function DashboardPage({mode}: DashboardPageProps){
 				/>
 			</div>
 			{formConfiguration.isDisplayed ? <DashboardFormWrapper mode={mode} type={formConfiguration.type} selected={formConfiguration.selected} onFormClose={onFormClose}/> : ''}
-			{massActionPopupConfiguration.isDisplayed? <MassActionPopup mode={mode} selected={massActionPopupConfiguration.selected} callForm={callForm} onDelete={onDelete} onPopupClose={onPopupClose} />: ''}
+			{massActionPopupConfiguration.isDisplayed ? <MassActionPopup mode={mode} selected={massActionPopupConfiguration.selected} callForm={callForm} onDelete={onDelete} onPopupClose={onPopupClose} />: ''}
     </div>
   )
 }
