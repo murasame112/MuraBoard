@@ -67,7 +67,7 @@ export async function getApplicationsStats(req: Request, res: Response) {
 type DeleteApplicationBody = {
 	ids: number[];
 }
-export async function deleteApplications(req: Request, res: Response) {
+export async function deleteApplications(req: Request<{}, {}, DeleteApplicationBody>, res: Response) {
 	try {
 		const { ids } = req.body as {
 			ids: number[];

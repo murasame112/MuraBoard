@@ -11,12 +11,12 @@ export async function getCompanies(req: Request, res: Response) {
 	}
 }
 
-type upsertCompanyBody = {
+type UpsertCompanyBody = {
 	name: string;
 	location: string;
 	website?: string;
 }
-export async function upsertCompany(req: Request<{}, {}, upsertCompanyBody>, res: Response) {
+export async function upsertCompany(req: Request<{}, {}, UpsertCompanyBody>, res: Response) {
 	console.log('called -------------------------------------');
 	try {
 			
