@@ -40,7 +40,7 @@ export default function DashboardPage({mode}: DashboardPageProps){
 
 	function onDelete(){
 		setRefreshToken((prev) => prev + 1);
-		setMassActionPopupConfiguration((prev) => ({...prev, isDisplayed: false}));
+		setMassActionPopupConfiguration({ selected: new Set() });
 	}
 
   return(
