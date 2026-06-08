@@ -1,8 +1,7 @@
+// TODO: to be deleted
 import type { Request, Response } from 'express';
-import {prisma} from '../index.js';
 import { ApplicationStatus, Prisma, UserRole } from '../generated/prisma/index.js';
 import bcrypt from 'bcrypt';
-import { companiesSeed, jobOffersSeed, applicationsSeed } from './testData.js';
 import type { Company } from '../models/models.js';
 import { Currency } from '../enums/enums.js';
 
