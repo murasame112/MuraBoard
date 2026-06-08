@@ -21,7 +21,7 @@ export default function DashboardList({mode, callForm, callMassActionPopup, refr
 
 	useEffect(() => {
 		fetchRecordCount()
-	}, [mode]);
+	}, [mode, refreshToken]);
 
 	function fetchRecordCount() {
 		//TODO: userId shouldn't be 4, it's just for development
@@ -50,7 +50,7 @@ export default function DashboardList({mode, callForm, callMassActionPopup, refr
 					}
 					setRecordCount(data);
 				})
-				.catch((error) => console.log(error));
+				.catch((error) => console.log(JSON.stringify(error)));
 		}
 	}
 
