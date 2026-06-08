@@ -35,14 +35,15 @@ export default function JobOffersTable({callForm, callMassActionPopup, currentPa
 	function handleCheckboxChange(e: React.ChangeEvent<HTMLInputElement>, id: number) {
 		let val = e.currentTarget.checked;
 		setSelectedCheckboxes(prev => {
+			const next = new Set(prev);
 			if (val) {
-				prev.add(id);
+				next.add(id);
 			} else {
-				prev.delete(id);
+				next.delete(id);
 			}
-			return new Set(prev);
+			callMassActionPopup(next);
+			return next;
 		});
-		callMassActionPopup(selectedCheckboxes);
 	}
 
 	function fetchData() {

@@ -8,13 +8,12 @@ type MassActionPopupProps = {
 	mode: DashboardMode
 	selected: Set<number>;
 	callForm: (type: DashboardFormType, selected?: Set<number>) => void;
-	onPopupClose: () => void;
 	onDelete: () => void;
 }
 
 type PopupType = 'edit' | 'delete' | null;
 
-export default function MassActionPopup({mode, selected, onPopupClose, onDelete, callForm}: MassActionPopupProps) {
+export default function MassActionPopup({mode, selected, onDelete, callForm}: MassActionPopupProps) {
 	const host = import.meta.env.VITE_API_URL;
 	const { t } = useTranslation();
 	const [popupType, setPopupType] = useState<PopupType>(null);
