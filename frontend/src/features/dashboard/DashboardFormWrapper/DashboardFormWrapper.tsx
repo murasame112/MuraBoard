@@ -16,10 +16,14 @@ type DashboardFormWrapperProps = {
 
 export default function DashboardFormWrapper({mode, type, onFormClose, selected = new Set<number>()}: DashboardFormWrapperProps){
 
+	function onSubmit(){
+		//TODO: implement;
+	}
+
 	return (
         <div className={styles.jobOfferFormWrapper}>
             {mode === 'JobOffer' ? (
-                <JobOffersForm />
+                <JobOffersForm onClose={onFormClose} onSubmit={onSubmit}/>
             ) : mode === 'Application' ? (
                 <ApplicationsForm />
             ) : (

@@ -12,7 +12,7 @@ type JobOffersForm = {
 	onSubmit: () => void;
 }
 
-export default function JobOffersForm(){
+export default function JobOffersForm({onClose, onSubmit}){
 	const { t } = useTranslation();
 	const host = import.meta.env.VITE_API_URL;
 
@@ -216,7 +216,7 @@ export default function JobOffersForm(){
 			
 			if (!response.ok) throw new Error(`request failed with status ${response.status}`);
 			//refetch();
-			//close(); TODO:
+			onClose();
 
 		} catch (error) {
 			console.error(error);
@@ -227,7 +227,7 @@ export default function JobOffersForm(){
 	return (
 			<div className={styles.jobOfferForm}>
 				<form onSubmit={handleSubmit}>
-					<div className={styles.closeButton}><button type='button' onClick={close}>X</button></div>
+					<div className={styles.closeButton}><button type='button' onClick={onClose}>X</button></div>
 
 					<div className={styles.jobOfferFormElement}>
 						<label htmlFor='positionInput' className={styles.jobOfferFormLabel}>
