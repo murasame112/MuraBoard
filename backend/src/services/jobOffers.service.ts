@@ -1,4 +1,7 @@
+import { connect } from 'node:http2';
 import { prisma } from '../db/prisma.js';
+import type { Currency } from '../enums/enums.js';
+import type { Company } from '../models/models.js';
 
 export async function getJobOffersDashboardData(userId: number, page: number, pageSize: number) {
 	const offers = await prisma.jobOffer.findMany({
@@ -43,6 +46,56 @@ export async function getJobOffersStats(userId: number) {
 	]);
 
 	return {summaryCount, stats: {applied, notApplied}};
+}
+
+export async function upsertJobOffer(userId: number, position: string, company: Company, id?: number, salaryMin?: number, salaryMax?: number, currency?: Currency ) {
+	const result = await prisma.$transaction(async (tx) => {
+		const user = await tx.user.findUnique({
+			where: { id: userId }
+		});
+
+		if (!user) {
+			return 'user_not_found';
+		}
+
+		if (!id) {
+			const jobOffer = await tx.jobOffer.create({
+				data: {
+					position,
+					salaryMin: salaryMin ?? null,
+					salaryMax: salaryMax ?? null,
+					currency: currency ?? null,
+					company: {
+						connect: { id: company.id }
+					},
+					user: {
+						connect: { id: user.id }
+					}
+				}
+			});
+			return jobOffer;
+		} else {
+			const jobOffer = await tx.jobOffer.update({
+				where: { id },
+				data: {
+					position,
+					salaryMin: salaryMin ?? null,
+					salaryMax: salaryMax ?? null,
+					currency: currency ?? null,
+					company: {
+						connect: { id: company.id }
+					},
+					user: {
+						connect: { id: user.id }
+					}		
+				}
+			});
+			return jobOffer;
+		}
+
+	});
+	return result;
+
 }
 
 export async function deleteJobOffers(ids: number[]){

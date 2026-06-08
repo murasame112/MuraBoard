@@ -28,12 +28,15 @@ export default function DashboardPage({mode}: DashboardPageProps){
 		setFormConfiguration((prev) => ({ ...prev, isDisplayed: false}))
 	}
 
+	function onFormSubmit() {
+		setRefreshToken((prev) => prev + 1);
+	}
+
 	function callMassActionPopup(selected: Set<number>){
 		setMassActionPopupConfiguration({
 			selected: new Set(selected)
 		});
 	}
-
 
 	function onDelete(){
 		setRefreshToken((prev) => prev + 1);
@@ -65,7 +68,7 @@ export default function DashboardPage({mode}: DashboardPageProps){
 						refreshToken={refreshToken}
 				/>
 			</div>
-			{formConfiguration.isDisplayed ? <DashboardFormWrapper mode={mode} type={formConfiguration.type} selected={formConfiguration.selected} onFormClose={onFormClose}/> : ''}
+			{formConfiguration.isDisplayed ? <DashboardFormWrapper mode={mode} type={formConfiguration.type} selected={formConfiguration.selected} onFormClose={onFormClose} onFormSubmit={onFormSubmit}/> : ''}
 			{massActionPopupConfiguration.selected.size > 0 ? <MassActionPopup mode={mode} selected={massActionPopupConfiguration.selected} callForm={callForm} onDelete={onDelete} />: ''}
     </div>
   )

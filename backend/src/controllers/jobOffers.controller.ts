@@ -1,5 +1,7 @@
 import type { Request, Response } from 'express';
 import * as jobOffersService from '../services/jobOffers.service.js';
+import type { Currency } from '../enums/enums.js';
+import type { Company } from '../models/models.js';
 
 export async function getJobOffersForDashboard(req: Request, res: Response) {
 	try {
@@ -65,10 +67,79 @@ export async function getJobOffersStats(req: Request, res: Response) {
 	}
 }
 
+type UpsertJobOfferBody = {
+	id?: number;
+	position: string;
+	salaryMin?: string;
+	salaryMax?: string;
+	currency: Currency | string;
+	company: Company;
+}
+
+export async function upsertJobOffer(req: Request<{}, {}, UpsertJobOfferBody>, res: Response) {
+	try {
+		const { userId } = req.query as {
+			userId?: string;
+		}
+		
+		if (!userId || Number.isNaN(userId)) {
+			return res.status(400).json({ message: 'Invalid user id' });
+		}
+
+		const { 
+			id,
+			position,
+			salaryMin,
+			salaryMax,
+			currency,
+			company 
+		} = req.body as {
+			id?: number;
+			position: string;
+			salaryMin?: string;
+			salaryMax?: string;
+			currency: Currency | string;
+			company: Company;
+		};
+
+		if (!position || !company || !currency) {
+			return res.status(400).json({message: 'Missing job offer data'});
+		}
+
+		if (Number.isNaN(salaryMin)) {
+			return res.status(400).json({ message: 'Invalid min salary' });
+		}
+
+		if (Number.isNaN(salaryMax)) {
+			return res.status(400).json({ message: 'Invalid max salary' });
+		}
+		
+		const result = await jobOffersService.upsertJobOffer(
+            Number(userId),
+            position,
+            company,
+            id ?? undefined,
+            salaryMin ? Number(salaryMin) : undefined,
+            salaryMax ? Number(salaryMax) :  undefined,
+						currency === 'unknown' ? undefined : (currency as Currency)
+    );
+		if (result === 'user_not_found') {
+			return res.status(404).json({
+				message: "User not found"
+			});
+		}
+
+		return res.status(201).json(result);
+
+	} catch (error) {
+		return res.status(500).json({message: 'Something went wrong'});
+	}
+}
+
 type DeleteJobOfferBody = {
 	ids: number[];
 }
-export async function deleteJobOffers(req: Request, res: Response) {
+export async function deleteJobOffers(req: Request<{}, {}, DeleteJobOfferBody>, res: Response) {
 	try {
 		const { ids } = req.body as {
 			ids: number[];

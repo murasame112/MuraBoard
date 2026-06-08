@@ -12,7 +12,7 @@ type JobOffersForm = {
 	onSubmit: () => void;
 }
 
-export default function JobOffersForm({onClose, onSubmit}){
+export default function JobOffersForm({onClose, onSubmit}: JobOffersForm){
 	const { t } = useTranslation();
 	const host = import.meta.env.VITE_API_URL;
 
@@ -204,19 +204,23 @@ export default function JobOffersForm({onClose, onSubmit}){
 
 	async	function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
 		e.preventDefault();
-		const addJobOfferRequestOptions = {
+		const upsertJobOfferRequestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(values),
     };
 		
 		try {
-			//FIXME: fetch
-			const response = await fetch(`${host}/api/joboffer/upsert`, addJobOfferRequestOptions);
-			
-			if (!response.ok) throw new Error(`request failed with status ${response.status}`);
-			//refetch();
-			onClose();
+			//TODO: userId shouldn't be 4, it's just for development
+			const userId = 4;
+			fetch(`${host}/api/joboffer/offers-upsert?userId=${userId}`, upsertJobOfferRequestOptions)
+				.then((response) => {
+					if (!response.ok) throw new Error(`request failed with status ${response.status}`);
+
+					onClose();
+					onSubmit();
+				})
+				.catch((error) => console.log(JSON.stringify(error)));
 
 		} catch (error) {
 			console.error(error);
