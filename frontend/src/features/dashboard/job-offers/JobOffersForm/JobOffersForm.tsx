@@ -1,5 +1,5 @@
 import styles from './JobOffersForm.module.css';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useTranslation } from '../../../../shared/i18n/useTranslation';
 import { ChevronDownIcon } from '@heroicons/react/24/outline';
 import CompanyCombobox from '../../../../shared/ui/CompanyCombobox/CompanyCombobox';

@@ -4,5 +4,6 @@ import * as companiesController from '../controllers/companies.controller.js';
 const router = Router();
 
 router.get('/companies', companiesController.getCompanies);
+router.post('/companies-upsert', companiesController.upsertCompany);
 
 export default router;

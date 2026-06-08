@@ -144,7 +144,7 @@ export default function CompanyCombobox({labelClass, additionalFormTextClass, ge
 				setLimitedCompanies(sortedData);
 			})
 			.catch((error) => console.log(error));
-	}, []);
+	}, [companyValues]);
 
 	function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
 		let value = e.currentTarget.value;
@@ -196,21 +196,19 @@ export default function CompanyCombobox({labelClass, additionalFormTextClass, ge
 	}
 
 	function handleAddingCompany() {
-		const addCompanyRequestOptions = {
+		const upsertCompanyRequestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newCompanyValues),
     };
 
-		// TODO: fetch needs to be changed
-		fetch(`${host}/api/joboffer/company`, addCompanyRequestOptions)
+		fetch(`${host}/api/company/companies-upsert`, upsertCompanyRequestOptions)
 			.then((response) => response.json())
 			.then((data: Company) => {
 				getCompany(data);
 				setCompanyValues(data);
 			})
-			.catch((error) => console.log(error));
-		
+			.catch((error) => console.log(JSON.stringify(error)));
 	}
 
 	return (
