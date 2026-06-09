@@ -30,17 +30,18 @@ export default function DashboardPage({mode}: DashboardPageProps){
 
 	function onFormSubmit() {
 		setRefreshToken((prev) => prev + 1);
+		setMassActionPopupConfiguration({ selected: new Set<number>() });
 	}
 
 	function callMassActionPopup(selected: Set<number>){
 		setMassActionPopupConfiguration({
-			selected: new Set(selected)
+			selected: new Set<number>(selected)
 		});
 	}
 
 	function onDelete(){
 		setRefreshToken((prev) => prev + 1);
-		setMassActionPopupConfiguration({ selected: new Set() });
+		setMassActionPopupConfiguration({ selected: new Set<number>() });
 	}
 
   return(

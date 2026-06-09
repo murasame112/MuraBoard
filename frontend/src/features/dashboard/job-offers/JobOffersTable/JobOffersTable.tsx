@@ -82,7 +82,7 @@ export default function JobOffersTable({callForm, callMassActionPopup, currentPa
 			{jobOffers.length === 0 ? (<p>{t('noJobOffersFound')} - <span className={styles.createOne} onClick={() => callForm('add')}>{t('createOne')}</span>!</p>) : 
 			jobOffers.map((element) => (
 				<div key={element.id} className={styles.jobOfferItem}>
-					<div className={styles.select}><input type='checkbox' name='selectItem' onChange={(e) => {handleCheckboxChange(e, element.id)}}/></div>
+					<div className={styles.select}><input type='checkbox' name='selectItem' checked={selectedCheckboxes.has(element.id)} onChange={(e) => {handleCheckboxChange(e, element.id)}}/></div>
 
 					<div className={styles.companyName} onClick={() => {selectCompany(element.id)}}>
 					{element.id === selectedCompany && (
