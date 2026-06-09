@@ -15,7 +15,7 @@ type DashboardPageProps = {
 }
 
 export default function DashboardPage({mode}: DashboardPageProps){
-	const [formConfiguration, setFormConfiguration] = useState<{isDisplayed: boolean, type: DashboardFormType, selectedId?: number}>({isDisplayed: false, type: 'add', selected: undefined});
+	const [formConfiguration, setFormConfiguration] = useState<{isDisplayed: boolean, type: DashboardFormType, selectedId?: number}>({isDisplayed: false, type: 'add', selectedId: undefined});
 	const [massActionPopupConfiguration, setMassActionPopupConfiguration] = useState<{selected: Set<number>}>({selected: new Set<number>()});
 	const [refreshToken, setRefreshToken] = useState<number>(0);
 	const { t } = useTranslation();
