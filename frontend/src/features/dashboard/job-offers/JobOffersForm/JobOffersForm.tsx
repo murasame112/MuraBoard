@@ -289,7 +289,7 @@ export default function JobOffersForm({onClose, onSubmit, type, selectedId}: Job
 					
 					<div className={styles.jobOfferFormElement}>
 						<label htmlFor='salaryMinInput' className={styles.jobOfferFormLabel}>
-							{t('salary')}
+							{t('salary')} (min - max)
 						</label>
 						<p className={styles.additionalFormText}>{t('canBeLeftEmpty')}</p>
 						<div className={styles.salaryInputsBox}>
