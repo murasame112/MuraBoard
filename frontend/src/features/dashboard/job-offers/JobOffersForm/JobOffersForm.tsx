@@ -226,27 +226,50 @@ export default function JobOffersForm({onClose, onSubmit, type, selectedId}: Job
 
 	async	function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
 		e.preventDefault();
-		const upsertJobOfferRequestOptions = {
+		//TODO: userId shouldn't be 4, it's just for development
+		const userId = 4;
+
+		if (type === 'add') {
+			const insertJobOfferRequestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(values),
-    };
+    	};
 		
-		try {
-			//TODO: userId shouldn't be 4, it's just for development
-			const userId = 4;
-			fetch(`${host}/api/joboffer/offers-upsert?userId=${userId}`, upsertJobOfferRequestOptions)
-				.then((response) => {
-					if (!response.ok) throw new Error(`request failed with status ${response.status}`);
+			try {
+				fetch(`${host}/api/joboffer/offers-insert?userId=${userId}`, insertJobOfferRequestOptions)
+					.then((response) => {
+						if (!response.ok) throw new Error(`request failed with status ${response.status}`);
 
-					onClose();
-					onSubmit();
-				})
-				.catch((error) => console.log(JSON.stringify(error)));
+						onClose();
+						onSubmit();
+					})
+					.catch((error) => console.log(JSON.stringify(error)));
+			} catch (error) {
+				console.error(error);
+			}
 
-		} catch (error) {
-			console.error(error);
+		} else if (type === 'edit') {
+			const updateJobOfferRequestOptions = {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({id: selectedId, ...values}),
+    	};
+		
+			try {
+				fetch(`${host}/api/joboffer/offers-update?userId=${userId}`, updateJobOfferRequestOptions)
+					.then((response) => {
+						if (!response.ok) throw new Error(`request failed with status ${response.status}`);
+
+						onClose();
+						onSubmit();
+					})
+					.catch((error) => console.log(JSON.stringify(error)));
+			} catch (error) {
+				console.error(error);
+			}
 		}
+
 	}
 
 	return (
