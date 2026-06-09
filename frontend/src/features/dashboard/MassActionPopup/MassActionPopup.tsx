@@ -23,10 +23,10 @@ export default function MassActionPopup({mode, selected, onDelete, onFormClose, 
 		if (popupType === type) {
 			setPopupType(null);
 		} else {
-			setPopupType(type);
-			if (type === 'delete' && popupType === 'edit') {
+			if (popupType === 'edit') {
 				onFormClose();
 			}
+			setPopupType(type);
 		}
 
 		if (type === 'edit') {
