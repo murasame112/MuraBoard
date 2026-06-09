@@ -9,9 +9,10 @@ type CompanyComboboxProps = {
 	labelClass: string;
 	additionalFormTextClass: string;
 	getCompany: (company: Company | null) => void;
+	selectedCompany?: Company;
 }
 
-export default function CompanyCombobox({labelClass, additionalFormTextClass, getCompany}: CompanyComboboxProps) {
+export default function CompanyCombobox({labelClass, additionalFormTextClass, getCompany, selectedCompany}: CompanyComboboxProps) {
 	const { t } = useTranslation();
 	const [companies, setCompanies] = useState<Company[]>([]);
 	const [limitedCompanies, setLimitedCompanies] = useState<Company[]>([]);
@@ -38,6 +39,12 @@ export default function CompanyCombobox({labelClass, additionalFormTextClass, ge
 		location: null,
 		website: null,
 	});
+
+	useEffect(() => {
+		if (selectedCompany) {
+			setCompanyValues(selectedCompany);
+		}
+	}, [selectedCompany]);
 
 	function validate(e: React.FocusEvent<HTMLInputElement | HTMLSelectElement>) {
 		const currentValidation = validationRegister[e.currentTarget.name as FormFields];

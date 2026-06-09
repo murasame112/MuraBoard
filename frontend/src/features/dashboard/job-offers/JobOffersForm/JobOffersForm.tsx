@@ -18,6 +18,7 @@ type JobOffersForm = {
 export default function JobOffersForm({onClose, onSubmit, type, selectedId}: JobOffersForm){
 	const { t } = useTranslation();
 	const host = import.meta.env.VITE_API_URL;
+	const [selectedCompany, setSelectedCompany] = useState<Company>();
 
 	type FormFields =
     | 'position'
@@ -74,14 +75,11 @@ export default function JobOffersForm({onClose, onSubmit, type, selectedId}: Job
 						salaryMax: data.salaryMax ?? '',
 						currency: data.currency ?? 'unknown',
 						company: data.company
-					})
+					});
+					setSelectedCompany(data.company);
 				})
 				.catch((error) => console.log(JSON.stringify(error)));
-		}
-		//fetch job offer data
-		// setValues
-		// send info to companyCombobox
-		
+		}		
 	}, [selectedId]);
 
 	function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) {
@@ -293,7 +291,7 @@ export default function JobOffersForm({onClose, onSubmit, type, selectedId}: Job
 					</div>
 					<div className={styles.jobOfferFormElement}>
 						<label htmlFor='comboboxSelect' className={styles.jobOfferFormLabel}>{t('company')}</label>
-						<CompanyCombobox labelClass={styles.jobOfferFormLabel} additionalFormTextClass={styles.additionalFormText} getCompany={getCompany}  />
+						<CompanyCombobox labelClass={styles.jobOfferFormLabel} additionalFormTextClass={styles.additionalFormText} getCompany={getCompany} selectedCompany={selectedCompany}/>
 					</div>
 
 					<div className={styles.jobOfferFormSubmit}>
