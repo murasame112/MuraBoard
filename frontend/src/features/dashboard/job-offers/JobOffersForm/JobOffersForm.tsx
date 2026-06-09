@@ -63,6 +63,27 @@ export default function JobOffersForm({onClose, onSubmit, type, selectedId}: Job
 		company: null
 	});
 
+	useEffect(() => {
+		if (selectedId) {
+			fetch(`${host}/api/joboffer/offers-by-id?id=${selectedId}`)
+				.then(response => response.json())
+				.then(data => {
+					setValues({
+						position: data.position,
+						salaryMin: data.salaryMin ?? '',
+						salaryMax: data.salaryMax ?? '',
+						currency: data.currency ?? 'unknown',
+						company: data.company
+					})
+				})
+				.catch((error) => console.log(JSON.stringify(error)));
+		}
+		//fetch job offer data
+		// setValues
+		// send info to companyCombobox
+		
+	}, [selectedId]);
+
 	function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) {
 		let value = e.currentTarget.value;
 		let name = e.currentTarget.name;

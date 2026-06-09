@@ -48,6 +48,17 @@ export async function getJobOffersStats(userId: number) {
 	return {summaryCount, stats: {applied, notApplied}};
 }
 
+export async function getJobOfferById(id: number) { 
+	const result = await prisma.jobOffer.findFirst({
+		where: { id },
+		include: {
+			company: true,
+			application: false
+		}
+	});
+	return result;
+}
+
 export async function upsertJobOffer(userId: number, position: string, company: Company, id?: number, salaryMin?: number, salaryMax?: number, currency?: Currency ) {
 	const result = await prisma.$transaction(async (tx) => {
 		const user = await tx.user.findUnique({

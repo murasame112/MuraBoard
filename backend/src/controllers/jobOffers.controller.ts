@@ -67,6 +67,24 @@ export async function getJobOffersStats(req: Request, res: Response) {
 	}
 }
 
+export async function getJobOfferById(req: Request, res: Response) {
+	try {
+		const { id } = req.query as {
+			id?: string; 
+		}
+
+		if (!id || Number.isNaN(id)) {
+			return res.status(400).json({ message: 'Invalid id'});
+		}
+
+		const data = await jobOffersService.getJobOfferById(Number(id));
+		return res.status(200).json(data);
+
+	} catch (error) {
+		return res.status(500).json({message: 'Something went wrong'});
+	}
+}
+
 type UpsertJobOfferBody = {
 	id?: number;
 	position: string;
