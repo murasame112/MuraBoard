@@ -6,7 +6,7 @@ import type { DashboardFormType } from '../../DashboardFormWrapper/DashboardForm
 
 
 type JobOffersTableProps = {
-	callForm: (type: DashboardFormType, selected?: Set<number>) => void;
+	callForm: (type: DashboardFormType, selectedId?: number) => void;
 	callMassActionPopup: (selected: Set<number>) => void;
 	currentPage: number;
 	pageSize: number;

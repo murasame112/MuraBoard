@@ -27,14 +27,15 @@
 	margin: 0;
 }
 
-.massActionPopup h4 {
-	margin:
-}
-
 .deleteButton, .editButton  {
 	width: 80px;
 	height: 30px;
 	margin-top: 25px;
+}
+
+.editButton:disabled {
+	background-color: var(--secondary-text);
+	cursor: default;
 }
 
 .extraPopup {

@@ -1,18 +1,21 @@
 import styles from './JobOffersForm.module.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from '../../../../shared/i18n/useTranslation';
 import { ChevronDownIcon } from '@heroicons/react/24/outline';
 import CompanyCombobox from '../../../../shared/ui/CompanyCombobox/CompanyCombobox';
 import ErrorBox from '../../../../shared/ui/ErrorBox/ErrorBox';
 import { Currency } from '../../../../shared/enums/enums';
 import type { Company } from '../../../../shared/models/models';
+import type { DashboardFormType } from '../../DashboardFormWrapper/DashboardFormWrapper';
 
 type JobOffersForm = {
 	onClose: () => void;
 	onSubmit: () => void;
+	type: DashboardFormType;
+	selectedId?: number;
 }
 
-export default function JobOffersForm({onClose, onSubmit}: JobOffersForm){
+export default function JobOffersForm({onClose, onSubmit, type, selectedId}: JobOffersForm){
 	const { t } = useTranslation();
 	const host = import.meta.env.VITE_API_URL;
 
@@ -227,7 +230,6 @@ export default function JobOffersForm({onClose, onSubmit}: JobOffersForm){
 		}
 	}
 
-
 	return (
 			<div className={styles.jobOfferForm}>
 				<form onSubmit={handleSubmit}>
@@ -241,7 +243,6 @@ export default function JobOffersForm({onClose, onSubmit}: JobOffersForm){
 							<input className={styles.positionInput} id='positionInput' name='position' type='text' onChange={handleChange} onBlur={validate} value={values.position}/>
 							{errors.position ? <ErrorBox message={errors.position} /> : ''}
 						</div>
-						
 					</div>
 					
 					<div className={styles.jobOfferFormElement}>

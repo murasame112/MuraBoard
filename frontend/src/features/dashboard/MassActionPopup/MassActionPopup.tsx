@@ -7,7 +7,7 @@ import type { DashboardFormType } from '../DashboardFormWrapper/DashboardFormWra
 type MassActionPopupProps = {
 	mode: DashboardMode
 	selected: Set<number>;
-	callForm: (type: DashboardFormType, selected?: Set<number>) => void;
+	callForm: (type: DashboardFormType, selectedId?: number) => void;
 	onDelete: () => void;
 }
 
@@ -26,7 +26,7 @@ export default function MassActionPopup({mode, selected, onDelete, callForm}: Ma
 		}
 
 		if (type === 'edit') {
-			callForm('edit', selected)
+			callForm('edit', selected.values().next().value);
 		}
 		
 	}
@@ -68,7 +68,7 @@ export default function MassActionPopup({mode, selected, onDelete, callForm}: Ma
 			<h4>{selected.size} {selected.size === 1 ? t('itemSelected') : t('itemsSelected')}</h4>
 			<h6>{t('selectAction')}</h6>
 			<div className={styles.buttons}>
-				<button type='button' className={styles.editButton} onClick={(e) => {handleMassActionButton(e, 'edit')}}>{t('edit')}</button>
+				<button type='button' className={styles.editButton} onClick={(e) => {handleMassActionButton(e, 'edit')}} disabled={selected.size === 1 ? false : true}>{t('edit')}</button>
 				<button type='button' className={styles.deleteButton} onClick={(e) => {handleMassActionButton(e, 'delete')}}>{t('delete')}</button>
 			</div>
 		</div>

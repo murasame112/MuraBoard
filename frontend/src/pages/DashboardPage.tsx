@@ -15,13 +15,13 @@ type DashboardPageProps = {
 }
 
 export default function DashboardPage({mode}: DashboardPageProps){
-	const [formConfiguration, setFormConfiguration] = useState<{isDisplayed: boolean, type: DashboardFormType, selected?: Set<number>}>({isDisplayed: false, type: 'add', selected: new Set<number>()});
+	const [formConfiguration, setFormConfiguration] = useState<{isDisplayed: boolean, type: DashboardFormType, selectedId?: number}>({isDisplayed: false, type: 'add', selected: undefined});
 	const [massActionPopupConfiguration, setMassActionPopupConfiguration] = useState<{selected: Set<number>}>({selected: new Set<number>()});
 	const [refreshToken, setRefreshToken] = useState<number>(0);
 	const { t } = useTranslation();
 
-	function callForm(type: DashboardFormType, selected?: Set<number>){
-		setFormConfiguration({isDisplayed: true, type, selected});	
+	function callForm(type: DashboardFormType, selectedId?: number){
+		setFormConfiguration({isDisplayed: true, type, selectedId});	
 	}
 
 	function onFormClose(){
@@ -68,7 +68,7 @@ export default function DashboardPage({mode}: DashboardPageProps){
 						refreshToken={refreshToken}
 				/>
 			</div>
-			{formConfiguration.isDisplayed ? <DashboardFormWrapper mode={mode} type={formConfiguration.type} selected={formConfiguration.selected} onFormClose={onFormClose} onFormSubmit={onFormSubmit}/> : ''}
+			{formConfiguration.isDisplayed ? <DashboardFormWrapper mode={mode} type={formConfiguration.type} selectedId={formConfiguration.selectedId} onFormClose={onFormClose} onFormSubmit={onFormSubmit}/> : ''}
 			{massActionPopupConfiguration.selected.size > 0 ? <MassActionPopup mode={mode} selected={massActionPopupConfiguration.selected} callForm={callForm} onDelete={onDelete} />: ''}
     </div>
   )

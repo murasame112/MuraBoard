@@ -9,19 +9,18 @@ export type DashboardFormType = 'add' | 'edit';
 type DashboardFormWrapperProps = {
 	mode: DashboardMode;
 	type: DashboardFormType;
-	selected?: Set<number>;
+	selectedId?: number;
 	onFormClose: () => void;
 	onFormSubmit: () => void;
 }
 
 
-export default function DashboardFormWrapper({mode, type, onFormClose, onFormSubmit, selected = new Set<number>()}: DashboardFormWrapperProps){
-
+export default function DashboardFormWrapper({mode, type, onFormClose, onFormSubmit, selectedId}: DashboardFormWrapperProps){
 
 	return (
         <div className={styles.jobOfferFormWrapper}>
             {mode === 'JobOffer' ? (
-                <JobOffersForm onClose={onFormClose} onSubmit={onFormSubmit}/>
+                <JobOffersForm type={type} selectedId={selectedId} onClose={onFormClose} onSubmit={onFormSubmit}/>
             ) : mode === 'Application' ? (
                 <ApplicationsForm />
             ) : (

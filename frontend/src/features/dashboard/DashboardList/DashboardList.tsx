@@ -8,7 +8,7 @@ import type { DashboardFormType } from '../DashboardFormWrapper/DashboardFormWra
 
 type DashboardListProps = {
 	mode: DashboardMode;
-	callForm: (type: DashboardFormType, selected?: Set<number>) => void;
+	callForm: (type: DashboardFormType, selectedId?: number) => void;
 	callMassActionPopup: (selected: Set<number>) => void;
 	refreshToken: number;
 }

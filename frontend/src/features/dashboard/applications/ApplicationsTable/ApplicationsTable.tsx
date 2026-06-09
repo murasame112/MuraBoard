@@ -2,7 +2,7 @@ import type { DashboardFormType } from '../../DashboardFormWrapper/DashboardForm
 import styles from './ApplicationsTable.module.css';
 
 type ApplicationsTableProps = {
-	callForm: (type: DashboardFormType, selected?: Set<number>) => void;
+	callForm: (type: DashboardFormType, selectedId?: number) => void;
 	callMassActionPopup: (selected: Set<number>) => void;
 }
 
