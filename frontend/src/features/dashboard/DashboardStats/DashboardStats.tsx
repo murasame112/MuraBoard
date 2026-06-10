@@ -153,7 +153,7 @@ export default function DashboardStats({className, mode, refreshToken, searchPhr
 	
 	useEffect(() => {
 		fetchStatsData();
-	}, [mode, refreshToken]);
+	}, [mode, refreshToken, searchPhrase]);
 	
 	
 	return(

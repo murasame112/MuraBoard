@@ -31,7 +31,7 @@ export default function JobOffersTable({callForm, callMassActionPopup, currentPa
 
 	useEffect(() => {
 		fetchData();
-	}, [refreshToken, currentPage]);
+	}, [refreshToken, currentPage, searchPhrase, pageSize]);
 
 	useEffect(() => {
 		callMassActionPopup(selectedCheckboxes);
