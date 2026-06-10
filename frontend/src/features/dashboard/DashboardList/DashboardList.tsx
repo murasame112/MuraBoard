@@ -36,7 +36,7 @@ export default function DashboardList({mode, callForm, callMassActionPopup, refr
                     callMassActionPopup={callMassActionPopup}
                 />
             )}
-						<DashboardPager recordCount={recordCount} currentPage={currentPage} pageSize={pageSize} onPageChange={setCurrentPage} refreshToken={refreshToken}/>
+						<DashboardPager recordCount={recordCount} currentPage={currentPage} pageSize={pageSize} onPageChange={setCurrentPage}/>
         </div>
     );
 

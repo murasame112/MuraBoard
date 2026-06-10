@@ -8,10 +8,9 @@ type DashboardPagerType = {
 	currentPage: number;
 	pageSize: number ;
 	onPageChange: React.Dispatch<React.SetStateAction<number>>;
-	refreshToken: number;
 }
 
-export default function DashboardPager({recordCount, currentPage, pageSize, onPageChange, refreshToken}: DashboardPagerType) {
+export default function DashboardPager({recordCount, currentPage, pageSize, onPageChange}: DashboardPagerType) {
 	const { t } = useTranslation();
 	const lastPage = Math.ceil(recordCount/pageSize);
 	let start: number;
