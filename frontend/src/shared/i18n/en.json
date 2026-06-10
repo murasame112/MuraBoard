@@ -66,6 +66,9 @@
 	"formError.companyLocationTooLong": "company location is too long",
 	"formError.companyWebsiteTooShort": "company website is too short",
 	"formError.companyWebsiteTooLong": "company website is too long",
-	"formError.companyWebsiteInvalid": "company website is invalid"
+	"formError.companyWebsiteInvalid": "company website is invalid",
+
+	"goToPage": "go to page",
+	"go": "go"
 
 }

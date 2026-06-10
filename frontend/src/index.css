@@ -71,6 +71,11 @@ button:hover {
 	background-color: var(--secondary-theme);
 }
 
+button:disabled {
+	background-color: var(--secondary-text);
+	cursor: default;
+}
+
 input {
 	font-family: "Inter", sans-serif;
 	font-optical-sizing: auto;
