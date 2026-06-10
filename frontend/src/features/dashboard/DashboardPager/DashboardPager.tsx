@@ -2,17 +2,17 @@ import styles from './DashboardPager.module.css';
 import { ChevronDoubleLeftIcon, ChevronDoubleRightIcon, ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
 import { useTranslation } from '../../../shared/i18n/useTranslation';
 import { useState } from 'react';
+import type { QueryState } from '../../../pages/DashboardPage';
 
 type DashboardPagerType = {
 	recordCount: number;
-	currentPage: number;
-	pageSize: number ;
-	onPageChange: React.Dispatch<React.SetStateAction<number>>;
+	queryState: QueryState;
+	onPageChange: (page: number) => void;
 }
 
-export default function DashboardPager({recordCount, currentPage, pageSize, onPageChange}: DashboardPagerType) {
+export default function DashboardPager({recordCount, queryState, onPageChange}: DashboardPagerType) {
 	const { t } = useTranslation();
-	const lastPage = Math.ceil(recordCount/pageSize);
+	const lastPage = Math.ceil(recordCount/queryState.pageSize);
 	let start: number;
 	const slots: number[] = [];
 	const [goToPageValue, setGoToPageValue] = useState<string>('');
@@ -20,12 +20,12 @@ export default function DashboardPager({recordCount, currentPage, pageSize, onPa
 	if (lastPage <= 5){ 
 		start = 1;
 	} else {
-		if (currentPage <= 3) {
+		if (queryState.currentPage <= 3) {
 			start = 1;
-		} else if (currentPage >= lastPage - 2) {
+		} else if (queryState.currentPage >= lastPage - 2) {
 			start = lastPage - 4;
 		} else {
-			start = currentPage - 2;
+			start = queryState.currentPage - 2;
 		}
 	}
 
@@ -36,9 +36,7 @@ export default function DashboardPager({recordCount, currentPage, pageSize, onPa
 	function handleChange(e: React.ChangeEvent<HTMLInputElement>){
 		let value = e.currentTarget.value;
 		value = value.replace(/\D/g, '');
-		console.log(value);
 		setGoToPageValue(value);
-		
 	}
 
 	function handleGoToPage(){
@@ -49,32 +47,35 @@ export default function DashboardPager({recordCount, currentPage, pageSize, onPa
 			page = lastPage;
 		}
 		if(!isNaN(page)) onPageChange(page);
+		setGoToPageValue('');
 	}
 
 	type ArrowTypes = 'first' | 'last' | 'prev' | 'next';
 	function handlePageArrowChange(arrow: ArrowTypes){
 		switch(arrow){
 			case 'first':
-				if (currentPage === 1) break;
+				if (queryState.currentPage === 1) break;
 				onPageChange(1);
 				break;
 			case 'prev':
-				if (currentPage === 1) break;
-				onPageChange(currentPage - 1);
+				if (queryState.currentPage === 1) break;
+				onPageChange(queryState.currentPage - 1);
 				break;
 			case 'next':
-				if (currentPage === lastPage) break;
-				onPageChange(currentPage + 1);
+				if (queryState.currentPage === lastPage) break;
+				onPageChange(queryState.currentPage + 1);
 				break;
 			case 'last':
-				if (currentPage === lastPage) break;
+				if (queryState.currentPage === lastPage) break;
 				onPageChange(lastPage);
 				break;
 		}
+		setGoToPageValue('');
 	}
 
 	function handlePageChange(page: number){
-		if( page > lastPage || page === currentPage) return;
+		if( page > lastPage || page === queryState.currentPage) return;
+		setGoToPageValue('');
 		onPageChange(page);
 	}
 
@@ -83,18 +84,18 @@ export default function DashboardPager({recordCount, currentPage, pageSize, onPa
             <div className={styles.pager}>
                 <div className={styles.pagesBox}>
                     <ChevronDoubleLeftIcon
-                        className={`${styles.arrowButton} ${currentPage === 1 ? styles.arrowDisabled : styles.arrowActive}`}
+                        className={`${styles.arrowButton} ${queryState.currentPage === 1 ? styles.arrowDisabled : styles.arrowActive}`}
                         onClick={() => handlePageArrowChange('first')}
                     />
                     <ChevronLeftIcon
-                        className={`${styles.arrowButton} ${currentPage === 1 ? styles.arrowDisabled : styles.arrowActive}`}
+                        className={`${styles.arrowButton} ${queryState.currentPage === 1 ? styles.arrowDisabled : styles.arrowActive}`}
                         onClick={() => handlePageArrowChange('prev')}
                     />
 
                     {slots.map((element, index) => (
                         <div
                             key={element}
-                            className={`${element === currentPage ? styles.pageActive : element > lastPage ? styles.pageDisabled : ''} ${styles.page}`}
+                            className={`${element === queryState.currentPage ? styles.pageActive : element > lastPage ? styles.pageDisabled : ''} ${styles.page}`}
                             onClick={() => handlePageChange(index + 1)}
                         >
                             {element}
@@ -102,11 +103,11 @@ export default function DashboardPager({recordCount, currentPage, pageSize, onPa
                     ))}
 
                     <ChevronRightIcon
-                        className={`${styles.arrowButton} ${currentPage === lastPage ? styles.arrowDisabled : styles.arrowActive}`}
+                        className={`${styles.arrowButton} ${queryState.currentPage === lastPage ? styles.arrowDisabled : styles.arrowActive}`}
                         onClick={() => handlePageArrowChange('next')}
                     />
                     <ChevronDoubleRightIcon
-                        className={`${styles.arrowButton} ${currentPage === lastPage ? styles.arrowDisabled : styles.arrowActive}`}
+                        className={`${styles.arrowButton} ${queryState.currentPage === lastPage ? styles.arrowDisabled : styles.arrowActive}`}
                         onClick={() => handlePageArrowChange('last')}
                     />
                 </div>

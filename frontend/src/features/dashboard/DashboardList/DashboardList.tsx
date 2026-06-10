@@ -1,34 +1,30 @@
 import styles from './DashboardList.module.css';
-import { useState, useEffect } from 'react';
 import type { DashboardMode } from '../../../layouts/main-layout/AppNavigation/AppNavigation';
 import JobOffersTable from '../job-offers/JobOffersTable/JobOffersTable';
 import ApplicationsTable from '../applications/ApplicationsTable/ApplicationsTable';
 import DashboardPager from '../DashboardPager/DashboardPager';
 import type { DashboardFormType } from '../DashboardFormWrapper/DashboardFormWrapper';
+import type { QueryState } from '../../../pages/DashboardPage';
 
 type DashboardListProps = {
 	mode: DashboardMode;
 	callForm: (type: DashboardFormType, selectedId?: number) => void;
 	callMassActionPopup: (selected: Set<number>) => void;
 	refreshToken: number;
-	searchPhrase: string;
 	recordCount: number;
-	pageSize: number;
-	currentPage: number;
-	setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
+	queryState: QueryState;
+	onPageChange: (page: number) => void;
 }
 
-export default function DashboardList({mode, callForm, callMassActionPopup, refreshToken, searchPhrase, recordCount, pageSize, currentPage, setCurrentPage}: DashboardListProps){
+export default function DashboardList({mode, callForm, callMassActionPopup, refreshToken, recordCount, queryState, onPageChange}: DashboardListProps){
 	return (
         <div className={styles.dashboardList}>
             {mode === 'JobOffer' ? (
                 <JobOffersTable
                     callForm={callForm}
                     callMassActionPopup={callMassActionPopup}
-										currentPage={currentPage}
-										pageSize={pageSize}
 										refreshToken={refreshToken}
-										searchPhrase={searchPhrase}
+										queryState={queryState}
                 />
             ) : (
                 <ApplicationsTable
@@ -36,7 +32,7 @@ export default function DashboardList({mode, callForm, callMassActionPopup, refr
                     callMassActionPopup={callMassActionPopup}
                 />
             )}
-						<DashboardPager recordCount={recordCount} currentPage={currentPage} pageSize={pageSize} onPageChange={setCurrentPage}/>
+						<DashboardPager recordCount={recordCount} queryState={queryState} onPageChange={onPageChange}/>
         </div>
     );
 

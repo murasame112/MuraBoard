@@ -3,18 +3,17 @@ import type { JobOffer } from '../../../../shared/models/models';
 import { useTranslation } from '../../../../shared/i18n/useTranslation';
 import { useEffect, useState } from 'react';
 import type { DashboardFormType } from '../../DashboardFormWrapper/DashboardFormWrapper';
+import type { QueryState } from '../../../../pages/DashboardPage';
 
 
 type JobOffersTableProps = {
 	callForm: (type: DashboardFormType, selectedId?: number) => void;
 	callMassActionPopup: (selected: Set<number>) => void;
-	currentPage: number;
-	pageSize: number;
 	refreshToken: number;
-	searchPhrase: string;
+	queryState: QueryState;
 }
 
-export default function JobOffersTable({callForm, callMassActionPopup, currentPage, pageSize, refreshToken, searchPhrase}: JobOffersTableProps){
+export default function JobOffersTable({callForm, callMassActionPopup, refreshToken, queryState}: JobOffersTableProps){
 	const { t } = useTranslation();
 	const [selectedCompany, setSelectedCompany] = useState<number | null>(null);
 	const [selectedCheckboxes, setSelectedCheckboxes] = useState<Set<number>>(new Set<number>());
@@ -31,7 +30,7 @@ export default function JobOffersTable({callForm, callMassActionPopup, currentPa
 
 	useEffect(() => {
 		fetchData();
-	}, [refreshToken, currentPage, searchPhrase, pageSize]);
+	}, [refreshToken, queryState]);
 
 	useEffect(() => {
 		callMassActionPopup(selectedCheckboxes);
@@ -54,7 +53,7 @@ export default function JobOffersTable({callForm, callMassActionPopup, currentPa
 	function fetchData() {
 		//TODO: userId shouldn't be 4, it's just for development
 		const userId = 4;
-		fetch(`${host}/api/joboffer/offers-for-dashboard?userId=${userId}&page=${currentPage}&pageSize=${pageSize}&searchPhrase=${searchPhrase}`)
+		fetch(`${host}/api/joboffer/offers-for-dashboard?userId=${userId}&page=${queryState.currentPage}&pageSize=${queryState.pageSize}&searchPhrase=${queryState.searchPhrase}`)
 			.then((response) => response.json())
 			.then((data) => {
 				if (!data || data.length == 0){

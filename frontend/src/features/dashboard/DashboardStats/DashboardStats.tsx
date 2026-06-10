@@ -3,12 +3,13 @@ import type { DashboardMode } from '../../../layouts/main-layout/AppNavigation/A
 import { useState, useEffect } from 'react';
 import { CheckCircleIcon, ClockIcon, ArrowPathIcon, ChatBubbleLeftRightIcon, HandRaisedIcon, XCircleIcon } from '@heroicons/react/24/outline';
 import { useTranslation } from '../../../shared/i18n/useTranslation';
+import type { QueryState } from '../../../pages/DashboardPage';
 
 type DashboardStatsProps = {
 	className: string;
 	mode: DashboardMode;
 	refreshToken: number;
-	searchPhrase: string;
+	queryState: QueryState;
 }
 
 type CardsData = {
@@ -41,7 +42,7 @@ type DashboardStatsState =
 			stats: ApplicationStats;
 	  };
 
-export default function DashboardStats({className, mode, refreshToken, searchPhrase}: DashboardStatsProps) {
+export default function DashboardStats({className, mode, refreshToken, queryState}: DashboardStatsProps) {
 	const {t} = useTranslation();
 	const [summaryCount, setSummaryCount] = useState<number>(0);
 	const [statsState, setStatsState] = useState<DashboardStatsState | null>(null);
@@ -51,7 +52,7 @@ export default function DashboardStats({className, mode, refreshToken, searchPhr
 		//TODO: userId shouldn't be 4, it's just for development
 		const userId = 4;
 		if (mode === 'JobOffer') {
-			fetch(`${host}/api/joboffer/offers-stats?userId=${userId}&searchPhrase=${searchPhrase}`)
+			fetch(`${host}/api/joboffer/offers-stats?userId=${userId}&searchPhrase=${queryState.searchPhrase}`)
 				.then((response) => response.json())
 				.then((data) => {
 					if (!data){
@@ -70,7 +71,7 @@ export default function DashboardStats({className, mode, refreshToken, searchPhr
 				.catch((error) => console.log(error));
 
 		} else if (mode === 'Application') {
-			fetch(`${host}/api/application/applications-stats?userId=${userId}&searchPhrase=${searchPhrase}`)
+			fetch(`${host}/api/application/applications-stats?userId=${userId}&searchPhrase=${queryState.searchPhrase}`)
 				.then((response) => response.json())
 				.then((data) => {
 					if (!data){
@@ -153,7 +154,7 @@ export default function DashboardStats({className, mode, refreshToken, searchPhr
 	
 	useEffect(() => {
 		fetchStatsData();
-	}, [mode, refreshToken, searchPhrase]);
+	}, [mode, refreshToken, queryState]);
 	
 	
 	return(

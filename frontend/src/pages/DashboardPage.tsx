@@ -14,28 +14,36 @@ type DashboardPageProps = {
 	mode: DashboardMode;
 }
 
+export type QueryState = {
+	searchPhrase: string;
+	pageSize: number;
+	currentPage: number;
+	// TODO: filters
+}
+
 export default function DashboardPage({mode}: DashboardPageProps){
 	const [formConfiguration, setFormConfiguration] = useState<{isDisplayed: boolean, type: DashboardFormType, selectedId?: number}>({isDisplayed: false, type: 'add', selectedId: undefined});
 	const [massActionPopupConfiguration, setMassActionPopupConfiguration] = useState<{selected: Set<number>}>({selected: new Set<number>()});
-	const [refreshToken, setRefreshToken] = useState<number>(0);
-	const [searchPhrase, setSearchPhrase] = useState<string>('');
 	const [recordCount, setRecordCount] = useState<number>(0);
-	const pageSize: number = 9;
-	const [currentPage, setCurrentPage] = useState<number>(1);
+	const [refreshToken, setRefreshToken] = useState<number>(0);
+
+	const [queryState, setQueryState] = useState<QueryState>({searchPhrase: '', pageSize: 9, currentPage: 1});
+
+
 	const { t } = useTranslation();
 
 		const host = import.meta.env.VITE_API_URL;
 
 	useEffect(() => {
 		fetchRecordCount()
-	}, [mode, refreshToken, searchPhrase]);
+	}, [mode, refreshToken, queryState]);
 
 	function fetchRecordCount() {
 		//TODO: userId shouldn't be 4, it's just for development
 		const userId = 4;
 
 		if (mode === 'JobOffer') {
-			fetch(`${host}/api/joboffer/offers-count?userId=${userId}&searchPhrase=${searchPhrase}`)
+			fetch(`${host}/api/joboffer/offers-count?userId=${userId}&searchPhrase=${queryState.searchPhrase}`)
 				.then((response) => response.json())
 				.then((data) => {
 					if (!data){
@@ -48,7 +56,7 @@ export default function DashboardPage({mode}: DashboardPageProps){
 				
 		} else if (mode === 'Application') {
 			
-			fetch(`${host}/api/application/applications-count?userId=${userId}&searchPhrase=${searchPhrase}`)
+			fetch(`${host}/api/application/applications-count?userId=${userId}&searchPhrase=${queryState.searchPhrase}`)
 				.then((response) => response.json())
 				.then((data) => {
 					if (!data){
@@ -87,8 +95,11 @@ export default function DashboardPage({mode}: DashboardPageProps){
 
 	function onSearch(searchPhrase: string){
 		setRefreshToken((prev) => prev + 1);
-		setCurrentPage(1);
-		setSearchPhrase(searchPhrase);
+		setQueryState((prev) => ({...prev, currentPage: 1, searchPhrase}));
+	}
+
+	function onPageChange(page: number) {
+		setQueryState((prev) => ({...prev, currentPage: page}));
 	}
 
   return(
@@ -102,7 +113,7 @@ export default function DashboardPage({mode}: DashboardPageProps){
 					className={`${styles.stats} ${styles.dashboardSection}`}
 					mode={mode}
 					refreshToken={refreshToken}
-					searchPhrase={searchPhrase}
+					queryState={queryState}
 			/>
 			<DashboardControls
 					className={`${styles.dashboardControls} ${styles.dashboardSection}`}
@@ -116,11 +127,9 @@ export default function DashboardPage({mode}: DashboardPageProps){
 						callForm={callForm}
 						callMassActionPopup={callMassActionPopup}
 						refreshToken={refreshToken}
-						searchPhrase={searchPhrase}
 						recordCount={recordCount}
-						pageSize={pageSize}
-						currentPage={currentPage}
-						setCurrentPage={setCurrentPage}
+						queryState={queryState}
+						onPageChange={onPageChange}
 				/>
 			</div>
 			{formConfiguration.isDisplayed ? <DashboardFormWrapper mode={mode} type={formConfiguration.type} selectedId={formConfiguration.selectedId} onFormClose={onFormClose} onFormSubmit={onFormSubmit}/> : ''}
