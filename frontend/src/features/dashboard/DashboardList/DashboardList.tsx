@@ -12,49 +12,13 @@ type DashboardListProps = {
 	callMassActionPopup: (selected: Set<number>) => void;
 	refreshToken: number;
 	searchPhrase: string;
+	recordCount: number;
+	pageSize: number;
+	currentPage: number;
+	setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
 }
 
-export default function DashboardList({mode, callForm, callMassActionPopup, refreshToken, searchPhrase}: DashboardListProps){
-	const [recordCount, setRecordCount] = useState<number>(0);
-	const pageSize: number = 9;
-	const [currentPage, setCurrentPage] = useState<number>(1);
-	const host = import.meta.env.VITE_API_URL;
-
-	useEffect(() => {
-		fetchRecordCount()
-	}, [mode, refreshToken]);
-
-	function fetchRecordCount() {
-		//TODO: userId shouldn't be 4, it's just for development
-		const userId = 4;
-
-		if (mode === 'JobOffer') {
-			fetch(`${host}/api/joboffer/offers-count?userId=${userId}&searchPhrase=${searchPhrase}`)
-				.then((response) => response.json())
-				.then((data) => {
-					if (!data){
-						setRecordCount(0);
-						return;
-					}
-					setRecordCount(data);
-				})
-				.catch((error) => console.log(error));
-				
-		} else if (mode === 'Application') {
-			
-			fetch(`${host}/api/application/applications-count?userId=${userId}&searchPhrase=${searchPhrase}`)
-				.then((response) => response.json())
-				.then((data) => {
-					if (!data){
-						setRecordCount(0);
-						return;
-					}
-					setRecordCount(data);
-				})
-				.catch((error) => console.log(error));
-		}
-	}
-
+export default function DashboardList({mode, callForm, callMassActionPopup, refreshToken, searchPhrase, recordCount, pageSize, currentPage, setCurrentPage}: DashboardListProps){
 	return (
         <div className={styles.dashboardList}>
             {mode === 'JobOffer' ? (

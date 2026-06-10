@@ -2,7 +2,7 @@ import styles from './DashboardPage.module.css';
 import { useTranslation } from '../shared/i18n/useTranslation';
 import type { DashboardMode } from '../layouts/main-layout/AppNavigation/AppNavigation';
 import type { DashboardFormType } from '../features/dashboard/DashboardFormWrapper/DashboardFormWrapper';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import DashboardStats from '../features/dashboard/DashboardStats/DashboardStats';
 import DashboardControls from '../features/dashboard/DashboardControls/DashboardControls';
 import DashboardList from '../features/dashboard/DashboardList/DashboardList';
@@ -19,7 +19,47 @@ export default function DashboardPage({mode}: DashboardPageProps){
 	const [massActionPopupConfiguration, setMassActionPopupConfiguration] = useState<{selected: Set<number>}>({selected: new Set<number>()});
 	const [refreshToken, setRefreshToken] = useState<number>(0);
 	const [searchPhrase, setSearchPhrase] = useState<string>('');
+	const [recordCount, setRecordCount] = useState<number>(0);
+	const pageSize: number = 9;
+	const [currentPage, setCurrentPage] = useState<number>(1);
 	const { t } = useTranslation();
+
+		const host = import.meta.env.VITE_API_URL;
+
+	useEffect(() => {
+		fetchRecordCount()
+	}, [mode, refreshToken]);
+
+	function fetchRecordCount() {
+		//TODO: userId shouldn't be 4, it's just for development
+		const userId = 4;
+
+		if (mode === 'JobOffer') {
+			fetch(`${host}/api/joboffer/offers-count?userId=${userId}&searchPhrase=${searchPhrase}`)
+				.then((response) => response.json())
+				.then((data) => {
+					if (!data){
+						setRecordCount(0);
+						return;
+					}
+					setRecordCount(data);
+				})
+				.catch((error) => console.log(error));
+				
+		} else if (mode === 'Application') {
+			
+			fetch(`${host}/api/application/applications-count?userId=${userId}&searchPhrase=${searchPhrase}`)
+				.then((response) => response.json())
+				.then((data) => {
+					if (!data){
+						setRecordCount(0);
+						return;
+					}
+					setRecordCount(data);
+				})
+				.catch((error) => console.log(error));
+		}
+	}
 
 	function callForm(type: DashboardFormType, selectedId?: number){
 		setFormConfiguration({isDisplayed: true, type, selectedId});	
@@ -47,6 +87,7 @@ export default function DashboardPage({mode}: DashboardPageProps){
 
 	function onSearch(searchPhrase: string){
 		setRefreshToken((prev) => prev + 1);
+		setCurrentPage(1);
 		setSearchPhrase(searchPhrase);
 	}
 
@@ -76,6 +117,10 @@ export default function DashboardPage({mode}: DashboardPageProps){
 						callMassActionPopup={callMassActionPopup}
 						refreshToken={refreshToken}
 						searchPhrase={searchPhrase}
+						recordCount={recordCount}
+						pageSize={pageSize}
+						currentPage={currentPage}
+						setCurrentPage={setCurrentPage}
 				/>
 			</div>
 			{formConfiguration.isDisplayed ? <DashboardFormWrapper mode={mode} type={formConfiguration.type} selectedId={formConfiguration.selectedId} onFormClose={onFormClose} onFormSubmit={onFormSubmit}/> : ''}
