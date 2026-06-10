@@ -1,0 +1,17 @@
+.pager {
+	display: flex;
+	justify-content: center;
+	font-size: 24px;
+}
+
+.page {
+	color: var(--main-text);
+}
+
+.pageActive {
+	color: var(--main-theme);
+}
+
+.pageDisabled {
+	color: var(--additional-text);
+}

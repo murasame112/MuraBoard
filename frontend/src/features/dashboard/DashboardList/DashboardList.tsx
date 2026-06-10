@@ -37,7 +37,7 @@ export default function DashboardList({mode, callForm, callMassActionPopup, refr
 					}
 					setRecordCount(data);
 				})
-				.catch((error) => console.log(JSON.stringify(error)));
+				.catch((error) => console.log(error));
 				
 		} else if (mode === 'Application') {
 			
@@ -50,7 +50,7 @@ export default function DashboardList({mode, callForm, callMassActionPopup, refr
 					}
 					setRecordCount(data);
 				})
-				.catch((error) => console.log(JSON.stringify(error)));
+				.catch((error) => console.log(error));
 		}
 	}
 
@@ -70,7 +70,7 @@ export default function DashboardList({mode, callForm, callMassActionPopup, refr
                     callMassActionPopup={callMassActionPopup}
                 />
             )}
-							<DashboardPager/>
+						<DashboardPager recordCount={recordCount} currentPage={currentPage} pageSize={pageSize} onPageChange={setCurrentPage}/>
         </div>
     );
 
