@@ -22,6 +22,7 @@ export async function getJobOffersCount(userId: number) {
 	const count = await prisma.jobOffer.count({
 		where: {userId}
 	});
+	return count;
 }
 
 export async function getJobOffersStats(userId: number) {
