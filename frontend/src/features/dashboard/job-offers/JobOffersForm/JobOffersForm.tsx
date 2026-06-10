@@ -78,7 +78,7 @@ export default function JobOffersForm({onClose, onSubmit, type, selectedId}: Job
 					});
 					setSelectedCompany(data.company);
 				})
-				.catch((error) => console.log(JSON.stringify(error)));
+				.catch((error) => console.log(error));
 		}		
 	}, [selectedId]);
 

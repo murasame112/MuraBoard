@@ -215,7 +215,7 @@ export default function CompanyCombobox({labelClass, additionalFormTextClass, ge
 				getCompany(data);
 				setCompanyValues(data);
 			})
-			.catch((error) => console.log(JSON.stringify(error)));
+			.catch((error) => console.log(error));
 	}
 
 	return (
