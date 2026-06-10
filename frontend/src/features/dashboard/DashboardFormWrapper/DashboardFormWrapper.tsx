@@ -4,7 +4,6 @@ import JobOffersForm from '../job-offers/JobOffersForm/JobOffersForm';
 import styles from './DashboardFormWrapper.module.css';
 
 export type DashboardFormType = 'add' | 'edit';
-//type={formConfiguration.type} mode={mode} onFormClose={onFormClose}
 
 type DashboardFormWrapperProps = {
 	mode: DashboardMode;
