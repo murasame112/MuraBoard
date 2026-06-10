@@ -63,7 +63,10 @@ export default function JobOffersTable({callForm, callMassActionPopup, currentPa
 				setJobOffers(data);
 				setSelectedCheckboxes(new Set<number>());
 			})
-			.catch((error) => console.log(error));
+			.catch((error) => {
+				setJobOffers([]);
+				console.log(error);
+			});
 	}
 
 	return(

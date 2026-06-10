@@ -1,7 +1,9 @@
 .pagerWrapper {
 	display: flex;
 	justify-content: center;
-	font-size: 24px;
+	align-items: center;
+	text-align: center;
+	font-size: 18px;
 	margin-top:3%;
 	height: 30px;
 }
@@ -26,6 +28,9 @@
 	height: 100%;
 	width: 30px;
 	font-weight: bold;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 .page:hover {
