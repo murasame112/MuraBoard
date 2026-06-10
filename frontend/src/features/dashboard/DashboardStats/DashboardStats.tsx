@@ -8,6 +8,7 @@ type DashboardStatsProps = {
 	className: string;
 	mode: DashboardMode;
 	refreshToken: number;
+	searchPhrase: string;
 }
 
 type CardsData = {
@@ -40,7 +41,7 @@ type DashboardStatsState =
 			stats: ApplicationStats;
 	  };
 
-export default function DashboardStats({className, mode, refreshToken}: DashboardStatsProps) {
+export default function DashboardStats({className, mode, refreshToken, searchPhrase}: DashboardStatsProps) {
 	const {t} = useTranslation();
 	const [summaryCount, setSummaryCount] = useState<number>(0);
 	const [statsState, setStatsState] = useState<DashboardStatsState | null>(null);
@@ -50,7 +51,7 @@ export default function DashboardStats({className, mode, refreshToken}: Dashboar
 		//TODO: userId shouldn't be 4, it's just for development
 		const userId = 4;
 		if (mode === 'JobOffer') {
-			fetch(`${host}/api/joboffer/offers-stats?userId=${userId}`)
+			fetch(`${host}/api/joboffer/offers-stats?userId=${userId}&searchPhrase=${searchPhrase}`)
 				.then((response) => response.json())
 				.then((data) => {
 					if (!data){
@@ -69,7 +70,7 @@ export default function DashboardStats({className, mode, refreshToken}: Dashboar
 				.catch((error) => console.log(error));
 
 		} else if (mode === 'Application') {
-			fetch(`${host}/api/application/applications-stats?userId=${userId}`)
+			fetch(`${host}/api/application/applications-stats?userId=${userId}&searchPhrase=${searchPhrase}`)
 				.then((response) => response.json())
 				.then((data) => {
 					if (!data){

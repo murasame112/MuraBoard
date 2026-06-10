@@ -5,10 +5,11 @@ import type { Company } from '../models/models.js';
 
 export async function getJobOffersForDashboard(req: Request, res: Response) {
 	try {
-		const { userId, page, pageSize} = req.query as {
+		const { userId, page, pageSize, searchPhrase} = req.query as {
 			userId?: string;
 			page?: string;
 			pageSize?: string;
+			searchPhrase?: string;
 		}
 
 		if (!userId || Number.isNaN(userId)) {
@@ -23,7 +24,7 @@ export async function getJobOffersForDashboard(req: Request, res: Response) {
 			return res.status(400).json({ message: 'Invalid pageSize' });
 		}
 
-		const data = await jobOffersService.getJobOffersDashboardData(Number(userId), Number(page), Number(pageSize));
+		const data = await jobOffersService.getJobOffersDashboardData(Number(userId), Number(page), Number(pageSize), searchPhrase ? searchPhrase : '');
 		return res.status(200).json(data);
 
 	} catch (error) {
@@ -33,15 +34,16 @@ export async function getJobOffersForDashboard(req: Request, res: Response) {
 
 export async function getJobOffersCount(req: Request, res: Response) {
 	try {
-		const { userId } = req.query as {
+		const { userId, searchPhrase } = req.query as {
 			userId?: string;
+			searchPhrase?: string;
 		}
 
 		if (!userId || Number.isNaN(userId)) {
 			return res.status(400).json({ message: 'Invalid user id' });
 		}
 
-		const data = await jobOffersService.getJobOffersCount(Number(userId));
+		const data = await jobOffersService.getJobOffersCount(Number(userId), searchPhrase ? searchPhrase : '');
 		return res.status(200).json(data);
 
 	} catch (error) {
@@ -51,15 +53,16 @@ export async function getJobOffersCount(req: Request, res: Response) {
 
 export async function getJobOffersStats(req: Request, res: Response) {
 	try {
-		const { userId } = req.query as {
+		const { userId, searchPhrase } = req.query as {
 			userId?: string;
+			searchPhrase?: string;
 		}
 
 		if (!userId || Number.isNaN(userId)) {
 			return res.status(400).json({ message: 'Invalid user id'});
 		}
 
-		const data = await jobOffersService.getJobOffersStats(Number(userId));
+		const data = await jobOffersService.getJobOffersStats(Number(userId), searchPhrase ? searchPhrase : '');
 		return res.status(200).json(data);
 
 	} catch (error) {

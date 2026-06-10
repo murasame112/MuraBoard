@@ -11,9 +11,10 @@ type JobOffersTableProps = {
 	currentPage: number;
 	pageSize: number;
 	refreshToken: number;
+	searchPhrase: string;
 }
 
-export default function JobOffersTable({callForm, callMassActionPopup, currentPage, pageSize, refreshToken}: JobOffersTableProps){
+export default function JobOffersTable({callForm, callMassActionPopup, currentPage, pageSize, refreshToken, searchPhrase}: JobOffersTableProps){
 	const { t } = useTranslation();
 	const [selectedCompany, setSelectedCompany] = useState<number | null>(null);
 	const [selectedCheckboxes, setSelectedCheckboxes] = useState<Set<number>>(new Set<number>());
@@ -53,7 +54,7 @@ export default function JobOffersTable({callForm, callMassActionPopup, currentPa
 	function fetchData() {
 		//TODO: userId shouldn't be 4, it's just for development
 		const userId = 4;
-		fetch(`${host}/api/joboffer/offers-for-dashboard?userId=${userId}&page=${currentPage}&pageSize=${pageSize}`)
+		fetch(`${host}/api/joboffer/offers-for-dashboard?userId=${userId}&page=${currentPage}&pageSize=${pageSize}&searchPhrase=${searchPhrase}`)
 			.then((response) => response.json())
 			.then((data) => {
 				if (!data || data.length == 0){

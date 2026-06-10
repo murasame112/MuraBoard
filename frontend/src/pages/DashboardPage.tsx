@@ -18,6 +18,7 @@ export default function DashboardPage({mode}: DashboardPageProps){
 	const [formConfiguration, setFormConfiguration] = useState<{isDisplayed: boolean, type: DashboardFormType, selectedId?: number}>({isDisplayed: false, type: 'add', selectedId: undefined});
 	const [massActionPopupConfiguration, setMassActionPopupConfiguration] = useState<{selected: Set<number>}>({selected: new Set<number>()});
 	const [refreshToken, setRefreshToken] = useState<number>(0);
+	const [searchPhrase, setSearchPhrase] = useState<string>('');
 	const { t } = useTranslation();
 
 	function callForm(type: DashboardFormType, selectedId?: number){
@@ -44,6 +45,11 @@ export default function DashboardPage({mode}: DashboardPageProps){
 		setMassActionPopupConfiguration({ selected: new Set<number>() });
 	}
 
+	function onSearch(searchPhrase: string){
+		setRefreshToken((prev) => prev + 1);
+		setSearchPhrase(searchPhrase);
+	}
+
   return(
     <div className={styles.dashboardPage}>
 			<div className={`${styles.title} ${styles.dashboardSection}`}>
@@ -55,11 +61,13 @@ export default function DashboardPage({mode}: DashboardPageProps){
 					className={`${styles.stats} ${styles.dashboardSection}`}
 					mode={mode}
 					refreshToken={refreshToken}
+					searchPhrase={searchPhrase}
 			/>
 			<DashboardControls
 					className={`${styles.dashboardControls} ${styles.dashboardSection}`}
 					mode={mode}
 					callForm={callForm}
+					onSearch={onSearch}
 			/>
 			<div className={`${styles.dashboardSection}`}>
 				<DashboardList 
@@ -67,6 +75,7 @@ export default function DashboardPage({mode}: DashboardPageProps){
 						callForm={callForm}
 						callMassActionPopup={callMassActionPopup}
 						refreshToken={refreshToken}
+						searchPhrase={searchPhrase}
 				/>
 			</div>
 			{formConfiguration.isDisplayed ? <DashboardFormWrapper mode={mode} type={formConfiguration.type} selectedId={formConfiguration.selectedId} onFormClose={onFormClose} onFormSubmit={onFormSubmit}/> : ''}

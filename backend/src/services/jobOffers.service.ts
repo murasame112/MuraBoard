@@ -3,9 +3,14 @@ import { prisma } from '../db/prisma.js';
 import type { Currency } from '../enums/enums.js';
 import type { Company } from '../models/models.js';
 
-export async function getJobOffersDashboardData(userId: number, page: number, pageSize: number) {
+export async function getJobOffersDashboardData(userId: number, page: number, pageSize: number, searchPhrase: string) {
 	const offers = await prisma.jobOffer.findMany({
-		where: {userId},
+		where: { userId,
+			OR: [
+				{ position: { contains: searchPhrase} },
+				{ company: { is: { name: { contains: searchPhrase } } } }
+			]
+		 },
 		orderBy: {createdAt: 'desc'},
 		skip: (page - 1) * pageSize,
 		take: pageSize,
@@ -18,31 +23,50 @@ export async function getJobOffersDashboardData(userId: number, page: number, pa
 	return offers;
 }
 
-export async function getJobOffersCount(userId: number) { 
+export async function getJobOffersCount(userId: number, searchPhrase: string) { 
 	const count = await prisma.jobOffer.count({
-		where: {userId}
+		where: { userId,
+			OR: [
+				{ position: { contains: searchPhrase} },
+				{ company: { is: { name: { contains: searchPhrase } } } }
+			]
+		 }
 	});
 	return count;
 }
 
-export async function getJobOffersStats(userId: number) {
+export async function getJobOffersStats(userId: number, searchPhrase: string) {
 	const [applied, notApplied, summaryCount] = await prisma.$transaction([
 
 		prisma.jobOffer.count({
 			where: {
-				userId, application: { isNot: null}
+				userId, 
+				application: { isNot: null},
+				OR: [
+					{ position: { contains: searchPhrase} },
+					{ company: { is: { name: { contains: searchPhrase } } } }
+				]
 			},
 		}),
 
 		prisma.jobOffer.count({
 			where: {
 				userId,
-				application: {is: null}
+				application: {is: null},
+				OR: [
+					{ position: { contains: searchPhrase} },
+					{ company: { is: { name: { contains: searchPhrase } } } }
+				]
 			}
 		}),
 
 		prisma.jobOffer.count({
-			where: { userId }
+			where: { userId,
+				OR: [
+					{ position: { contains: searchPhrase} },
+					{ company: { is: { name: { contains: searchPhrase } } } }
+				]
+			 }
 		})
 	]);
 

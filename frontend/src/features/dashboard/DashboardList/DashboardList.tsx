@@ -11,9 +11,10 @@ type DashboardListProps = {
 	callForm: (type: DashboardFormType, selectedId?: number) => void;
 	callMassActionPopup: (selected: Set<number>) => void;
 	refreshToken: number;
+	searchPhrase: string;
 }
 
-export default function DashboardList({mode, callForm, callMassActionPopup, refreshToken}: DashboardListProps){
+export default function DashboardList({mode, callForm, callMassActionPopup, refreshToken, searchPhrase}: DashboardListProps){
 	const [recordCount, setRecordCount] = useState<number>(0);
 	const pageSize: number = 9;
 	const [currentPage, setCurrentPage] = useState<number>(1);
@@ -28,7 +29,7 @@ export default function DashboardList({mode, callForm, callMassActionPopup, refr
 		const userId = 4;
 
 		if (mode === 'JobOffer') {
-			fetch(`${host}/api/joboffer/offers-count?userId=${userId}`)
+			fetch(`${host}/api/joboffer/offers-count?userId=${userId}&searchPhrase=${searchPhrase}`)
 				.then((response) => response.json())
 				.then((data) => {
 					if (!data){
@@ -41,7 +42,7 @@ export default function DashboardList({mode, callForm, callMassActionPopup, refr
 				
 		} else if (mode === 'Application') {
 			
-			fetch(`${host}/api/application/applications-count?userId=${userId}`)
+			fetch(`${host}/api/application/applications-count?userId=${userId}&searchPhrase=${searchPhrase}`)
 				.then((response) => response.json())
 				.then((data) => {
 					if (!data){
@@ -63,6 +64,7 @@ export default function DashboardList({mode, callForm, callMassActionPopup, refr
 										currentPage={currentPage}
 										pageSize={pageSize}
 										refreshToken={refreshToken}
+										searchPhrase={searchPhrase}
                 />
             ) : (
                 <ApplicationsTable
@@ -70,7 +72,7 @@ export default function DashboardList({mode, callForm, callMassActionPopup, refr
                     callMassActionPopup={callMassActionPopup}
                 />
             )}
-						<DashboardPager recordCount={recordCount} currentPage={currentPage} pageSize={pageSize} onPageChange={setCurrentPage}/>
+						<DashboardPager recordCount={recordCount} currentPage={currentPage} pageSize={pageSize} onPageChange={setCurrentPage} refreshToken={refreshToken}/>
         </div>
     );
 
