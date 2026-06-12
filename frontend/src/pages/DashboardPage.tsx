@@ -21,7 +21,7 @@ export default function DashboardPage({mode}: DashboardPageProps){
 	const [recordCount, setRecordCount] = useState<number>(0);
 	const [refreshToken, setRefreshToken] = useState<number>(0);
 
-	const [queryState, setQueryState] = useState<QueryState>({searchPhrase: '', pageSize: 9, currentPage: 1});
+	const [queryState, setQueryState] = useState<QueryState>({searchPhrase: '', pageSize: 9, currentPage: 1, filters: []});
 
 
 	const { t } = useTranslation();
