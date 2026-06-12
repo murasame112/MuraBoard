@@ -102,6 +102,11 @@ export default function DashboardPage({mode}: DashboardPageProps){
 		setQueryState((prev) => ({...prev, currentPage: page}));
 	}
 
+	function onFilter(filters: any /*TODO: */){
+		setRefreshToken((prev) => prev + 1);
+		setQueryState((prev) => ({...prev, currentPage: 1, filters}));
+	}
+
   return(
     <div className={styles.dashboardPage}>
 			<div className={`${styles.title} ${styles.dashboardSection}`}>
