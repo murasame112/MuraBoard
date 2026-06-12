@@ -2,6 +2,7 @@ import styles from './DashboardPage.module.css';
 import { useTranslation } from '../shared/i18n/useTranslation';
 import type { DashboardMode } from '../layouts/main-layout/AppNavigation/AppNavigation';
 import type { DashboardFormType } from '../features/dashboard/DashboardFormWrapper/DashboardFormWrapper';
+import type { QueryState } from '../features/dashboard/models/queryState';
 import { useState, useEffect } from 'react';
 import DashboardStats from '../features/dashboard/DashboardStats/DashboardStats';
 import DashboardControls from '../features/dashboard/DashboardControls/DashboardControls';
@@ -12,13 +13,6 @@ import MassActionPopup from '../features/dashboard/MassActionPopup/MassActionPop
 
 type DashboardPageProps = {
 	mode: DashboardMode;
-}
-
-export type QueryState = {
-	searchPhrase: string;
-	pageSize: number;
-	currentPage: number;
-	// TODO: filters
 }
 
 export default function DashboardPage({mode}: DashboardPageProps){
