@@ -1,7 +1,20 @@
+import type { DashboardMode } from '../../../../layouts/main-layout/AppNavigation/AppNavigation';
+import FilterPopover from '../shared/FilterPopover';
 import styles from './FilterBox.module.css';
+import { useState } from 'react';
 
-export default function FilterBox(){
+type FilterBoxProps = {
+	mode: DashboardMode;
+}
+
+export default function FilterBox({mode}: FilterBoxProps){
+	const []
+
 	return (
-		<>filterbox</>
+		<div className={styles.filterBox}>
+			<>job offer/application filters</>
+			<FilterPopover/> 
+			{/* ^ gets filter type */}
+		</div>
 	);
 }
