@@ -9,6 +9,7 @@ import DashboardControls from '../features/dashboard/DashboardControls/Dashboard
 import DashboardList from '../features/dashboard/DashboardList/DashboardList';
 import DashboardFormWrapper from '../features/dashboard/DashboardFormWrapper/DashboardFormWrapper';
 import MassActionPopup from '../features/dashboard/MassActionPopup/MassActionPopup';
+import FilterBox from '../features/dashboard/filters/FilterBox/FilterBox';
 
 
 type DashboardPageProps = {
@@ -18,6 +19,7 @@ type DashboardPageProps = {
 export default function DashboardPage({mode}: DashboardPageProps){
 	const [formConfiguration, setFormConfiguration] = useState<{isDisplayed: boolean, type: DashboardFormType, selectedId?: number}>({isDisplayed: false, type: 'add', selectedId: undefined});
 	const [massActionPopupConfiguration, setMassActionPopupConfiguration] = useState<{selected: Set<number>}>({selected: new Set<number>()});
+	const [isFilterBoxDisplayed, setIsFilterBoxDisplayed] = useState<boolean>(false);
 	const [recordCount, setRecordCount] = useState<number>(0);
 	const [refreshToken, setRefreshToken] = useState<number>(0);
 
@@ -96,6 +98,10 @@ export default function DashboardPage({mode}: DashboardPageProps){
 		setQueryState((prev) => ({...prev, currentPage: page}));
 	}
 
+	function toggleFilterBox(){
+		setIsFilterBoxDisplayed(prev => !prev);
+	}
+
 	function onFilter(filters: any /*TODO: */){
 		setRefreshToken((prev) => prev + 1);
 		setQueryState((prev) => ({...prev, currentPage: 1, filters}));
@@ -118,6 +124,8 @@ export default function DashboardPage({mode}: DashboardPageProps){
 					className={`${styles.dashboardControls} ${styles.dashboardSection}`}
 					mode={mode}
 					callForm={callForm}
+					toggleFilterBox={toggleFilterBox}
+					isFilterBoxDisplayed={isFilterBoxDisplayed}
 					onSearch={onSearch}
 			/>
 			<div className={`${styles.dashboardSection}`}>
@@ -133,6 +141,7 @@ export default function DashboardPage({mode}: DashboardPageProps){
 			</div>
 			{formConfiguration.isDisplayed ? <DashboardFormWrapper mode={mode} type={formConfiguration.type} selectedId={formConfiguration.selectedId} onFormClose={onFormClose} onFormSubmit={onFormSubmit}/> : ''}
 			{massActionPopupConfiguration.selected.size > 0 ? <MassActionPopup mode={mode} selected={massActionPopupConfiguration.selected} callForm={callForm} onFormClose={onFormClose} onDelete={onDelete} />: ''}
-    </div>
+			{isFilterBoxDisplayed ? <FilterBox/> : ''}
+		</div>
   )
 }

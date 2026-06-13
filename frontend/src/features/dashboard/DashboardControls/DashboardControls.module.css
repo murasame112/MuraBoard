@@ -37,6 +37,10 @@
 	justify-content: center;
 }
 
+.filterButtonActive {
+	background-color: var(--secondary-theme);
+}
+
 .filterIcon {
 	height: 24px;
 }

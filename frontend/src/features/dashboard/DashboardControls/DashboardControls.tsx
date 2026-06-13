@@ -8,10 +8,12 @@ type DashboardControlsProps = {
 	className: string;
 	mode: string;
 	callForm: (type: DashboardFormType, selectedId?: number) => void;
+	toggleFilterBox: () => void;
+	isFilterBoxDisplayed: boolean;
 	onSearch: (searchPhrase: string) => void;
 }
 
-export default function DashboardControls({className, mode, callForm, onSearch}: DashboardControlsProps) {
+export default function DashboardControls({className, mode, callForm, toggleFilterBox, isFilterBoxDisplayed, onSearch}: DashboardControlsProps) {
 	const { t } = useTranslation();
 	const [searchPhrase, setSearchPhrase] = useState<string>('');
 
@@ -40,7 +42,7 @@ export default function DashboardControls({className, mode, callForm, onSearch}:
 					placeholder={t('search')}
 				/>
 			</div>
-			<button type='button' className={styles.filterButton}><FunnelIcon className={styles.filterIcon}/>{t('addFilter')}</button>
+			<button type='button' className={`${styles.filterButton} ${isFilterBoxDisplayed ? styles.filterButtonActive : ''}`} onClick={toggleFilterBox}><FunnelIcon className={styles.filterIcon}/>{t('addFilter')}</button>
 			<button type='button' className={styles.addButton} onClick={() => callForm('add')}><PlusIcon className={styles.plusIcon}/>{t('add')} {t(mode)}</button>
 		</div>
 	);
