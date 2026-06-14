@@ -1,18 +1,21 @@
 import type { DashboardMode } from '../../../../layouts/main-layout/AppNavigation/AppNavigation';
+import ApplicationsFilters from '../../applications/ApplicationsFilters/ApplicationsFilters';
+import JobOffersFilters from '../../job-offers/JobOffersFilters/JobOffersFilters';
+import type { Filter, JobOfferFilter } from '../../models/queryState';
 import FilterPopover from '../shared/FilterPopover';
 import styles from './FilterBox.module.css';
-import { useState } from 'react';
 
 type FilterBoxProps = {
 	mode: DashboardMode;
+	filters: Filter[];
 }
 
-export default function FilterBox({mode}: FilterBoxProps){
-	const []
+export default function FilterBox({mode, filters}: FilterBoxProps){
+	
 
 	return (
 		<div className={styles.filterBox}>
-			<>job offer/application filters</>
+			{mode === 'JobOffer' ? <JobOffersFilters filters={filters as JobOfferFilter[]}/> : <ApplicationsFilters/>}
 			<FilterPopover/> 
 			{/* ^ gets filter type */}
 		</div>
