@@ -9,15 +9,18 @@ import { useState } from 'react';
 type FilterBoxProps = {
 	mode: DashboardMode;
 	filters: Filter[];
+	setFilter: (filter: Filter) => void; 
 	onUnsetFilter: (filterName: JobOffersFilterNames | ApplicationsFilterNames) => void;
+	
 }
 
-export default function FilterBox({mode, filters, onUnsetFilter}: FilterBoxProps){
+export default function FilterBox({mode, filters,  setFilter, onUnsetFilter}: FilterBoxProps){
 	const [chosenFilter, setChosenFilter] = useState<JobOffersFilterNames | ApplicationsFilterNames>();
 	
 	function onSetFilter(filterName: JobOffersFilterNames | ApplicationsFilterNames){
 		if (filters.find((element) => element.filterName === filterName)?.value) {
 			onUnsetFilter(filterName);
+			setChosenFilter(undefined);
 		} else {
 			setChosenFilter(filterName);
 		}
@@ -26,8 +29,7 @@ export default function FilterBox({mode, filters, onUnsetFilter}: FilterBoxProps
 	return (
 		<div className={styles.filterBox}>
 			{mode === 'JobOffer' ? <JobOffersFilters filters={filters as JobOfferFilter[]} onSetFilter={onSetFilter}/> : <ApplicationsFilters/>}
-			<FilterPopover filterName={chosenFilter}/> 
-			{/* ^ gets filter type */}
+			<FilterPopover filterName={chosenFilter} setFilter={setFilter}/> 
 		</div>
 	);
 }

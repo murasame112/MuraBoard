@@ -14,11 +14,12 @@ type DashboardControlsProps = {
 	toggleFilterBox: () => void;
 	filters: Filter[];
 	isFilterBoxDisplayed: boolean;
+	setFilter: (filter: Filter) => void; 
 	onUnsetFilter: (filterName: JobOffersFilterNames | ApplicationsFilterNames) => void;
 	onSearch: (searchPhrase: string) => void;
 }
 
-export default function DashboardControls({className, mode, callForm, toggleFilterBox, filters, isFilterBoxDisplayed, onUnsetFilter, onSearch}: DashboardControlsProps) {
+export default function DashboardControls({className, mode, callForm, toggleFilterBox, filters, isFilterBoxDisplayed, setFilter, onUnsetFilter, onSearch}: DashboardControlsProps) {
 	const { t } = useTranslation();
 	const [searchPhrase, setSearchPhrase] = useState<string>('');
 
@@ -51,7 +52,7 @@ export default function DashboardControls({className, mode, callForm, toggleFilt
 				<button type='button' className={`${styles.filterButton} ${isFilterBoxDisplayed ? styles.filterButtonActive : ''}`} onClick={toggleFilterBox}><FunnelIcon className={styles.filterIcon}/>
 				{t('addFilter')}
 				</button>
-			{isFilterBoxDisplayed ? <FilterBox mode={mode} filters={filters} onUnsetFilter={onUnsetFilter}/> : ''}
+			{isFilterBoxDisplayed ? <FilterBox mode={mode} filters={filters} setFilter={setFilter} onUnsetFilter={onUnsetFilter}/> : ''}
 			</div>
 			
 			

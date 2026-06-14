@@ -2,14 +2,13 @@ import styles from './DashboardPage.module.css';
 import { useTranslation } from '../shared/i18n/useTranslation';
 import type { DashboardMode } from '../layouts/main-layout/AppNavigation/AppNavigation';
 import type { DashboardFormType } from '../features/dashboard/DashboardFormWrapper/DashboardFormWrapper';
-import type { ApplicationsFilterNames, JobOffersFilterNames, QueryState } from '../features/dashboard/models/queryState';
+import type { ApplicationsFilterNames, Filter, JobOffersFilterNames, QueryState } from '../features/dashboard/models/queryState';
 import { useState, useEffect } from 'react';
 import DashboardStats from '../features/dashboard/DashboardStats/DashboardStats';
 import DashboardControls from '../features/dashboard/DashboardControls/DashboardControls';
 import DashboardList from '../features/dashboard/DashboardList/DashboardList';
 import DashboardFormWrapper from '../features/dashboard/DashboardFormWrapper/DashboardFormWrapper';
 import MassActionPopup from '../features/dashboard/MassActionPopup/MassActionPopup';
-import FilterBox from '../features/dashboard/filters/FilterBox/FilterBox';
 
 
 type DashboardPageProps = {
@@ -23,7 +22,7 @@ export default function DashboardPage({mode}: DashboardPageProps){
 	const [recordCount, setRecordCount] = useState<number>(0);
 	const [refreshToken, setRefreshToken] = useState<number>(0);
 
-	const [queryState, setQueryState] = useState<QueryState>({searchPhrase: '', pageSize: 9, currentPage: 1, filters: [{filterName: 'companyName', value: 'smth'}]});
+	const [queryState, setQueryState] = useState<QueryState>({searchPhrase: '', pageSize: 9, currentPage: 1, filters: []});
 
 
 	const { t } = useTranslation();
@@ -31,7 +30,8 @@ export default function DashboardPage({mode}: DashboardPageProps){
 		const host = import.meta.env.VITE_API_URL;
 
 	useEffect(() => {
-		fetchRecordCount()
+		fetchRecordCount();
+		console.log(queryState.filters);
 	}, [mode, refreshToken, queryState]);
 
 	function fetchRecordCount() {
@@ -102,16 +102,22 @@ export default function DashboardPage({mode}: DashboardPageProps){
 		setIsFilterBoxDisplayed(prev => !prev);
 	}
 
-	function onFilter(filters: any /*TODO: */) {
+	function setFilter(filter: Filter) {
 		setRefreshToken((prev) => prev + 1);
-		setQueryState((prev) => ({...prev, currentPage: 1, filters}));
+		setQueryState((prev) => {
+			const alreadyExists = prev.filters.some((element) => element.filterName === filter.filterName);
+
+			if (alreadyExists) return {...prev};
+
+			return {...prev, currentPage: 1, filters: [...prev.filters, filter]};
+		});
 	}
 
 	function onUnsetFilter(filterName: JobOffersFilterNames | ApplicationsFilterNames) {
 		setQueryState((prev) => {
 			return {
 				...prev,
-				filters: prev.filters.filter((element) => element.filterName !== filterName)
+				filters: prev.filters.filter((filter) => filter.filterName !== filterName)
 			};
 		});
 	}
@@ -136,6 +142,7 @@ export default function DashboardPage({mode}: DashboardPageProps){
 					toggleFilterBox={toggleFilterBox}
 					filters={queryState.filters}
 					isFilterBoxDisplayed={isFilterBoxDisplayed}
+					setFilter={setFilter}
 					onUnsetFilter={onUnsetFilter}
 					onSearch={onSearch}
 			/>

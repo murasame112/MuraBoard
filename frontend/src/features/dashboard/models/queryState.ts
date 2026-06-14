@@ -48,5 +48,5 @@ export type QueryState = {
 	searchPhrase: string;
 	pageSize: number;
 	currentPage: number;
-	filters: Filter[]
+	filters: Filter[];
 }
