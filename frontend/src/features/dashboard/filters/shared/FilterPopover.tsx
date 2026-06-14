@@ -1,6 +1,6 @@
 import type { ApplicationsFilterNames, Filter, JobOffersFilterNames } from '../../models/queryState';
 import styles from './FilterPopover.module.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 type FilterPopoverProps = {
 	filterName?: JobOffersFilterNames | ApplicationsFilterNames;
@@ -9,6 +9,16 @@ type FilterPopoverProps = {
 
 export default function FilterPopover({filterName, setFilter}: FilterPopoverProps){
 	const [popoverValue, setPopoverValue] = useState<string | number>('');
+	const [isPopoverDisabled, setIsPopoverDisabled] = useState<boolean>(true);
+
+	useEffect(() => {
+		if (!filterName) {
+			setPopoverValue('');
+			setIsPopoverDisabled(true);
+		} else {
+			setIsPopoverDisabled(false);
+		}
+	}, [filterName]);
 
 	function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) {
 		setPopoverValue(e.currentTarget.value);
@@ -17,6 +27,8 @@ export default function FilterPopover({filterName, setFilter}: FilterPopoverProp
 	function submitFilter() {
 		if (filterName) {
 			setFilter({filterName, value: popoverValue});
+			setPopoverValue('');
+			setIsPopoverDisabled(true);
 		}
 	}
 
@@ -29,7 +41,7 @@ export default function FilterPopover({filterName, setFilter}: FilterPopoverProp
                     type='text'
                     onChange={handleChange}
                     value={popoverValue}
-                    disabled={!filterName}
+                    disabled={isPopoverDisabled}
                 />
             )}
 						<button type='button' onClick={submitFilter}>set</button>
