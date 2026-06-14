@@ -3,17 +3,21 @@ import { useTranslation } from '../../../shared/i18n/useTranslation';
 import { FunnelIcon, MagnifyingGlassIcon, PlusIcon } from '@heroicons/react/24/outline';
 import type { DashboardFormType } from '../DashboardFormWrapper/DashboardFormWrapper';
 import { useState, useEffect } from 'react';
+import type { Filter } from '../models/queryState';
+import FilterBox from '../filters/FilterBox/FilterBox';
+import type { DashboardMode } from '../../../layouts/main-layout/AppNavigation/AppNavigation';
 
 type DashboardControlsProps = {
 	className: string;
-	mode: string;
+	mode: DashboardMode;
 	callForm: (type: DashboardFormType, selectedId?: number) => void;
 	toggleFilterBox: () => void;
+	filters: Filter[];
 	isFilterBoxDisplayed: boolean;
 	onSearch: (searchPhrase: string) => void;
 }
 
-export default function DashboardControls({className, mode, callForm, toggleFilterBox, isFilterBoxDisplayed, onSearch}: DashboardControlsProps) {
+export default function DashboardControls({className, mode, callForm, toggleFilterBox, filters, isFilterBoxDisplayed, onSearch}: DashboardControlsProps) {
 	const { t } = useTranslation();
 	const [searchPhrase, setSearchPhrase] = useState<string>('');
 
@@ -42,7 +46,10 @@ export default function DashboardControls({className, mode, callForm, toggleFilt
 					placeholder={t('search')}
 				/>
 			</div>
-			<button type='button' className={`${styles.filterButton} ${isFilterBoxDisplayed ? styles.filterButtonActive : ''}`} onClick={toggleFilterBox}><FunnelIcon className={styles.filterIcon}/>{t('addFilter')}</button>
+			<button type='button' className={`${styles.filterButton} ${isFilterBoxDisplayed ? styles.filterButtonActive : ''}`} onClick={toggleFilterBox}><FunnelIcon className={styles.filterIcon}/>
+			{t('addFilter')}
+			{isFilterBoxDisplayed ? <FilterBox mode={mode} filters={filters}/> : ''}
+			</button>
 			<button type='button' className={styles.addButton} onClick={() => callForm('add')}><PlusIcon className={styles.plusIcon}/>{t('add')} {t(mode)}</button>
 		</div>
 	);

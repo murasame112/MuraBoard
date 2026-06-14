@@ -1,0 +1,12 @@
+.filterBox {
+	position: absolute;
+	width: 150px;
+	height: 350px;
+	top: 30px;
+	display: flex;
+	flex-direction: column;
+	border-radius: 15px;
+	border: 3px solid var(--additional-theme);
+	background-color: var(--foreground);
+	z-index: 2;
+}

@@ -125,6 +125,7 @@ export default function DashboardPage({mode}: DashboardPageProps){
 					mode={mode}
 					callForm={callForm}
 					toggleFilterBox={toggleFilterBox}
+					filters={queryState.filters}
 					isFilterBoxDisplayed={isFilterBoxDisplayed}
 					onSearch={onSearch}
 			/>
@@ -141,7 +142,6 @@ export default function DashboardPage({mode}: DashboardPageProps){
 			</div>
 			{formConfiguration.isDisplayed ? <DashboardFormWrapper mode={mode} type={formConfiguration.type} selectedId={formConfiguration.selectedId} onFormClose={onFormClose} onFormSubmit={onFormSubmit}/> : ''}
 			{massActionPopupConfiguration.selected.size > 0 ? <MassActionPopup mode={mode} selected={massActionPopupConfiguration.selected} callForm={callForm} onFormClose={onFormClose} onDelete={onDelete} />: ''}
-			{isFilterBoxDisplayed ? <FilterBox mode={mode} filters={queryState.filters}/> : ''}
 		</div>
   )
 }
