@@ -13,6 +13,9 @@ type FilterBoxProps = {
 export default function FilterBox({mode, filters}: FilterBoxProps){
 	
 
+	// on set fiter from child:
+	//		check if active - if yes, unset, else send to FilterPopover
+
 	return (
 		<div className={styles.filterBox}>
 			{mode === 'JobOffer' ? <JobOffersFilters filters={filters as JobOfferFilter[]}/> : <ApplicationsFilters/>}

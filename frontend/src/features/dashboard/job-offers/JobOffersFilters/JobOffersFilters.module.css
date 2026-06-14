@@ -1,0 +1,35 @@
+.jobOffersFilters {
+	width: 100%;
+	display:flex;
+	flex-direction: column;
+	align-items: start;
+	justify-content: center;
+}
+
+.filterItem {
+	width: 95%;
+	height: 25px;
+	display: flex;
+	justify-content: start;
+	align-items: center;
+	font-size: 14px;
+	margin-left: 5px;
+	cursor: pointer;
+}
+
+.filterItem:hover {
+	color: var(--additional-text);
+}
+
+.filterItemActive {
+	color: var(--secondary-theme);
+}
+
+.filterItem p {
+	margin: 0;
+	padding: 0;
+}
+
+.filterItem p::first-letter {
+	text-transform: capitalize;
+}

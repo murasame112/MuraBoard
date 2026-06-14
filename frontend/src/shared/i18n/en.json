@@ -69,6 +69,12 @@
 	"formError.companyWebsiteInvalid": "company website is invalid",
 
 	"goToPage": "go to page",
-	"go": "go"
+	"go": "go",
+
+	"filter.position": "position",
+	"filter.companyName": "company name",
+	"filter.status": "status",
+	"filter.salaryMin": "salary above",
+	"filter.salaryMax": "salary below"
 
 }

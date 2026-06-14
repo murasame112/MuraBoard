@@ -1,8 +1,10 @@
 .filterBox {
 	position: absolute;
-	width: 150px;
-	height: 350px;
+	width: 120px;
+	height: 200px;
 	top: 30px;
+	padding-top: 5px;
+	box-sizing: border-box;
 	display: flex;
 	flex-direction: column;
 	border-radius: 15px;

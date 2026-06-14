@@ -19,18 +19,16 @@ export default function JobOffersFilters({filters}: JobOfferFilterProps){
 	
 
 	function setFilter(field: string){
-		
+		// send to parent
 	}
 
 	return (
-		<>
+		<div className={styles.jobOffersFilters}>
 			{availableFilters.map((element) => (
-				<div key={element.filterName} onClick={() => setFilter(element.filterName)}>
-					<p>{t(element.filterName)}
-					{filters.find((e) => e.filterName === element.filterName)?.value ? ' active' : ' not active'}
-					</p>
+				<div key={element.filterName} className={`${styles.filterItem} ${filters.find((e) => e.filterName === element.filterName)?.value ? styles.filterItemActive : ''}`} onClick={() => setFilter(element.filterName)}>
+					<p>{t(`filter.${element.filterName}`)}</p>
 				</div>
 			))}
-		</>
+		</div>
 	);
 }
