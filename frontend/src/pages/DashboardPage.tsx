@@ -2,7 +2,7 @@ import styles from './DashboardPage.module.css';
 import { useTranslation } from '../shared/i18n/useTranslation';
 import type { DashboardMode } from '../layouts/main-layout/AppNavigation/AppNavigation';
 import type { DashboardFormType } from '../features/dashboard/DashboardFormWrapper/DashboardFormWrapper';
-import type { QueryState } from '../features/dashboard/models/queryState';
+import type { ApplicationsFilterNames, JobOffersFilterNames, QueryState } from '../features/dashboard/models/queryState';
 import { useState, useEffect } from 'react';
 import DashboardStats from '../features/dashboard/DashboardStats/DashboardStats';
 import DashboardControls from '../features/dashboard/DashboardControls/DashboardControls';
@@ -102,9 +102,18 @@ export default function DashboardPage({mode}: DashboardPageProps){
 		setIsFilterBoxDisplayed(prev => !prev);
 	}
 
-	function onFilter(filters: any /*TODO: */){
+	function onFilter(filters: any /*TODO: */) {
 		setRefreshToken((prev) => prev + 1);
 		setQueryState((prev) => ({...prev, currentPage: 1, filters}));
+	}
+
+	function onUnsetFilter(filterName: JobOffersFilterNames | ApplicationsFilterNames) {
+		setQueryState((prev) => {
+			return {
+				...prev,
+				filters: prev.filters.filter((element) => element.filterName !== filterName)
+			};
+		});
 	}
 
   return(
@@ -127,6 +136,7 @@ export default function DashboardPage({mode}: DashboardPageProps){
 					toggleFilterBox={toggleFilterBox}
 					filters={queryState.filters}
 					isFilterBoxDisplayed={isFilterBoxDisplayed}
+					onUnsetFilter={onUnsetFilter}
 					onSearch={onSearch}
 			/>
 			<div className={`${styles.dashboardSection}`}>
