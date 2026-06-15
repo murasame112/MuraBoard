@@ -75,6 +75,8 @@
 	"filter.companyName": "company name",
 	"filter.status": "status",
 	"filter.salaryMin": "salary above",
-	"filter.salaryMax": "salary below"
+	"filter.salaryMax": "salary below",
+
+	"activeFilters": "active filters"
 
 }

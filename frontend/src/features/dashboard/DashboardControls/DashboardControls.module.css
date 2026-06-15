@@ -7,6 +7,29 @@
 	flex-direction: column;
 }
 
+.activeFiltersWrapper {
+	margin-right:auto;
+	margin-left: 15px;
+	position: relative;
+}
+
+.activeFilters {
+	background-color: var(--foreground);
+	color: var(--text);
+	height: 35px;
+	border: 1px solid var(--text);
+	border-radius: 25px;
+	width: 130px;
+}
+
+.activeFilters:hover {
+	background-color: var(--silk);
+}
+
+.activeFilters::first-letter {
+	text-transform: capitalize;
+}
+
 .searchIcon {
   position: absolute;
   left: 8px;

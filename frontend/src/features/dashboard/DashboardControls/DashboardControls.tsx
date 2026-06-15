@@ -39,6 +39,13 @@ export default function DashboardControls({className, mode, callForm, toggleFilt
 
 	return(
 		<div className={`${className}`}>
+
+			{filters.length > 0 ? 
+				<div className={styles.activeFiltersWrapper}>
+					<button className={styles.activeFilters}>{t('activeFilters')}: {filters.length}</button>
+				</div>
+			: ''}
+
 			<div className={styles.searchWrapper}>
 				<MagnifyingGlassIcon className={styles.searchIcon} />
 				<input
