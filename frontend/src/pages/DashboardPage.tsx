@@ -30,7 +30,6 @@ export default function DashboardPage({mode}: DashboardPageProps){
 
 	useEffect(() => {
 		fetchRecordCount();
-		console.log(queryState.filters);
 	}, [mode, refreshToken, queryState]);
 
 	function fetchRecordCount() {
