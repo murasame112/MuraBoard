@@ -108,16 +108,17 @@ export default function DashboardPage({mode}: DashboardPageProps){
 	}
 
 	function onUnsetFilter(filterName: JobOffersFilterNames | ApplicationsFilterNames) {
-		setQueryState((prev) => {
-			return {
-				...prev,
-				filters: prev.filters.filter((filter) => filter.filterName !== filterName)
-			};
-		});
+		setQueryState((prev) => ({
+			...prev,
+			filters: prev.filters.filter((filter) => filter.filterName !== filterName)	
+		}));
 	}
 
 	function onClearAllFilters(){
-		console.log('called on clear lla');
+		setQueryState((prev) => ({
+			...prev,
+			filters: []
+		}));
 	}
 
   return(
