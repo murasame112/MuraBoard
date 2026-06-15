@@ -44,7 +44,7 @@ export default function FilterPopover({filterName, setFilter}: FilterPopoverProp
                     disabled={isPopoverDisabled}
                 />
             )}
-						<button type='button' onClick={submitFilter}>set</button>
+						<button type='button' onClick={submitFilter} disabled={isPopoverDisabled}>set</button>
         </div>
     );
 }

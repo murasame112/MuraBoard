@@ -1,4 +1,24 @@
-.filterPopover input {
-	width: 50px;
+.filterPopover {
+	margin-bottom: 20px;
+	margin-top: 5px;
+	width: 100%;
+	display: flex;
+	box-sizing: border-box;
+	padding: 0 5px 0 5px;
+	justify-content: space-around;
+	
 }
 
+.filterPopover input, select {
+	width: 60%;
+	accent-color: var(--secondary-theme);
+}
+
+.filterPopover input:disabled, select:disabled {
+	background-color: var(--silk);
+	border: 1px solid var(--additional-text);
+}
+
+.filterPopover button {
+	width: 30%;
+}
