@@ -6,6 +6,7 @@ import { useState, useEffect } from 'react';
 import type { ApplicationsFilterNames, Filter, JobOffersFilterNames } from '../models/queryState';
 import FilterBox from '../filters/FilterBox/FilterBox';
 import type { DashboardMode } from '../../../layouts/main-layout/AppNavigation/AppNavigation';
+import FilterPanel from '../filters/FilterPanel/FilterPanel';
 
 type DashboardControlsProps = {
 	className: string;
@@ -14,13 +15,15 @@ type DashboardControlsProps = {
 	filters: Filter[];
 	setFilter: (filter: Filter) => void; 
 	onUnsetFilter: (filterName: JobOffersFilterNames | ApplicationsFilterNames) => void;
+	onClearAllFilters: () => void;
 	onSearch: (searchPhrase: string) => void;
 }
 
-export default function DashboardControls({className, mode, callForm, filters, setFilter, onUnsetFilter, onSearch}: DashboardControlsProps) {
+export default function DashboardControls({className, mode, callForm, filters, setFilter, onUnsetFilter, onClearAllFilters, onSearch}: DashboardControlsProps) {
 	const { t } = useTranslation();
 	const [searchPhrase, setSearchPhrase] = useState<string>('');
 	const [isFilterBoxDisplayed, setIsFilterBoxDisplayed] = useState<boolean>(false);
+	const [isFilterPanelDisplayed, setIsFilterPanelDisplayed] = useState<boolean>(false);
 
 	function handleSearch(e: React.ChangeEvent<HTMLInputElement>){
 		setSearchPhrase(e.currentTarget.value);
@@ -28,6 +31,10 @@ export default function DashboardControls({className, mode, callForm, filters, s
 
 	function toggleFilterBox(){
 		setIsFilterBoxDisplayed(prev => !prev);
+	}
+
+	function toggleFilterPanel(){
+		setIsFilterPanelDisplayed(prev => !prev);
 	}
 
 
@@ -41,12 +48,19 @@ export default function DashboardControls({className, mode, callForm, filters, s
 		}
 	}, [searchPhrase]);
 
+	useEffect(() => {
+		if (filters.length === 0) {
+			setIsFilterPanelDisplayed(false);
+		}
+	}, [filters]);
+
 	return(
 		<div className={`${className}`}>
 
 			{filters.length > 0 ? 
 				<div className={styles.activeFiltersWrapper}>
-					<button className={styles.activeFilters}>{t('activeFilters')}: {filters.length}</button>
+					<button type='button' className={styles.activeFilters} onClick={toggleFilterPanel}>{t('activeFilters')}: {filters.length}</button>
+					{isFilterPanelDisplayed ? <FilterPanel filters={filters} onUnsetFilter={onUnsetFilter} onClearAllFilters={onClearAllFilters}/> : ''}
 				</div>
 			: ''}
 

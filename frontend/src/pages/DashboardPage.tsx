@@ -116,6 +116,10 @@ export default function DashboardPage({mode}: DashboardPageProps){
 		});
 	}
 
+	function onClearAllFilters(){
+		console.log('called on clear lla');
+	}
+
   return(
     <div className={styles.dashboardPage}>
 			<div className={`${styles.title} ${styles.dashboardSection}`}>
@@ -136,6 +140,7 @@ export default function DashboardPage({mode}: DashboardPageProps){
 					filters={queryState.filters}
 					setFilter={setFilter}
 					onUnsetFilter={onUnsetFilter}
+					onClearAllFilters={onClearAllFilters}
 					onSearch={onSearch}
 			/>
 			<div className={`${styles.dashboardSection}`}>
