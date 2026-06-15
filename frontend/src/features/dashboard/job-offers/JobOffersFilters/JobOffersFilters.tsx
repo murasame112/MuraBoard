@@ -12,10 +12,15 @@ export default function JobOffersFilters({ filters, onSetFilter }: JobOfferFilte
     const { t } = useTranslation();
 		const [selected, setSelected] = useState<JobOffersFilterNames>();
 
-		function selectFilter(filterName: JobOffersFilterNames ) {
+		function selectFilter(filterName: JobOffersFilterNames, isActive: boolean) {
+			
 			onSetFilter(filterName);
-			setSelected(filterName);
-
+			if (!isActive) {
+				setSelected(filterName);
+			} else {
+				setSelected(undefined);
+			}
+			
 		}
 
     const availableFilters: JobOfferFilter[] = [
@@ -35,7 +40,7 @@ export default function JobOffersFilters({ filters, onSetFilter }: JobOfferFilte
                     key={element.filterName}
                     className={`${styles.filterItem} ${isActive ? styles.filterItemActive :
 											selected === element.filterName ? styles.filterItemSelected : ''}`}
-                    onClick={() => selectFilter(element.filterName)}
+                    onClick={() => selectFilter(element.filterName, isActive)}
                 >
 										<input type='checkbox' checked={isActive}/>
                     <p>{t(`filter.${element.filterName}`)}</p>
