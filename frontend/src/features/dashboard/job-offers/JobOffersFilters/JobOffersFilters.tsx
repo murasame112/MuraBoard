@@ -1,7 +1,7 @@
 import styles from './JobOffersFilters.module.css';
 import type { JobOfferFilter, JobOffersFilterNames } from '../../models/queryState';
 import { useTranslation } from '../../../../shared/i18n/useTranslation';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 type JobOfferFilterProps = {
     filters: JobOfferFilter[];
@@ -12,8 +12,11 @@ export default function JobOffersFilters({ filters, onSetFilter }: JobOfferFilte
     const { t } = useTranslation();
 		const [selected, setSelected] = useState<JobOffersFilterNames>();
 
+		useEffect(() => {
+			setSelected(undefined);
+		}, [filters]);
+
 		function selectFilter(filterName: JobOffersFilterNames, isActive: boolean) {
-			
 			onSetFilter(filterName);
 			if (!isActive) {
 				setSelected(filterName);
@@ -42,7 +45,7 @@ export default function JobOffersFilters({ filters, onSetFilter }: JobOfferFilte
 											selected === element.filterName ? styles.filterItemSelected : ''}`}
                     onClick={() => selectFilter(element.filterName, isActive)}
                 >
-										<input type='checkbox' checked={isActive}/>
+										<input type='checkbox' checked={isActive} readOnly/>
                     <p>{t(`filter.${element.filterName}`)}</p>
                 </div>
             )})}

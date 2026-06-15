@@ -26,10 +26,15 @@ export default function FilterBox({mode, filters,  setFilter, onUnsetFilter}: Fi
 		}
 	}
 
+	function handleSetFilter(filter: Filter){
+		setChosenFilter(undefined);
+		setFilter(filter);
+	}
+
 	return (
 		<div className={styles.filterBox}>
 			{mode === 'JobOffer' ? <JobOffersFilters filters={filters as JobOfferFilter[]} onSetFilter={onSetFilter}/> : <ApplicationsFilters/>}
-			<FilterPopover filterName={chosenFilter} setFilter={setFilter}/> 
+			<FilterPopover filterName={chosenFilter} setFilter={handleSetFilter}/> 
 		</div>
 	);
 }
