@@ -11,21 +11,25 @@ type DashboardControlsProps = {
 	className: string;
 	mode: DashboardMode;
 	callForm: (type: DashboardFormType, selectedId?: number) => void;
-	toggleFilterBox: () => void;
 	filters: Filter[];
-	isFilterBoxDisplayed: boolean;
 	setFilter: (filter: Filter) => void; 
 	onUnsetFilter: (filterName: JobOffersFilterNames | ApplicationsFilterNames) => void;
 	onSearch: (searchPhrase: string) => void;
 }
 
-export default function DashboardControls({className, mode, callForm, toggleFilterBox, filters, isFilterBoxDisplayed, setFilter, onUnsetFilter, onSearch}: DashboardControlsProps) {
+export default function DashboardControls({className, mode, callForm, filters, setFilter, onUnsetFilter, onSearch}: DashboardControlsProps) {
 	const { t } = useTranslation();
 	const [searchPhrase, setSearchPhrase] = useState<string>('');
+	const [isFilterBoxDisplayed, setIsFilterBoxDisplayed] = useState<boolean>(false);
 
 	function handleSearch(e: React.ChangeEvent<HTMLInputElement>){
 		setSearchPhrase(e.currentTarget.value);
 	}
+
+	function toggleFilterBox(){
+		setIsFilterBoxDisplayed(prev => !prev);
+	}
+
 
 	useEffect(() => {
 		const timeoutId = setTimeout(() => {

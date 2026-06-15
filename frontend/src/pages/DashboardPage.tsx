@@ -18,7 +18,6 @@ type DashboardPageProps = {
 export default function DashboardPage({mode}: DashboardPageProps){
 	const [formConfiguration, setFormConfiguration] = useState<{isDisplayed: boolean, type: DashboardFormType, selectedId?: number}>({isDisplayed: false, type: 'add', selectedId: undefined});
 	const [massActionPopupConfiguration, setMassActionPopupConfiguration] = useState<{selected: Set<number>}>({selected: new Set<number>()});
-	const [isFilterBoxDisplayed, setIsFilterBoxDisplayed] = useState<boolean>(false);
 	const [recordCount, setRecordCount] = useState<number>(0);
 	const [refreshToken, setRefreshToken] = useState<number>(0);
 
@@ -98,10 +97,6 @@ export default function DashboardPage({mode}: DashboardPageProps){
 		setQueryState((prev) => ({...prev, currentPage: page}));
 	}
 
-	function toggleFilterBox(){
-		setIsFilterBoxDisplayed(prev => !prev);
-	}
-
 	function setFilter(filter: Filter) {
 		setRefreshToken((prev) => prev + 1);
 		setQueryState((prev) => {
@@ -139,9 +134,7 @@ export default function DashboardPage({mode}: DashboardPageProps){
 					className={`${styles.dashboardControls} ${styles.dashboardSection}`}
 					mode={mode}
 					callForm={callForm}
-					toggleFilterBox={toggleFilterBox}
 					filters={queryState.filters}
-					isFilterBoxDisplayed={isFilterBoxDisplayed}
 					setFilter={setFilter}
 					onUnsetFilter={onUnsetFilter}
 					onSearch={onSearch}
