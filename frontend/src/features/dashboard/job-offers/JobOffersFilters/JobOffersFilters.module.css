@@ -4,16 +4,20 @@
 	flex-direction: column;
 	align-items: start;
 	justify-content: center;
+	margin-bottom:10px;
 }
 
 .filterItem {
-	width: 95%;
-	height: 25px;
+	width: 105px;
+	height: 32px;
 	display: flex;
 	justify-content: start;
 	align-items: center;
-	font-size: 14px;
+	font-size: 12px;
+	margin-top:5px;
 	margin-left: 5px;
+	margin-right: 5px;
+	padding-left: 3px;
 	cursor: pointer;
 }
 
@@ -22,14 +26,28 @@
 }
 
 .filterItemActive {
+	border-radius: 10px;
+	background-color: var(--additional-theme);
+	
+}
+
+.filterItemSelected {
 	color: var(--secondary-theme);
+	border-bottom: 1px solid var(--secondary-theme);
+	border-top: 1px solid var(--secondary-theme);
 }
 
 .filterItem p {
 	margin: 0;
 	padding: 0;
+	text-align: left;
 }
 
 .filterItem p::first-letter {
 	text-transform: capitalize;
+}
+
+.filterItem input {
+	accent-color: var(--secondary-theme);
+	margin-right: 8px;
 }

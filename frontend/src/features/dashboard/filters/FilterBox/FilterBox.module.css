@@ -1,7 +1,7 @@
 .filterBox {
 	position: absolute;
-	width: 120px;
-	height: 200px;
+	width: auto;
+	height: auto;
 	top: 30px;
 	padding-top: 5px;
 	box-sizing: border-box;
