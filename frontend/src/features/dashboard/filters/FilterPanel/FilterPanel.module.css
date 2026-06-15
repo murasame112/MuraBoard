@@ -15,7 +15,8 @@
 }
 
 .filterElement {
-	min-width: 110px;
+	min-width: 95px;
+	min-height: 20px;
 	background-color: var(--main-theme);
 	border: 1px solid var(--additional-text);
 	border-radius: 15px;
