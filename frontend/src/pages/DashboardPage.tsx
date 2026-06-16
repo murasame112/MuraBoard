@@ -97,26 +97,16 @@ export default function DashboardPage({mode}: DashboardPageProps){
 	function setFilter(filter: Filter) {
 		setRefreshToken((prev) => prev + 1);
 
-		setQueryState((prev) => {
-			const existingFilter = prev.filters.find(
-				(element) => element.filterName === filter.filterName
-			);
-
-			if (existingFilter?.value === filter.value) {
-				return prev;
-			}
-
-			return {
-				...prev,
-				currentPage: 1,
-				filters: [
-					...prev.filters.filter(
-						(element) => element.filterName !== filter.filterName
-					),
-					filter,
-				],
-			};
-		});
+		setQueryState((prev) => ({
+			...prev,
+			currentPage: 1,
+			filters: [
+				...prev.filters.filter(
+					(element) => element.filterName !== filter.filterName
+				),
+				filter,
+			],
+		}));
 	}
 
 	function onUnsetFilter(filterName: JobOffersFilterNames | ApplicationsFilterNames) {
