@@ -12,6 +12,7 @@ export default function FilterPopover({filterName, setFilter}: FilterPopoverProp
 	const { t } = useTranslation();
 	const [popoverValue, setPopoverValue] = useState<string | number>('');
 	const [isPopoverDisabled, setIsPopoverDisabled] = useState<boolean>(true);
+	const [isSubmitDisabled, setIsSubmitDisabled] = useState<boolean>(true);
 
 	useEffect(() => {
 		if (!filterName) {
@@ -24,18 +25,19 @@ export default function FilterPopover({filterName, setFilter}: FilterPopoverProp
 
 	function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) {
 		setPopoverValue(e.currentTarget.value);
+		if (e.currentTarget.value !== '') {
+			setIsSubmitDisabled(false);
+		} else {
+			setIsSubmitDisabled(true);
+		}
 	}
 
 	function submitFilter() {
-		if (filterName) {
-			if (filterName === 'status' && popoverValue === '') {
-				setFilter({filterName, value: 'applied'});
-			} else { 
-				setFilter({filterName, value: popoverValue});
-			}
+		if (filterName && popoverValue !== '') {
+			setFilter({filterName, value: popoverValue});
 			setPopoverValue('');
 			setIsPopoverDisabled(true);
-
+			setIsSubmitDisabled(true);
 		}
 	}
 
@@ -44,6 +46,7 @@ export default function FilterPopover({filterName, setFilter}: FilterPopoverProp
             {filterName === 'status' ? 
 						(
                 <select onChange={handleChange} disabled={isPopoverDisabled}>
+									<option value=''></option>
 									<option value='applied'>{t('applied')}</option>
 									<option value='notApplied'>{t('notApplied')}</option>
 								</select>
@@ -55,7 +58,7 @@ export default function FilterPopover({filterName, setFilter}: FilterPopoverProp
                     disabled={isPopoverDisabled}
                 />
             )}
-						<button type='button' onClick={submitFilter} disabled={isPopoverDisabled}>set</button>
+						<button type='button' onClick={submitFilter} disabled={isSubmitDisabled}>set</button>
         </div>
     );
 }
