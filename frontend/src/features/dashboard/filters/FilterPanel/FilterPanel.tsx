@@ -10,11 +10,14 @@ type FilterPanelProps = {
 
 export default function FilterPanel({filters, onUnsetFilter, onClearAllFilters}: FilterPanelProps){
 	const { t } = useTranslation();
+	
 
 	return (
 		<div className={styles.filterPanel}>
 			{filters.map((element) => (
-				<div className={styles.filterElement} onClick={() => onUnsetFilter(element.filterName)} key={element.filterName}> {element.filterName}: {element.value}</div>
+				<div className={styles.filterElement} onClick={() => onUnsetFilter(element.filterName)} key={element.filterName}>
+					{ element.filterName === 'status' ? `${element.filterName}: ${t(element.value as string)}` : `${element.filterName}: ${element.value}` }
+				</div>
 			))}
 			<button type='button' className={styles.clearAll} onClick={onClearAllFilters}>{t('clearAllFilters')}</button>
 		</div>
