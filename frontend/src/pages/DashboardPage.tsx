@@ -28,7 +28,7 @@ export default function DashboardPage({mode}: DashboardPageProps){
 
 	useEffect(() => {
 		fetchRecordCount();
-	}, [mode, refreshToken, queryState]);
+	}, [mode, refreshToken, queryState.filters, queryState.searchPhrase]);
 
 	function fetchRecordCount() {
 		//TODO: userId shouldn't be 4, it's just for development
