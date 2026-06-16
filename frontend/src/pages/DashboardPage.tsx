@@ -86,7 +86,6 @@ export default function DashboardPage({mode}: DashboardPageProps){
 	}
 
 	function onSearch(searchPhrase: string){
-		setRefreshToken((prev) => prev + 1);
 		setQueryState((prev) => ({...prev, currentPage: 1, searchPhrase}));
 	}
 
@@ -95,8 +94,6 @@ export default function DashboardPage({mode}: DashboardPageProps){
 	}
 
 	function setFilter(filter: Filter) {
-		setRefreshToken((prev) => prev + 1);
-
 		setQueryState((prev) => ({
 			...prev,
 			currentPage: 1,

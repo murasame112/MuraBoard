@@ -3,7 +3,7 @@ import type { JobOffer } from '../../../../shared/models/models';
 import { useTranslation } from '../../../../shared/i18n/useTranslation';
 import { useEffect, useState } from 'react';
 import type { DashboardFormType } from '../../DashboardFormWrapper/DashboardFormWrapper';
-import type { QueryState } from '../../../../pages/DashboardPage';
+import type { QueryState } from '../../models/queryState';
 
 
 type JobOffersTableProps = {
