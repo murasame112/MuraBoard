@@ -155,7 +155,7 @@ export default function DashboardStats({className, mode, refreshToken, queryStat
 	
 	useEffect(() => {
 		fetchStatsData();
-	}, [mode, refreshToken, queryState]);
+	}, [mode, refreshToken, queryState.filters, queryState.searchPhrase]);
 	
 	
 	return(
