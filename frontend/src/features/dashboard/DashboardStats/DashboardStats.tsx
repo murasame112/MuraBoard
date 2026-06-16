@@ -3,13 +3,14 @@ import type { DashboardMode } from '../../../layouts/main-layout/AppNavigation/A
 import { useState, useEffect } from 'react';
 import { CheckCircleIcon, ClockIcon, ArrowPathIcon, ChatBubbleLeftRightIcon, HandRaisedIcon, XCircleIcon } from '@heroicons/react/24/outline';
 import { useTranslation } from '../../../shared/i18n/useTranslation';
-import type { QueryState } from '../../../pages/DashboardPage';
+import type { Filter, QueryState } from '../models/queryState';
 
 type DashboardStatsProps = {
 	className: string;
 	mode: DashboardMode;
 	refreshToken: number;
 	queryState: QueryState;
+	setFilter: (filter: Filter) => void; 
 }
 
 type CardsData = {
@@ -42,7 +43,7 @@ type DashboardStatsState =
 			stats: ApplicationStats;
 	  };
 
-export default function DashboardStats({className, mode, refreshToken, queryState}: DashboardStatsProps) {
+export default function DashboardStats({className, mode, refreshToken, queryState, setFilter}: DashboardStatsProps) {
 	const {t} = useTranslation();
 	const [summaryCount, setSummaryCount] = useState<number>(0);
 	const [statsState, setStatsState] = useState<DashboardStatsState | null>(null);
@@ -163,7 +164,7 @@ export default function DashboardStats({className, mode, refreshToken, queryStat
 				{cardsData.map((element: CardsData) => {
 					const Icon = element.icon;
 					return (
-						<div key={element.label} className={styles.card} style={{borderBottom: `6px solid var(${element.color})`}}>
+						<div key={element.label} className={styles.card} style={{borderBottom: `6px solid var(${element.color})`}} onClick={() => setFilter({filterName: 'status', value: element.label})}>
 							<div className={styles.cardText}>
 								<Icon style={{color: `var(${element.color})`}} className={styles.icon}/><p>{element.label}</p>
 							</div>

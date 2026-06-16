@@ -20,13 +20,11 @@ export default function DashboardPage({mode}: DashboardPageProps){
 	const [massActionPopupConfiguration, setMassActionPopupConfiguration] = useState<{selected: Set<number>}>({selected: new Set<number>()});
 	const [recordCount, setRecordCount] = useState<number>(0);
 	const [refreshToken, setRefreshToken] = useState<number>(0);
-
 	const [queryState, setQueryState] = useState<QueryState>({searchPhrase: '', pageSize: 9, currentPage: 1, filters: []});
-
 
 	const { t } = useTranslation();
 
-		const host = import.meta.env.VITE_API_URL;
+	const host = import.meta.env.VITE_API_URL;
 
 	useEffect(() => {
 		fetchRecordCount();
@@ -133,6 +131,7 @@ export default function DashboardPage({mode}: DashboardPageProps){
 					mode={mode}
 					refreshToken={refreshToken}
 					queryState={queryState}
+					setFilter={setFilter}
 			/>
 			<DashboardControls
 					className={`${styles.dashboardControls} ${styles.dashboardSection}`}
