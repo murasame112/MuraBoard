@@ -8,27 +8,27 @@ export type JobOffersFilterNames =
 export type ApplicationsFilterNames = 'status'; //TODO:
 
 export type PositionFilter = {
-	filterName: JobOffersFilterNames,
+	filterName: 'position',
 	value?: string
 };
 
 export type CompanyNameFilter = {
-	filterName: JobOffersFilterNames,
+	filterName: 'companyName',
 	value?: string
 };
 
 export type JobOfferStatusFilter = {
-	filterName: JobOffersFilterNames,
+	filterName: 'status',
 	value?: 'applied' | 'notApplied';
 };
 
 export type SalaryMinFilter = {
-	filterName: JobOffersFilterNames,
+	filterName: 'salaryMin',
 	value?: number;
 };
 
 export type SalaryMaxFilter = {
-	filterName: JobOffersFilterNames,
+	filterName: 'salaryMax',
 	value?: number;
 };
 
