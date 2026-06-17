@@ -74,6 +74,8 @@
 	"filter.position": "position",
 	"filter.companyName": "company name",
 	"filter.status": "status",
+	"filter.jobOfferStatus": "status",
+	"filter.applicationStatus": "status",
 	"filter.salaryMin": "salary above",
 	"filter.salaryMax": "salary below",
 
