@@ -109,6 +109,7 @@ export default function DashboardPage({mode}: DashboardPageProps){
 	function onUnsetFilter(filterName: FilterName) {
 		setQueryState((prev) => ({
 			...prev,
+			currentPage: 1,
 			filters: prev.filters.filter((filter) => filter.filterName !== filterName)	
 		}));
 	}
@@ -116,6 +117,7 @@ export default function DashboardPage({mode}: DashboardPageProps){
 	function onClearAllFilters(){
 		setQueryState((prev) => ({
 			...prev,
+			currentPage: 1,
 			filters: []
 		}));
 	}
