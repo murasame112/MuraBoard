@@ -17,8 +17,9 @@ export default function FilterPopover({mode, filterName, setFilter}: FilterPopov
 	const [isSubmitDisabled, setIsSubmitDisabled] = useState<boolean>(true);
 
 	useEffect(() => {
+		setPopoverValue('');
+		setIsSubmitDisabled(true);
 		if (!filterName) {
-			setPopoverValue('');
 			setIsPopoverDisabled(true);
 		} else {
 			setIsPopoverDisabled(false);
@@ -38,7 +39,7 @@ export default function FilterPopover({mode, filterName, setFilter}: FilterPopov
 		if (!filterName || popoverValue === '') return;
 
 		if (filterName === 'position' || filterName === 'companyName') {
-			
+
 			setFilter({
 				filterName,
 				value: String(popoverValue).trim(),
