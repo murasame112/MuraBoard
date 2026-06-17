@@ -1,22 +1,22 @@
 import styles from './JobOffersFilters.module.css';
-import type { JobOfferFilter, JobOffersFilterNames } from '../../models/queryState';
+import type { FilterName, JobOfferFilter} from '../../models/queryState';
 import { useTranslation } from '../../../../shared/i18n/useTranslation';
 import { useState, useEffect } from 'react';
 
 type JobOfferFilterProps = {
     filters: JobOfferFilter[];
-    onSetFilter: (filterName: JobOffersFilterNames) => void;
+    onSetFilter: (filterName: FilterName) => void;
 };
 
 export default function JobOffersFilters({ filters, onSetFilter }: JobOfferFilterProps) {
     const { t } = useTranslation();
-		const [selected, setSelected] = useState<JobOffersFilterNames>();
+		const [selected, setSelected] = useState<FilterName>();
 
 		useEffect(() => {
 			setSelected(undefined);
 		}, [filters]);
 
-		function selectFilter(filterName: JobOffersFilterNames, isActive: boolean) {
+		function selectFilter(filterName: FilterName, isActive: boolean) {
 			onSetFilter(filterName);
 			if (!isActive) {
 				setSelected(filterName);
@@ -29,7 +29,7 @@ export default function JobOffersFilters({ filters, onSetFilter }: JobOfferFilte
     const availableFilters: JobOfferFilter[] = [
         { filterName: 'position' },
         { filterName: 'companyName' },
-        { filterName: 'status' },
+        { filterName: 'jobOfferStatus' },
         { filterName: 'salaryMin' },
         { filterName: 'salaryMax' },
     ];

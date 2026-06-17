@@ -1,9 +1,10 @@
-export type JobOffersFilterNames = 
-			| 'position'
-			| 'companyName'
-			| 'status'
-			| 'salaryMin'
-			| 'salaryMax';
+export type FilterName =
+  | 'position'
+  | 'companyName'
+  | 'salaryMin'
+  | 'salaryMax'
+  | 'jobOfferStatus'
+  | 'applicationStatus';
 
 export type ApplicationsFilterNames = 'status'; //TODO:
 
@@ -18,7 +19,7 @@ export type CompanyNameFilter = {
 };
 
 export type JobOfferStatusFilter = {
-	filterName: 'status',
+	filterName: 'jobOfferStatus',
 	value?: 'applied' | 'notApplied';
 };
 
@@ -35,8 +36,8 @@ export type SalaryMaxFilter = {
 export type JobOfferFilter = PositionFilter | CompanyNameFilter | JobOfferStatusFilter | SalaryMinFilter | SalaryMaxFilter;
 
 export type ApplicationStatusFilter = {
-	filterName: 'status',
-	value?: 'applied' | 'rejected' //TODO:
+	filterName: 'applicationStatus',
+	value?: 'applied' | 'inProgress' | 'interview' | 'offer' | 'rejected'  //TODO:
 }
 
 export type ApplicationFilter = ApplicationStatusFilter;

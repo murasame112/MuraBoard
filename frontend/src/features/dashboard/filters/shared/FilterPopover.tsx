@@ -1,14 +1,16 @@
-import type { ApplicationsFilterNames, Filter, JobOffersFilterNames } from '../../models/queryState';
+import type { Filter, FilterName } from '../../models/queryState';
 import styles from './FilterPopover.module.css';
 import { useState, useEffect } from 'react';
 import { useTranslation } from '../../../../shared/i18n/useTranslation';
+import type { DashboardMode } from '../../../../layouts/main-layout/AppNavigation/AppNavigation';
 
 type FilterPopoverProps = {
-	filterName?: JobOffersFilterNames | ApplicationsFilterNames;
+	mode: DashboardMode;
+	filterName?: FilterName;
 	setFilter: (filter: Filter) => void; 
 }
 
-export default function FilterPopover({filterName, setFilter}: FilterPopoverProps){
+export default function FilterPopover({mode, filterName, setFilter}: FilterPopoverProps){
 	const { t } = useTranslation();
 	const [popoverValue, setPopoverValue] = useState<string | number>('');
 	const [isPopoverDisabled, setIsPopoverDisabled] = useState<boolean>(true);
@@ -33,17 +35,48 @@ export default function FilterPopover({filterName, setFilter}: FilterPopoverProp
 	}
 
 	function submitFilter() {
-		if (filterName && popoverValue !== '') {
-			setFilter({filterName, value: popoverValue});
-			setPopoverValue('');
-			setIsPopoverDisabled(true);
-			setIsSubmitDisabled(true);
-		}
-	}
+		if (!filterName || popoverValue === '') return;
 
+		if (filterName === 'position' || filterName === 'companyName') {
+			
+			setFilter({
+				filterName,
+				value: String(popoverValue).trim(),
+			});
+
+		} else if (filterName === 'salaryMin' || filterName === 'salaryMax') {
+
+			const numericValue = Number(popoverValue);
+			if (Number.isNaN(numericValue)) return;
+
+			setFilter({
+				filterName,
+				value: numericValue,
+			});
+
+		} else if (filterName === 'jobOfferStatus') {
+
+			setFilter({
+				filterName,
+				value: popoverValue as 'applied' | 'notApplied',
+			});
+
+		} else if (filterName === 'applicationStatus') {
+
+			setFilter({
+				filterName,
+				value: popoverValue as 'applied' | 'rejected',
+			});
+
+		}
+
+		setPopoverValue('');
+		setIsPopoverDisabled(true);
+		setIsSubmitDisabled(true);
+	}
 	return (
         <div className={styles.filterPopover}>
-            {filterName === 'status' ? 
+            {filterName === 'jobOfferStatus' ? 
 						(
                 <select onChange={handleChange} disabled={isPopoverDisabled}>
 									<option value=''></option>

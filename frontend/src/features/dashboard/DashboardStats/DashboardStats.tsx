@@ -18,6 +18,7 @@ type CardsData = {
 	count: number;
 	color: string;
 	icon: React.ElementType;
+	filterName: 'jobOfferStatus' | 'applicationStatus';
 };
 
 type JobOfferStats = {
@@ -105,13 +106,15 @@ export default function DashboardStats({className, mode, refreshToken, queryStat
 						label: 'applied',
 						count: statsState.stats.applied,
 						color: '--alert-lightblue',
-						icon: CheckCircleIcon
+						icon: CheckCircleIcon,
+						filterName: 'jobOfferStatus'
 					},
 					{
 						label: 'notApplied',
 						count: statsState.stats.notApplied,
 						color: '--alert-burgund',
-						icon: ClockIcon
+						icon: ClockIcon,
+						filterName: 'jobOfferStatus'
 					}
 				];
 		} else if (statsState.mode === 'Application') {
@@ -120,31 +123,36 @@ export default function DashboardStats({className, mode, refreshToken, queryStat
 						label: 'applied',
 						count: statsState.stats.applied,
 						color: '--alert-lightblue',
-						icon: CheckCircleIcon
+						icon: CheckCircleIcon,
+						filterName: 'applicationStatus'
 					},
 					{
 						label: 'inProgress',
 						count: statsState.stats.inProgress,
 						color: '--alert-yellow',
-						icon: ArrowPathIcon
+						icon: ArrowPathIcon,
+						filterName: 'applicationStatus'
 					},
 					{
 						label: 'interview',
 						count: statsState.stats.interview,
 						color: '--alert-purple',
-						icon: ChatBubbleLeftRightIcon
+						icon: ChatBubbleLeftRightIcon,
+						filterName: 'applicationStatus'
 					},
 					{
 						label: 'offer',
 						count: statsState.stats.offer,
 						color: '--alert-green',
-						icon: HandRaisedIcon
+						icon: HandRaisedIcon,
+						filterName: 'applicationStatus'
 					},
 					{
-						label: t('rejected'),
+						label: 'rejected',
 						count: statsState.stats.rejected,
 						color: '--alert-burgund',
-						icon: XCircleIcon
+						icon: XCircleIcon,
+						filterName: 'applicationStatus'
 					}
 				];
 		} else {
@@ -164,7 +172,7 @@ export default function DashboardStats({className, mode, refreshToken, queryStat
 				{cardsData.map((element: CardsData) => {
 					const Icon = element.icon;
 					return (
-						<div key={element.label} className={styles.card} style={{borderBottom: `6px solid var(${element.color})`}} onClick={() => setFilter({filterName: 'status', value: element.label})}>
+						<div key={element.label} className={styles.card} style={{borderBottom: `6px solid var(${element.color})`}} onClick={() => setFilter({filterName: element.filterName, value: element.label as any})}>
 							<div className={styles.cardText}>
 								<Icon style={{color: `var(${element.color})`}} className={styles.icon}/><p>{t(element.label)}</p>
 							</div>

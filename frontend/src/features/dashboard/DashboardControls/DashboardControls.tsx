@@ -3,7 +3,7 @@ import { useTranslation } from '../../../shared/i18n/useTranslation';
 import { FunnelIcon, MagnifyingGlassIcon, PlusIcon } from '@heroicons/react/24/outline';
 import type { DashboardFormType } from '../DashboardFormWrapper/DashboardFormWrapper';
 import { useState, useEffect } from 'react';
-import type { ApplicationsFilterNames, Filter, JobOffersFilterNames } from '../models/queryState';
+import type { Filter, FilterName } from '../models/queryState';
 import FilterBox from '../filters/FilterBox/FilterBox';
 import type { DashboardMode } from '../../../layouts/main-layout/AppNavigation/AppNavigation';
 import FilterPanel from '../filters/FilterPanel/FilterPanel';
@@ -14,7 +14,7 @@ type DashboardControlsProps = {
 	callForm: (type: DashboardFormType, selectedId?: number) => void;
 	filters: Filter[];
 	setFilter: (filter: Filter) => void; 
-	onUnsetFilter: (filterName: JobOffersFilterNames | ApplicationsFilterNames) => void;
+	onUnsetFilter: (filterName: FilterName) => void;
 	onClearAllFilters: () => void;
 	onSearch: (searchPhrase: string) => void;
 }

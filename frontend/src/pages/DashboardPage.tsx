@@ -2,7 +2,7 @@ import styles from './DashboardPage.module.css';
 import { useTranslation } from '../shared/i18n/useTranslation';
 import type { DashboardMode } from '../layouts/main-layout/AppNavigation/AppNavigation';
 import type { DashboardFormType } from '../features/dashboard/DashboardFormWrapper/DashboardFormWrapper';
-import type { ApplicationsFilterNames, Filter, JobOffersFilterNames, QueryState } from '../features/dashboard/models/queryState';
+import type { Filter, FilterName, QueryState } from '../features/dashboard/models/queryState';
 import { useState, useEffect } from 'react';
 import DashboardStats from '../features/dashboard/DashboardStats/DashboardStats';
 import DashboardControls from '../features/dashboard/DashboardControls/DashboardControls';
@@ -106,7 +106,7 @@ export default function DashboardPage({mode}: DashboardPageProps){
 		}));
 	}
 
-	function onUnsetFilter(filterName: JobOffersFilterNames | ApplicationsFilterNames) {
+	function onUnsetFilter(filterName: FilterName) {
 		setQueryState((prev) => ({
 			...prev,
 			filters: prev.filters.filter((filter) => filter.filterName !== filterName)	
