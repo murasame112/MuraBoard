@@ -102,13 +102,13 @@ export default function DashboardStats({className, mode, refreshToken, queryStat
 		if (statsState.mode === 'JobOffer') {
 			return [
 					{
-						label: t('applied'),
+						label: 'applied',
 						count: statsState.stats.applied,
 						color: '--alert-lightblue',
 						icon: CheckCircleIcon
 					},
 					{
-						label: t('notApplied'),
+						label: 'notApplied',
 						count: statsState.stats.notApplied,
 						color: '--alert-burgund',
 						icon: ClockIcon
@@ -117,25 +117,25 @@ export default function DashboardStats({className, mode, refreshToken, queryStat
 		} else if (statsState.mode === 'Application') {
 			return [
 					{
-						label: t('applied'),
+						label: 'applied',
 						count: statsState.stats.applied,
 						color: '--alert-lightblue',
 						icon: CheckCircleIcon
 					},
 					{
-						label: t('inProgress'),
+						label: 'inProgress',
 						count: statsState.stats.inProgress,
 						color: '--alert-yellow',
 						icon: ArrowPathIcon
 					},
 					{
-						label: t('interview'),
+						label: 'interview',
 						count: statsState.stats.interview,
 						color: '--alert-purple',
 						icon: ChatBubbleLeftRightIcon
 					},
 					{
-						label: t('offer'),
+						label: 'offer',
 						count: statsState.stats.offer,
 						color: '--alert-green',
 						icon: HandRaisedIcon
@@ -166,7 +166,7 @@ export default function DashboardStats({className, mode, refreshToken, queryStat
 					return (
 						<div key={element.label} className={styles.card} style={{borderBottom: `6px solid var(${element.color})`}} onClick={() => setFilter({filterName: 'status', value: element.label})}>
 							<div className={styles.cardText}>
-								<Icon style={{color: `var(${element.color})`}} className={styles.icon}/><p>{element.label}</p>
+								<Icon style={{color: `var(${element.color})`}} className={styles.icon}/><p>{t(element.label)}</p>
 							</div>
 							<p className={styles.count}>{element.count}</p>
 						</div>
