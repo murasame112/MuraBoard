@@ -46,7 +46,7 @@ export default function DashboardControls({className, mode, callForm, filters, s
 		return () => {
 			clearTimeout(timeoutId);
 		}
-	}, [searchPhrase]);
+	}, [searchPhrase, onSearch]);
 
 	useEffect(() => {
 		if (filters.length === 0) {
