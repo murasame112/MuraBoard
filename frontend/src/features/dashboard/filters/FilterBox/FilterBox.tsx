@@ -18,7 +18,7 @@ export default function FilterBox({mode, filters,  setFilter, onUnsetFilter}: Fi
 	const [chosenFilter, setChosenFilter] = useState<FilterName>();
 	
 	function onSetFilter(filterName: FilterName){
-		if (filters.find((element) => element.filterName === filterName)?.value) {
+		if (filters.find((element) => element.filterName === filterName)) {
 			onUnsetFilter(filterName);
 			setChosenFilter(undefined);
 		} else {
