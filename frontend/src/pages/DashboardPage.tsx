@@ -3,7 +3,7 @@ import { useTranslation } from '../shared/i18n/useTranslation';
 import type { DashboardMode } from '../layouts/main-layout/AppNavigation/AppNavigation';
 import type { DashboardFormType } from '../features/dashboard/DashboardFormWrapper/DashboardFormWrapper';
 import type { Filter, FilterName, QueryState } from '../features/dashboard/models/queryState';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import DashboardStats from '../features/dashboard/DashboardStats/DashboardStats';
 import DashboardControls from '../features/dashboard/DashboardControls/DashboardControls';
 import DashboardList from '../features/dashboard/DashboardList/DashboardList';
@@ -85,9 +85,9 @@ export default function DashboardPage({mode}: DashboardPageProps){
 		setMassActionPopupConfiguration({ selected: new Set<number>() });
 	}
 
-	function onSearch(searchPhrase: string){
+	const onSearch = useCallback((searchPhrase: string) => {
 		setQueryState((prev) => ({...prev, currentPage: 1, searchPhrase}));
-	}
+	}, []);
 
 	function onPageChange(page: number) {
 		setQueryState((prev) => ({...prev, currentPage: page}));
