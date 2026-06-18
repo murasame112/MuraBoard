@@ -5,9 +5,9 @@ import type { Company } from '../models/models.js';
 
 export async function getJobOffersForDashboard(req: Request, res: Response) {
 	try {
-		const { userId, page, pageSize, searchPhrase} = req.query as {
+		const { userId, currentPage, pageSize, searchPhrase} = req.query as {
 			userId?: string;
-			page?: string;
+			currentPage?: string;
 			pageSize?: string;
 			searchPhrase?: string;
 		}
@@ -16,15 +16,15 @@ export async function getJobOffersForDashboard(req: Request, res: Response) {
 			return res.status(400).json({ message: 'Invalid user id' });
 		}
 
-		if (!page || Number.isNaN(pageSize)) {
+		if (!currentPage || Number.isNaN(currentPage)) {
 			return res.status(400).json({ message: 'Invalid page' });
 		}
 
-		if (!page || Number.isNaN(pageSize)) {
+		if (!pageSize || Number.isNaN(pageSize)) {
 			return res.status(400).json({ message: 'Invalid pageSize' });
 		}
 
-		const data = await jobOffersService.getJobOffersDashboardData(Number(userId), Number(page), Number(pageSize), searchPhrase ? searchPhrase : '');
+		const data = await jobOffersService.getJobOffersDashboardData(Number(userId), Number(currentPage), Number(pageSize), searchPhrase ? searchPhrase : '');
 		return res.status(200).json(data);
 
 	} catch (error) {

@@ -4,6 +4,8 @@ export function buildQueryParams(userId: number, queryState: QueryState) {
 	const params = new URLSearchParams();
 
 	params.append('userId', String(userId));
+	params.append('currentPage', String(queryState.currentPage));
+	params.append('pageSize', String(queryState.pageSize));
 
 	if (queryState.searchPhrase) {
 		params.append('searchPhrase', queryState.searchPhrase);

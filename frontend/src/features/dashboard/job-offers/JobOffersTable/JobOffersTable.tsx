@@ -55,10 +55,11 @@ export default function JobOffersTable({callForm, callMassActionPopup, refreshTo
 		//TODO: userId shouldn't be 4, it's just for development
 		const userId = 4;
 		const query = buildQueryParams(userId, queryState);
-
+		
 		fetch(`${host}/api/joboffer/offers-for-dashboard?${query}`)
 			.then((response) => response.json())
 			.then((data) => {
+				console.log(data);
 				if (!data || data.length == 0){
 					setJobOffers([]);
 					return;
