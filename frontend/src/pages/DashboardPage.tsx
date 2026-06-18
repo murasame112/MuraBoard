@@ -9,6 +9,7 @@ import DashboardControls from '../features/dashboard/DashboardControls/Dashboard
 import DashboardList from '../features/dashboard/DashboardList/DashboardList';
 import DashboardFormWrapper from '../features/dashboard/DashboardFormWrapper/DashboardFormWrapper';
 import MassActionPopup from '../features/dashboard/MassActionPopup/MassActionPopup';
+import { buildQueryParams } from '../shared/lib/buildQueryParams';
 
 
 type DashboardPageProps = {
@@ -33,9 +34,11 @@ export default function DashboardPage({mode}: DashboardPageProps){
 	function fetchRecordCount() {
 		//TODO: userId shouldn't be 4, it's just for development
 		const userId = 4;
+		const query = buildQueryParams(userId, queryState);
 
 		if (mode === 'JobOffer') {
-			fetch(`${host}/api/joboffer/offers-count?userId=${userId}&searchPhrase=${queryState.searchPhrase}`)
+
+			fetch(`${host}/api/joboffer/offers-count?${query}`)
 				.then((response) => response.json())
 				.then((data) => {
 					if (!data){
@@ -48,7 +51,7 @@ export default function DashboardPage({mode}: DashboardPageProps){
 				
 		} else if (mode === 'Application') {
 			
-			fetch(`${host}/api/application/applications-count?userId=${userId}&searchPhrase=${queryState.searchPhrase}`)
+			fetch(`${host}/api/application/applications-count?${query}`)
 				.then((response) => response.json())
 				.then((data) => {
 					if (!data){
