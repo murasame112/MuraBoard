@@ -4,6 +4,7 @@ import { useTranslation } from '../../../../shared/i18n/useTranslation';
 import { useEffect, useState } from 'react';
 import type { DashboardFormType } from '../../DashboardFormWrapper/DashboardFormWrapper';
 import type { QueryState } from '../../models/queryState';
+import { buildQueryParams } from '../../../../shared/lib/buildQueryParams';
 
 
 type JobOffersTableProps = {
@@ -53,7 +54,9 @@ export default function JobOffersTable({callForm, callMassActionPopup, refreshTo
 	function fetchData() {
 		//TODO: userId shouldn't be 4, it's just for development
 		const userId = 4;
-		fetch(`${host}/api/joboffer/offers-for-dashboard?userId=${userId}&page=${queryState.currentPage}&pageSize=${queryState.pageSize}&searchPhrase=${queryState.searchPhrase}`)
+		const query = buildQueryParams(userId, queryState);
+
+		fetch(`${host}/api/joboffer/offers-for-dashboard?${query}`)
 			.then((response) => response.json())
 			.then((data) => {
 				if (!data || data.length == 0){
