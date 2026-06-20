@@ -32,7 +32,15 @@ export async function getJobOffersDashboardData(query: ParsedQuery) {
 	return offers;
 }
 
-export async function getJobOffersCount(userId: number, searchPhrase: string) { 
+export async function getJobOffersCount(query: ParsedQuery) { 
+	const {
+		userId, 
+		currentPage,
+		pageSize,
+		searchPhrase,
+		filters
+	} = query;
+
 	const count = await prisma.jobOffer.count({
 		where: { userId,
 			OR: [
@@ -44,7 +52,15 @@ export async function getJobOffersCount(userId: number, searchPhrase: string) {
 	return count;
 }
 
-export async function getJobOffersStats(userId: number, searchPhrase: string) {
+export async function getJobOffersStats(query: ParsedQuery) {
+	const {
+		userId, 
+		currentPage,
+		pageSize,
+		searchPhrase,
+		filters
+	} = query;
+	
 	const [applied, notApplied, summaryCount] = await prisma.$transaction([
 
 		prisma.jobOffer.count({

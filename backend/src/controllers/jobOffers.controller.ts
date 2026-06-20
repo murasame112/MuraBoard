@@ -8,9 +8,11 @@ import * as jobOfferDashboardQueryParser from '../shared/lib/jobOfferDashboardQu
 export async function getJobOffersForDashboard(req: Request<{}, {}, {}, RequestQuery>, res: Response) {
 	try {
 		const query = jobOfferDashboardQueryParser.parse(req.query);
+
 		if (!query.ok) {
 			return res.status(400).json({message: query.error});
 		}
+
 		const data = await jobOffersService.getJobOffersDashboardData(query);
 		return res.status(200).json(data);
 
@@ -21,16 +23,13 @@ export async function getJobOffersForDashboard(req: Request<{}, {}, {}, RequestQ
 
 export async function getJobOffersCount(req: Request, res: Response) {
 	try {
-		const { userId, searchPhrase } = req.query as {
-			userId?: string;
-			searchPhrase?: string;
+		const query = jobOfferDashboardQueryParser.parse(req.query);
+
+		if (!query.ok) {
+			return res.status(400).json({message: query.error});
 		}
 
-		if (!userId || Number.isNaN(userId)) {
-			return res.status(400).json({ message: 'Invalid user id' });
-		}
-
-		const data = await jobOffersService.getJobOffersCount(Number(userId), searchPhrase ? searchPhrase : '');
+		const data = await jobOffersService.getJobOffersCount(query);
 		return res.status(200).json(data);
 
 	} catch (error) {
@@ -40,16 +39,13 @@ export async function getJobOffersCount(req: Request, res: Response) {
 
 export async function getJobOffersStats(req: Request, res: Response) {
 	try {
-		const { userId, searchPhrase } = req.query as {
-			userId?: string;
-			searchPhrase?: string;
+		const query = jobOfferDashboardQueryParser.parse(req.query);
+
+		if (!query.ok) {
+			return res.status(400).json({message: query.error});
 		}
 
-		if (!userId || Number.isNaN(userId)) {
-			return res.status(400).json({ message: 'Invalid user id'});
-		}
-
-		const data = await jobOffersService.getJobOffersStats(Number(userId), searchPhrase ? searchPhrase : '');
+		const data = await jobOffersService.getJobOffersStats(query);
 		return res.status(200).json(data);
 
 	} catch (error) {
