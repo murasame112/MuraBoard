@@ -59,7 +59,6 @@ export default function JobOffersTable({callForm, callMassActionPopup, refreshTo
 		fetch(`${host}/api/joboffer/offers-for-dashboard?${query}`)
 			.then((response) => response.json())
 			.then((data) => {
-				console.log(data);
 				if (!data || data.length == 0){
 					setJobOffers([]);
 					return;

@@ -2,17 +2,26 @@ import { connect } from 'node:http2';
 import { prisma } from '../db/prisma.js';
 import type { Currency } from '../enums/enums.js';
 import type { Company } from '../models/models.js';
+import type { ParsedQuery } from '../shared/lib/jobOfferDashboardQueryParser.js';
 
-export async function getJobOffersDashboardData(userId: number, page: number, pageSize: number, searchPhrase: string) {
+export async function getJobOffersDashboardData(query: ParsedQuery) {
+	const {
+		userId, 
+		currentPage,
+		pageSize,
+		searchPhrase,
+		filters
+	} = query;
+
 	const offers = await prisma.jobOffer.findMany({
 		where: { userId,
 			OR: [
-				{ position: { contains: searchPhrase} },
-				{ company: { is: { name: { contains: searchPhrase } } } }
+				{ position: { contains: searchPhrase, mode: 'insensitive'} },
+				{ company: { is: { name: { contains: searchPhrase, mode: 'insensitive'} } } }
 			]
 		 },
 		orderBy: {createdAt: 'desc'},
-		skip: (page - 1) * pageSize,
+		skip: (currentPage - 1) * pageSize,
 		take: pageSize,
 		include: {
 			company: true,
@@ -27,8 +36,8 @@ export async function getJobOffersCount(userId: number, searchPhrase: string) {
 	const count = await prisma.jobOffer.count({
 		where: { userId,
 			OR: [
-				{ position: { contains: searchPhrase} },
-				{ company: { is: { name: { contains: searchPhrase } } } }
+				{ position: { contains: searchPhrase, mode: 'insensitive'} },
+				{ company: { is: { name: { contains: searchPhrase, mode: 'insensitive' } } } }
 			]
 		 }
 	});
@@ -43,8 +52,8 @@ export async function getJobOffersStats(userId: number, searchPhrase: string) {
 				userId, 
 				application: { isNot: null},
 				OR: [
-					{ position: { contains: searchPhrase} },
-					{ company: { is: { name: { contains: searchPhrase } } } }
+					{ position: { contains: searchPhrase, mode: 'insensitive'} },
+					{ company: { is: { name: { contains: searchPhrase, mode: 'insensitive'} } } }
 				]
 			},
 		}),
@@ -54,8 +63,8 @@ export async function getJobOffersStats(userId: number, searchPhrase: string) {
 				userId,
 				application: {is: null},
 				OR: [
-					{ position: { contains: searchPhrase} },
-					{ company: { is: { name: { contains: searchPhrase } } } }
+					{ position: { contains: searchPhrase, mode: 'insensitive'} },
+					{ company: { is: { name: { contains: searchPhrase, mode: 'insensitive'} } } }
 				]
 			}
 		}),
@@ -63,8 +72,8 @@ export async function getJobOffersStats(userId: number, searchPhrase: string) {
 		prisma.jobOffer.count({
 			where: { userId,
 				OR: [
-					{ position: { contains: searchPhrase} },
-					{ company: { is: { name: { contains: searchPhrase } } } }
+					{ position: { contains: searchPhrase, mode: 'insensitive'} },
+					{ company: { is: { name: { contains: searchPhrase, mode: 'insensitive'} } } }
 				]
 			 }
 		})

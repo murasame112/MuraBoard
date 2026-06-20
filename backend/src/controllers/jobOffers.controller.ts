@@ -2,29 +2,16 @@ import type { Request, Response } from 'express';
 import * as jobOffersService from '../services/jobOffers.service.js';
 import type { Currency } from '../enums/enums.js';
 import type { Company } from '../models/models.js';
+import type { RequestQuery } from '../shared/lib/jobOfferDashboardQueryParser.js';
+import * as jobOfferDashboardQueryParser from '../shared/lib/jobOfferDashboardQueryParser.js';
 
-export async function getJobOffersForDashboard(req: Request, res: Response) {
+export async function getJobOffersForDashboard(req: Request<{}, {}, {}, RequestQuery>, res: Response) {
 	try {
-		const { userId, currentPage, pageSize, searchPhrase} = req.query as {
-			userId?: string;
-			currentPage?: string;
-			pageSize?: string;
-			searchPhrase?: string;
+		const query = jobOfferDashboardQueryParser.parse(req.query);
+		if (!query.ok) {
+			return res.status(400).json({message: query.error});
 		}
-
-		if (!userId || Number.isNaN(userId)) {
-			return res.status(400).json({ message: 'Invalid user id' });
-		}
-
-		if (!currentPage || Number.isNaN(currentPage)) {
-			return res.status(400).json({ message: 'Invalid page' });
-		}
-
-		if (!pageSize || Number.isNaN(pageSize)) {
-			return res.status(400).json({ message: 'Invalid pageSize' });
-		}
-
-		const data = await jobOffersService.getJobOffersDashboardData(Number(userId), Number(currentPage), Number(pageSize), searchPhrase ? searchPhrase : '');
+		const data = await jobOffersService.getJobOffersDashboardData(query);
 		return res.status(200).json(data);
 
 	} catch (error) {

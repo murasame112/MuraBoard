@@ -17,7 +17,6 @@ type UpsertCompanyBody = {
 	website?: string;
 }
 export async function upsertCompany(req: Request<{}, {}, UpsertCompanyBody>, res: Response) {
-	console.log('called -------------------------------------');
 	try {
 			
 		const name = req.body.name.trim();
