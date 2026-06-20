@@ -149,7 +149,7 @@ export default function DashboardPage({mode}: DashboardPageProps){
 					onClearAllFilters={onClearAllFilters}
 					onSearch={onSearch}
 			/>
-			<div className={`${styles.dashboardSection}`}>
+			<div className={`${styles.dashboardSection} ${styles.dashboardList}`}>
 				<DashboardList 
 						mode={mode}
 						callForm={callForm}

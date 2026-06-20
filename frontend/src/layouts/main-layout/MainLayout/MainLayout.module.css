@@ -1,6 +1,6 @@
 .mainLayout {
-  width: 93vw;
-  height: 93vh;
+  width: 93%;
+  height: 93%;
   background-color: var(--foreground);
   border-radius: 10px;
   overflow: hidden;

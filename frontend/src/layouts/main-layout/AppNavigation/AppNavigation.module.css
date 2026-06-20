@@ -1,6 +1,6 @@
 .appNavigation {
   height: 100%;
-  width: 15%;
+  width: 220px;
   background-color: var(--silk);
 	display: flex;
 	flex-direction: column;
