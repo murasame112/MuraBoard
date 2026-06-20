@@ -34,12 +34,12 @@
 	font-size: var(--font-lg);
 }
 
-.navElements h3:active, .navElements .debugActive {
-	color: var(--secondary-theme);
+.active {
+	color: var(--secondary-theme) !important;
 	background-color: var(--additional-theme);
 }
 
-.navElements h3:active:hover, .navElements .debugActive:hover {
+.active:hover {
 	cursor: default;
 }
 

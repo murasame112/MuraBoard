@@ -8,7 +8,7 @@ export default function MainLayout(){
 	const [mode, setMode] = useState<DashboardMode>('JobOffer');
   return(
     <div className={styles.mainLayout}>
-			<AppNavigation setMode={setMode}/>
+			<AppNavigation mode={mode} setMode={setMode}/>
 			<DashboardPage mode={mode}/>
     </div>
   );
