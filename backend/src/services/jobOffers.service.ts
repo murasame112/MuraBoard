@@ -60,7 +60,7 @@ export async function getJobOffersStats(query: ParsedQuery) {
 		searchPhrase,
 		filters
 	} = query;
-	
+
 	const [applied, notApplied, summaryCount] = await prisma.$transaction([
 
 		prisma.jobOffer.count({
