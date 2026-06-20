@@ -27,66 +27,30 @@ export async function getJobOffersDashboardData(query: ParsedQuery) {
 }
 
 export async function getJobOffersCount(query: ParsedQuery) { 
-	const {
-		userId, 
-		currentPage,
-		pageSize,
-		searchPhrase,
-		filters
-	} = query;
-
-	const count = await prisma.jobOffer.count({
-		where: { userId,
-			OR: [
-				{ position: { contains: searchPhrase, mode: 'insensitive'} },
-				{ company: { is: { name: { contains: searchPhrase, mode: 'insensitive' } } } }
-			]
-		 }
-	});
+	const where = buildJobOfferWhere(query);
+	const count = await prisma.jobOffer.count({where});
 	return count;
 }
 
 export async function getJobOffersStats(query: ParsedQuery) {
-	const {
-		userId, 
-		currentPage,
-		pageSize,
-		searchPhrase,
-		filters
-	} = query;
-
+	const where = buildJobOfferWhere(query);
 	const [applied, notApplied, summaryCount] = await prisma.$transaction([
 
 		prisma.jobOffer.count({
 			where: {
-				userId, 
 				application: { isNot: null},
-				OR: [
-					{ position: { contains: searchPhrase, mode: 'insensitive'} },
-					{ company: { is: { name: { contains: searchPhrase, mode: 'insensitive'} } } }
-				]
+				...where
 			},
 		}),
 
 		prisma.jobOffer.count({
-			where: {
-				userId,
+			where: {	
 				application: {is: null},
-				OR: [
-					{ position: { contains: searchPhrase, mode: 'insensitive'} },
-					{ company: { is: { name: { contains: searchPhrase, mode: 'insensitive'} } } }
-				]
+				...where
 			}
 		}),
 
-		prisma.jobOffer.count({
-			where: { userId,
-				OR: [
-					{ position: { contains: searchPhrase, mode: 'insensitive'} },
-					{ company: { is: { name: { contains: searchPhrase, mode: 'insensitive'} } } }
-				]
-			 }
-		})
+		prisma.jobOffer.count({where})
 	]);
 
 	return {summaryCount, stats: {applied, notApplied}};
