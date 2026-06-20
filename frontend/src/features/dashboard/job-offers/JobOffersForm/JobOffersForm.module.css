@@ -23,7 +23,7 @@
 .jobOfferFormLabel {
 	color: var(--secondary-theme);
 	margin-bottom: 5px;
-	font-size: 20px;
+	font-size: var(--font-2xl);
 }
 
 .jobOfferFormLabel::first-letter {
@@ -90,7 +90,7 @@
 
 .additionalFormText {
 	color: var(--additional-text);
-	font-size: 10px;
+	font-size: var(--font-xs);
 	margin: 0 0 0 3px;
 }
 

@@ -3,7 +3,7 @@
 	justify-content: center;
 	align-items: center;
 	text-align: center;
-	font-size: 18px;
+	font-size: var(--font-xl);
 	margin-top:3%;
 	height: 30px;
 }
@@ -93,7 +93,7 @@
 }
 
 .goToPageBox input {
-	font-size: 16px;
+	font-size: var(--font-lg);
 	width: 28px;
 	height: 28px;
 	text-align: center;
@@ -109,7 +109,7 @@
 	width: 30px;
 	height: 30px;
 	margin-left: 5px;
-	font-size: 16px;
+	font-size: var(--font-lg);
 }
 
 .goToPageBox button::first-letter {

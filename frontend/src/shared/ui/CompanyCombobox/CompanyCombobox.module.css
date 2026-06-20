@@ -163,7 +163,7 @@
 
 .chosenCompany h2 {
 	color: var(--additional-text);
-	font-size: 20px;
+	font-size: var(--font-2xl);
 	margin-bottom: 30px;
 }
 
@@ -176,23 +176,23 @@
 }
 
 .chosenCompanyName {
-	font-size: 20px;
+	font-size: var(--font-2xl);
 	font-weight: bold;
 }
 
 .chosenCompanyLocation {
 	color: var(--additional-text);
-	font-size: 16px;
+	font-size: var(--font-lg);
 }
 
 .chosenCompanyWebsite {
 	color: var(--main-theme);
-	font-size: 12px;
+	font-size: var(--font-sm);
 	cursor: pointer;
 	text-decoration: none;
 }
 
 .chosenCompanyNoWebsite {
 	color: var(--additional-text);
-	font-size: 12px;
+	font-size: var(--font-sm);
 }

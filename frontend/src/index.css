@@ -16,7 +16,15 @@
 	--alert-burgund: #B33771;
 	--alert-lightblue: #54A0FF;
 	--alert-blue: #2133A1;
-	--alert-pink: #EC2A5F;	
+	--alert-pink: #EC2A5F;
+
+	--font-xs: 0.6rem;
+	--font-sm: 0.75rem;
+	--font-md: 0.875rem;
+	--font-lg: 1rem;
+	--font-xl: 1.125rem;
+	--font-2xl: 1.25rem;
+
 }
 
 

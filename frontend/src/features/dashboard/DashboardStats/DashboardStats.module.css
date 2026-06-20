@@ -25,7 +25,7 @@
 
 .cardText p {
 	text-transform: capitalize;
-	font-size: 18px;
+	font-size: var(--font-xl);
 	color: var(--additional-text);
 	width: 60px;
 }
@@ -37,7 +37,7 @@
 }
 
 .count {
-	font-size: 24px;
+	font-size: var(--font-2xl);
 }
 
 .summary {
@@ -48,7 +48,7 @@
 .summary p {
 	margin: 0;
 	color: var(--additional-text);
-	font-size: 12px;
+	font-size: var(--font-sm);
 }
 
 .summary p::first-letter {

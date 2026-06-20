@@ -20,7 +20,7 @@
 	background-color: var(--main-theme);
 	border: 1px solid var(--additional-text);
 	border-radius: 15px;
-	font-size: 12px;
+	font-size: var(--font-sm);
 	margin-bottom: 5px;
 	padding: 3px 8px 3px 8px;
 	color: var(--silk);

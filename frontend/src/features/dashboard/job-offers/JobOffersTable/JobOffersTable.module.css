@@ -12,11 +12,11 @@
 }
 
 .jobOfferItem p {
-	font-size: 14px;
+	font-size: var(--font-md);
 }
 
 .detailsHeader {
-	font-size: 16px;
+	font-size: var(--font-lg);
 	border-top: 1px solid var(--additional-text);
 	border-bottom: 1px solid var(--additional-text);
 }
@@ -63,7 +63,7 @@
 	color: var(--main-theme);
 	cursor: pointer;
 	text-decoration: none;
-	font-size: 12px;
+	font-size: var(--font-sm);
 }
 
 .companyDetailsWebsite:hover {
@@ -77,7 +77,7 @@
 
 .companyDetailsClose {
 	color: var(--additional-text);
-	font-size: 10px !important;
+	font-size: var(--font-xs) !important;
 }
 
 .offerStatus {
