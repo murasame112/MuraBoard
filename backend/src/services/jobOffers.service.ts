@@ -3,23 +3,17 @@ import { prisma } from '../db/prisma.js';
 import type { Currency } from '../enums/enums.js';
 import type { Company } from '../models/models.js';
 import type { ParsedQuery } from '../shared/lib/jobOfferDashboardQueryParser.js';
+import { buildJobOfferWhere } from '../shared/lib/buildJobOfferWhere.js';
 
 export async function getJobOffersDashboardData(query: ParsedQuery) {
 	const {
-		userId, 
 		currentPage,
-		pageSize,
-		searchPhrase,
-		filters
+		pageSize
 	} = query;
-
+	
+	const where = buildJobOfferWhere(query);
 	const offers = await prisma.jobOffer.findMany({
-		where: { userId,
-			OR: [
-				{ position: { contains: searchPhrase, mode: 'insensitive'} },
-				{ company: { is: { name: { contains: searchPhrase, mode: 'insensitive'} } } }
-			]
-		 },
+		where,
 		orderBy: {createdAt: 'desc'},
 		skip: (currentPage - 1) * pageSize,
 		take: pageSize,
