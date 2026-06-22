@@ -27,7 +27,7 @@ export async function getApplicationsCount(req: Request<{}, {}, {}, RequestQuery
 			return res.status(400).json({message: query.error});
 		}
 
-		const data = applicationsService.getApplicationsCount(query);
+		const data = await applicationsService.getApplicationsCount(query);
 		return res.status(200).json(data);
 
 	} catch (error) {
