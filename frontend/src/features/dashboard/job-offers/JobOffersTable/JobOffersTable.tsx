@@ -103,7 +103,7 @@ export default function JobOffersTable({callForm, callMassActionPopup, refreshTo
 							<p className={styles.companyDetailsClose}>{t('companyDetailsClose')}</p>
 						</div>
 					)}
-					<span className={styles.companyNameText}>{element.company.name}</span>
+					<span>{element.company.name}</span>
 				</div>
 
 					<p className={`${styles.offerStatus} ${element.application ? styles.applied : styles.notApplied }`}>{element.application ? t('applied'): t('notApplied') }</p>
