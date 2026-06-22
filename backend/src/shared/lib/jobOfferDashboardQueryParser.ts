@@ -85,7 +85,7 @@ export function parse(query: RequestQuery): ParsedQuery | ParseError{
 		filters.push({filterName: 'companyName', value: query.companyName});
 	}
 
-	if ( query.jobOfferStatus !== undefined && (query.jobOfferStatus === 'applied' || query.jobOfferStatus === 'notApplied')) {
+	if ( query.jobOfferStatus !== undefined ) {
 		if (!isJobOfferStatusValue(query.jobOfferStatus)) {
 			return { ok: false, error: 'Invalid job offer status' };
 		}
