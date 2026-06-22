@@ -83,8 +83,9 @@
 
 .offerStatus {
 	width: 110px;
+	height: 25px;
 	border-radius: 10px;
-	margin: 10px auto 10px auto;
+	margin: auto;
 	display: flex;
 	justify-content: center;
 	align-items: center;
