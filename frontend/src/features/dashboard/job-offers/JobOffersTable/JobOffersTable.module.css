@@ -38,6 +38,10 @@
 	justify-content: center;
 }
 
+.companyName * {
+	margin: auto;
+}
+
 .companyName:hover {
 	color: var(--alert-green);
 }
