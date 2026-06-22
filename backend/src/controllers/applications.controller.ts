@@ -1,27 +1,17 @@
 import type { Request, Response } from 'express';
 import * as applicationsService from '../services/applications.service.js';
+import type { RequestQuery } from '../shared/lib/applicationDashboardQueryParser.js';
+import * as applicationDashboardQueryParser from '../shared/lib/applicationDashboardQueryParser.js';
 
-export async function getApplicationsForDashboard(req: Request, res: Response) {
+export async function getApplicationsForDashboard(req: Request<{}, {}, {}, RequestQuery>, res: Response) {
 	try {
-		const { userId, page, pageSize} = req.query as {
-			userId?: string;
-			page?: string;
-			pageSize?: string;
+		const query = applicationDashboardQueryParser.parse(req.query);
+
+		if (!query.ok) {
+			return res.status(400).json({message: query.error});
 		}
 
-		if (!userId || Number.isNaN(userId)) {
-			return res.status(400).json({ message: 'Invalid user id' });
-		}
-
-		if (!page || Number.isNaN(pageSize)) {
-			return res.status(400).json({ message: 'Invalid page' });
-		}
-
-		if (!page || Number.isNaN(pageSize)) {
-			return res.status(400).json({ message: 'Invalid pageSize' });
-		}
-
-		const data = await applicationsService.getApplicationsDashboardData(Number(userId), Number(page), Number(pageSize));
+		const data = await applicationsService.getApplicationsDashboardData(query);
 		return res.status(200).json(data);
 
 	} catch (error) {
@@ -29,34 +19,31 @@ export async function getApplicationsForDashboard(req: Request, res: Response) {
 	}
 }
 
-export async function getApplicationsCount(req: Request, res: Response) {
+export async function getApplicationsCount(req: Request<{}, {}, {}, RequestQuery>, res: Response) {
 	try {
-		const { userId } = req.query as {
-			userId?: string;
+		const query = applicationDashboardQueryParser.parse(req.query);
+
+		if (!query.ok) {
+			return res.status(400).json({message: query.error});
 		}
 
-		if (!userId || Number.isNaN(userId)) {
-			return res.status(400).json({ message: 'Invalid user id' });
-		}
-
-		const data = applicationsService.getApplicationsCount(Number(userId));
+		const data = applicationsService.getApplicationsCount(query);
+		return res.status(200).json(data);
 
 	} catch (error) {
 		return res.status(500).json({message: 'Something went wrong'});
 	}
 }
 
-export async function getApplicationsStats(req: Request, res: Response) {
+export async function getApplicationsStats(req: Request<{}, {}, {}, RequestQuery>, res: Response) {
 	try {
-		const { userId } = req.query as {
-			userId?: string;
+		const query = applicationDashboardQueryParser.parse(req.query);
+
+		if (!query.ok) {
+			return res.status(400).json({message: query.error});
 		}
 
-		if (!userId || Number.isNaN(userId)) {
-			return res.status(400).json({ message: 'Invalid user id'});
-		}
-
-		const data = await applicationsService.getApplicationsStats(Number(userId));
+		const data = await applicationsService.getApplicationsStats(query);
 		return res.status(200).json(data);
 
 	} catch (error) {

@@ -1,26 +1,37 @@
 import { prisma } from '../db/prisma.js';
+import type { ParsedQuery } from '../shared/lib/applicationDashboardQueryParser.js';
+import { buildApplicationWhere } from '../shared/lib/buildApplicationWhere.js';
 
-export async function getApplicationsDashboardData(userId: number, page: number, pageSize: number) {
-	const offers = await prisma.application.findMany({
-		where: {userId},
+export async function getApplicationsDashboardData(query: ParsedQuery) {
+	const {
+		currentPage,
+		pageSize
+	} = query
+
+	const where = buildApplicationWhere(query);
+	const applications = await prisma.application.findMany({
+		where,
 		orderBy: {appliedAt: 'desc'},
-		skip: (page - 1) * pageSize,
+		skip: (currentPage - 1) * pageSize,
 		take: pageSize,
 		include: {
-			jobOffer: false
+			jobOffer: true
 		}
 	});
 
-	return offers;
+	return applications;
 }
 
-export async function getApplicationsCount(userId: number) { 
+export async function getApplicationsCount(query: ParsedQuery) { 
+	const where = buildApplicationWhere(query);
 	const count = await prisma.application.count({
-		where: {userId}
+		where
 	});
+	return count;
 }
 
-export async function getApplicationsStats(userId: number) {
+export async function getApplicationsStats(query: ParsedQuery) {
+	const where = buildApplicationWhere(query);
 	const [
 		applied,
 		inProgress,
@@ -31,28 +42,26 @@ export async function getApplicationsStats(userId: number) {
 	] = await prisma.$transaction([
 
 		prisma.application.count({
-			where: { userId, status: 'APPLIED' }
+			where: { status: 'APPLIED', ...where }
 		}),
 
 		prisma.application.count({
-			where: { userId, status: 'IN_PROGRESS' }
+			where: { status: 'IN_PROGRESS', ...where }
 		}),
 
 		prisma.application.count({
-			where: { userId, status: 'INTERVIEW' }
+			where: { status: 'INTERVIEW', ...where }
 		}),
 
 		prisma.application.count({
-			where: { userId, status: 'OFFER' }
+			where: { status: 'OFFER', ...where }
 		}),
 
 		prisma.application.count({
-			where: { userId, status: 'REJECTED' }
+			where: { status: 'REJECTED', ...where }
 		}),
 
-		prisma.application.count({
-			where: { userId }
-		})
+		prisma.application.count({where})
 	]);
 
 	return {summaryCount, stats: {applied, inProgress, interview, offer, rejected}};
