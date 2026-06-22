@@ -4,7 +4,9 @@ export type FilterName =
   | 'salaryMin'
   | 'salaryMax'
   | 'jobOfferStatus'
-  | 'applicationStatus';
+  | 'applicationStatus'
+	| 'applicationDateFrom'
+	| 'applicationDateTo';
 
 export type ApplicationsFilterNames = 'status'; //TODO:
 
@@ -37,10 +39,20 @@ export type JobOfferFilter = PositionFilter | CompanyNameFilter | JobOfferStatus
 
 export type ApplicationStatusFilter = {
 	filterName: 'applicationStatus',
-	value?: 'applied' | 'inProgress' | 'interview' | 'offer' | 'rejected'  //TODO:
+	value?: 'applied' | 'inProgress' | 'interview' | 'offer' | 'rejected';
 }
 
-export type ApplicationFilter = ApplicationStatusFilter;
+export type ApplicationDateFromFilter = {
+	filterName: 'applicationDateFrom',
+	value?: string;
+}
+
+export type ApplicationDateToFilter = {
+	filterName: 'applicationDateTo',
+	value?: string;
+}
+
+export type ApplicationFilter = PositionFilter | CompanyNameFilter | ApplicationStatusFilter | ApplicationDateFromFilter | ApplicationDateToFilter;
 
 
 export type Filter = JobOfferFilter | ApplicationFilter;
