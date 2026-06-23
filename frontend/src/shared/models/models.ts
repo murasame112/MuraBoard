@@ -19,3 +19,12 @@ export type Company = {
 	location: string;
 	website?: string | null;
 }
+
+export type Application = {
+	id: number;
+	comment?: string;
+	nextStepDate?: Date;
+	appliedAt: Date;
+	status: ApplicationStatus;
+	jobOffer: JobOffer
+}

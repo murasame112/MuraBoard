@@ -15,7 +15,11 @@ export async function getApplicationsDashboardData(query: ParsedQuery) {
 		skip: (currentPage - 1) * pageSize,
 		take: pageSize,
 		include: {
-			jobOffer: true
+			jobOffer: {
+				include: {
+					company: true,
+				},
+			}
 		}
 	});
 

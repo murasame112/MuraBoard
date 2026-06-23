@@ -9,7 +9,7 @@ export default function MainLayout(){
   return(
     <div className={styles.mainLayout}>
 			<AppNavigation mode={mode} setMode={setMode}/>
-			<DashboardPage mode={mode}/>
+			<DashboardPage mode={mode} setMode={setMode}/>
     </div>
   );
 }

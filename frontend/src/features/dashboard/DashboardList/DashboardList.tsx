@@ -4,10 +4,11 @@ import JobOffersTable from '../job-offers/JobOffersTable/JobOffersTable';
 import ApplicationsTable from '../applications/ApplicationsTable/ApplicationsTable';
 import DashboardPager from '../DashboardPager/DashboardPager';
 import type { DashboardFormType } from '../DashboardFormWrapper/DashboardFormWrapper';
-import type { QueryState } from '../../../pages/DashboardPage';
+import type { QueryState } from '../models/queryState';
 
 type DashboardListProps = {
 	mode: DashboardMode;
+	setMode: React.Dispatch<React.SetStateAction<DashboardMode>>;
 	callForm: (type: DashboardFormType, selectedId?: number) => void;
 	callMassActionPopup: (selected: Set<number>) => void;
 	refreshToken: number;
@@ -16,7 +17,7 @@ type DashboardListProps = {
 	onPageChange: (page: number) => void;
 }
 
-export default function DashboardList({mode, callForm, callMassActionPopup, refreshToken, recordCount, queryState, onPageChange}: DashboardListProps){
+export default function DashboardList({mode, setMode, callForm, callMassActionPopup, refreshToken, recordCount, queryState, onPageChange}: DashboardListProps){
 	return (
         <div className={styles.dashboardList}>
             {mode === 'JobOffer' ? (
@@ -28,8 +29,10 @@ export default function DashboardList({mode, callForm, callMassActionPopup, refr
                 />
             ) : (
                 <ApplicationsTable
-                    callForm={callForm}
+                    setMode={setMode}
                     callMassActionPopup={callMassActionPopup}
+										refreshToken={refreshToken}
+										queryState={queryState}
                 />
             )}
 						<DashboardPager recordCount={recordCount} queryState={queryState} onPageChange={onPageChange}/>

@@ -1,0 +1,147 @@
+.appicationsTable {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+}
+
+.applicationItem {
+	display: grid;
+	grid-template-columns: 10% 55% 20% 15%;
+	border-top: 1px solid var(--additional-text);
+}
+
+.applicationItem p {
+	font-size: var(--font-md);
+}
+
+.detailsHeader {
+	font-size: var(--font-lg);
+	border-top: 2px solid var(--additional-text);
+	border-bottom: 1px solid var(--additional-text);
+}
+
+.detailsHeader h4 {
+	margin: 9px 0 9px 0;
+	text-transform: capitalize;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.offer {
+	color: var(--main-theme);
+	cursor: pointer;
+	position: relative;
+  display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.offer * {
+	margin: auto;
+}
+
+.offer:hover {
+	color: var(--alert-green);
+}
+
+.offerDetails {
+	width: 200px;
+	height: 150px;
+	position: absolute;
+	left: 50%;
+	transform: translate(-50%, 0%);
+	bottom: 35px;
+	border-radius: 15px;
+	border: 3px solid var(--additional-theme);
+	background-color: var(--foreground);
+	color: var(--text);
+}
+
+.offerDetailsName {
+	font-weight: bold;
+	font-size: 18px !important;
+}
+
+.offerDetailsWebsite {
+	color: var(--main-theme);
+	cursor: pointer;
+	text-decoration: none;
+	font-size: var(--font-sm);
+}
+
+.offerDetailsWebsite:hover {
+	color: var(--alert-green);
+	cursor: pointer;
+}
+
+.offerDetailsNoWebsite {
+	color: var(--additional-text);
+}
+
+.offerDetailsClose {
+	color: var(--additional-text);
+	font-size: var(--font-xs) !important;
+}
+
+.offerName {
+	width: 100%;
+	box-sizing: border-box;
+	padding-left: 20%;
+	padding-right: 20%;
+	display: grid;
+	grid-template-columns: 45% 10% 45%;
+}
+
+.applicationStatus {
+	width: 110px;
+	height: 25px;
+	border-radius: 10px;
+	margin: auto;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-transform: uppercase;
+}
+
+.statusApplied {
+	color: var(--foreground);
+	background-color: var(--alert-lightblue);
+}
+
+.statusInProgress {
+	color: var(--foreground);
+	background-color: var(--alert-yellow);
+}
+
+.statusInterview {
+	color: var(--foreground);
+	background-color: var(--alert-purple);
+}
+
+.statusOffer {
+	color: var(--foreground);
+	background-color: var(--alert-green);
+}
+
+.statusRejected {
+	color: var(--foreground);
+	background-color: var(--alert-burgund);
+}
+
+.select {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	accent-color: var(--secondary-theme);
+}
+
+.select input {
+	cursor: pointer;
+}
+
+.createOne { 
+	color: var(--main-theme);
+	cursor: pointer;
+}

@@ -14,9 +14,10 @@ import { buildQueryParams } from '../shared/lib/buildQueryParams';
 
 type DashboardPageProps = {
 	mode: DashboardMode;
+	setMode: React.Dispatch<React.SetStateAction<DashboardMode>>;
 }
 
-export default function DashboardPage({mode}: DashboardPageProps){
+export default function DashboardPage({mode, setMode}: DashboardPageProps){
 	const [formConfiguration, setFormConfiguration] = useState<{isDisplayed: boolean, type: DashboardFormType, selectedId?: number}>({isDisplayed: false, type: 'add', selectedId: undefined});
 	const [massActionPopupConfiguration, setMassActionPopupConfiguration] = useState<{selected: Set<number>}>({selected: new Set<number>()});
 	const [recordCount, setRecordCount] = useState<number>(0);
@@ -152,6 +153,7 @@ export default function DashboardPage({mode}: DashboardPageProps){
 			<div className={`${styles.dashboardSection} ${styles.dashboardList}`}>
 				<DashboardList 
 						mode={mode}
+						setMode={setMode}
 						callForm={callForm}
 						callMassActionPopup={callMassActionPopup}
 						refreshToken={refreshToken}

@@ -1,11 +1,10 @@
 export const ApplicationStatus = {
-  APPLIED: 'applied',
-  IN_PROGRESS: 'in progress',
-  INTERVIEW: 'interview',
-  OFFER: 'offer',
-  REJECTED: 'rejected',
+  APPLIED: 'APPLIED',
+  IN_PROGRESS: 'IN_PROGRESS',
+  INTERVIEW: 'INTERVIEW',
+  OFFER: 'OFFER',
+  REJECTED: 'REJECTED'
 } as const;
-
 
 export type ApplicationStatus =
   typeof ApplicationStatus[keyof typeof ApplicationStatus];
