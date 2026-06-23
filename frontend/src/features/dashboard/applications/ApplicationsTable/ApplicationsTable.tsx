@@ -96,28 +96,27 @@ export default function ApplicationsTable({setMode, callMassActionPopup, refresh
 				
 				<div key={element.id} className={styles.applicationItem}>
 					<div className={styles.select}><input type='checkbox' name='selectItem' checked={selectedCheckboxes.has(element.id)} onChange={(e) => {handleCheckboxChange(e, element.id)}}/></div>
-					<div className={styles.offer} onClick={() => {selectOffer(element.id)}}>
-					{
-					element.id === selectedOffer && (
-						<div className={styles.offerDetails}>
-							<p className={styles.offerDetailsName}>{element.jobOffer.position} </p>
+						<div className={styles.offer} onClick={() => {selectOffer(element.id)}}>
+						{
+						element.id === selectedOffer && (
+							<div className={styles.offerDetails}>
+								<p className={styles.offerDetailsName}>{element.jobOffer.position} </p>
+								<p>{element.jobOffer.position}</p>
+								{element.jobOffer.position ? (
+									<a href={element.jobOffer.position} className={styles.offerDetailsWebsite}>{element.jobOffer.position}</a>
+								) : (
+									<p className={styles.offerDetailsNoWebsite}>{t('noWebsite')}</p>
+								)}
+								<p className={styles.offerDetailsClose}>{t('companyDetailsClose')}</p>
+							</div>
+						)}
+						<div className={styles.offerName}>
+							<p>{element.jobOffer.company.name}</p>
+							<p>-</p>
 							<p>{element.jobOffer.position}</p>
-							{element.jobOffer.position ? (
-								<a href={element.jobOffer.position} className={styles.offerDetailsWebsite}>{element.jobOffer.position}</a>
-							) : (
-								<p className={styles.offerDetailsNoWebsite}>{t('noWebsite')}</p>
-							)}
-							<p className={styles.offerDetailsClose}>{t('companyDetailsClose')}</p>
 						</div>
-					)}
-					<div className={styles.offerName}>
-						<p>{element.jobOffer.company.name}</p>
-						<p>-</p>
-						<p>{element.jobOffer.position}</p>
 					</div>
-				</div>
 
-					{/* TODO: statuses below */}
 					<p className={`${styles.applicationStatus} ${applicationStylesMap[element.status]}`}>{t(element.status)}</p>
 					<p>{new Date(element.appliedAt).toLocaleDateString('pl-PL')}</p>
 				</div>
