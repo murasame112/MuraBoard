@@ -130,3 +130,7 @@
 .jobOfferFormSubmit button::first-letter {
 	text-transform: capitalize;
 }
+
+.errorBox {
+	position: absolute;
+}

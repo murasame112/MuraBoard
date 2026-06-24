@@ -2,7 +2,6 @@
 	width: 300px;
 	height: 25px;
 	color: var(--alert-red);
-	position: absolute;
   display: flex;
   align-items: center;
   font-size: var(--font-xs);

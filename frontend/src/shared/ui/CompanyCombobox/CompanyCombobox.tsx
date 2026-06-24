@@ -243,18 +243,18 @@ export default function CompanyCombobox({labelClass, additionalFormTextClass, ge
 						<label className={labelClass} htmlFor='companyName'>{t('name')}</label>
 						<div className={styles.inputWrapper}>
 							<input type='text' name='name' id='companyName' value={newCompanyValues?.name ?? ''} onChange={handleChange} onBlur={validate}/>
-							{errors.name ? <ErrorBox message={errors.name} /> : ''}
+							{errors.name ? <ErrorBox message={errors.name} className={styles.errorBox} /> : ''}
 						</div>
 						<label className={labelClass} htmlFor='companyLocation'>{t('location')}</label>
 						<div className={styles.inputWrapper}>
 							<input type='text' name='location' id='companyLocation' value={newCompanyValues?.location ?? ''} onChange={handleChange} onBlur={validate}/>
-							{errors.location ? <ErrorBox message={errors.location} /> : ''}
+							{errors.location ? <ErrorBox message={errors.location} className={styles.errorBox} /> : ''}
 						</div>
 						<label className={labelClass} htmlFor='companyWebsite'>{t('website')}</label>
 						<div className={styles.inputWrapper}>
 							<p className={additionalFormTextClass}>{`${t('canBeLeftEmpty')}, ${t('withoutHttps')}`}</p>
 							<input type='text' name='website' id='companyWebsite' value={newCompanyValues?.website ?? ''} onChange={handleChange} onBlur={validate}/>
-							{errors.website ? <ErrorBox message={errors.website} /> : ''}
+							{errors.website ? <ErrorBox message={errors.website} className={styles.errorBox} /> : ''}
 						</div>
 
 						<button disabled={Object.values(errors).some((error) => error !== null) || !areRequiredFieldsFilled()} type='button' onClick={handleAddingCompany} className={styles.comboboxSubmit}>{t('addCompany')}</button>

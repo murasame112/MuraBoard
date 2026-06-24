@@ -283,7 +283,7 @@ export default function JobOffersForm({onClose, onSubmit, type, selectedId}: Job
 						</label>
 						<div className={styles.inputWrapper}>
 							<input className={styles.positionInput} id='positionInput' name='position' type='text' onChange={handleChange} onBlur={validate} value={values.position}/>
-							{errors.position ? <ErrorBox message={errors.position} /> : ''}
+							{errors.position ? <ErrorBox message={errors.position} className={styles.errorBox} /> : ''}
 						</div>
 					</div>
 					
@@ -295,11 +295,11 @@ export default function JobOffersForm({onClose, onSubmit, type, selectedId}: Job
 						<div className={styles.salaryInputsBox}>
 							<div className={styles.inputWrapper}>
 								<input className={styles.salaryInput} id='salaryMinInput' name='salaryMin' type='text' onChange={handleChange} onBlur={validate} value={values.salaryMin}/>
-								{errors.salaryMin ? <ErrorBox message={errors.salaryMin} /> : ''}
+								{errors.salaryMin ? <ErrorBox message={errors.salaryMin} className={styles.errorBox} /> : ''}
 							</div>
 							<div className={styles.inputWrapper}>
 								<input className={styles.salaryInput} id='salaryMaxInput' name='salaryMax' type='text' onChange={handleChange} onBlur={validate} value={values.salaryMax}/>
-								{errors.salaryMax ? <ErrorBox message={errors.salaryMax} /> : ''}
+								{errors.salaryMax ? <ErrorBox message={errors.salaryMax} className={styles.errorBox} /> : ''}
 							</div>
 							<div className={styles.selectWrapper}>
 								<ChevronDownIcon className={styles.selectArrowIcon}/>

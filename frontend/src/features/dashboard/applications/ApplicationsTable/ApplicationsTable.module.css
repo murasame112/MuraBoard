@@ -7,7 +7,7 @@
 
 .applicationItem {
 	display: grid;
-	grid-template-columns: 10% 55% 20% 15%;
+	grid-template-columns: 10% 45% 15% 10% 10% 10%;
 	border-top: 1px solid var(--additional-text);
 }
 
@@ -144,4 +144,73 @@
 .createOne { 
 	color: var(--main-theme);
 	cursor: pointer;
+}
+
+.commentBox {
+	width: 100%;
+	height:100%;
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.commentButton {
+	width: 30px;
+	height: 30px;
+	margin: auto;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.commentIcon {
+	height: 20px;
+}
+
+.commentWindow {
+	width: 200px;
+	height: 170px;
+	position: absolute;
+	left: 0%;
+	transform: translate(-50%, 0%);
+	bottom: 35px;
+	border-radius: 15px;
+	border: 3px solid var(--additional-theme);
+	background-color: var(--foreground);
+	color: var(--text);
+	display: flex;
+	flex-direction: column;
+	align-items: end;
+}
+
+.commentWindow textarea {
+	width: 90%;
+	max-width: 90%;
+	height: 110px;
+	resize: none;
+	accent-color: var(--secondary-theme);
+	margin: 2px auto 0 auto;
+	border-radius: 5px;
+	border: 1px solid var(--additional-theme);
+}
+
+.errorSlot {
+	min-height: 24px;
+	width: 90%;
+	margin: 2px auto 0 auto;
+}
+
+.commentButtons {
+	width:100%;
+	display: flex;
+	justify-content: space-between;
+	box-sizing: border-box;
+	padding: 5px 8px 5px 8px;
+	margin-top: auto;
+}
+
+.commentButtons button {
+	width: 50px;
+	height: 25px;
 }

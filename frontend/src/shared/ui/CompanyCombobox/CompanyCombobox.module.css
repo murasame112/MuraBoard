@@ -196,3 +196,7 @@
 	color: var(--additional-text);
 	font-size: var(--font-sm);
 }
+
+.errorBox {
+	position: absolute;
+}

@@ -6,6 +6,8 @@ import type { QueryState } from '../../models/queryState';
 import { buildQueryParams } from '../../../../shared/lib/buildQueryParams';
 import type { DashboardMode } from '../../../../layouts/main-layout/AppNavigation/AppNavigation';
 import type { ApplicationStatus } from '../../../../shared/enums/enums';
+import { PencilSquareIcon } from '@heroicons/react/24/outline';
+import ErrorBox from '../../../../shared/ui/ErrorBox/ErrorBox';
 
 type ApplicationsTableProps = {
 	setMode: React.Dispatch<React.SetStateAction<DashboardMode>>;
@@ -19,6 +21,9 @@ export default function ApplicationsTable({setMode, callMassActionPopup, refresh
 	const { t } = useTranslation();
 	const [selectedCheckboxes, setSelectedCheckboxes] = useState<Set<number>>(new Set<number>());
 	const [selectedOffer, setSelectedOffer] = useState<number | null>(null);
+	const [selectedComment, setSelectedComment] = useState<number | null>(null);
+	const [commentError, setCommentError] = useState<string | null>(null);
+	const [currentCommentValue, setCurrentCommentValue] = useState<string>();
 	const [applications, setApplications] = useState<Application[]>([]);
 	const host = import.meta.env.VITE_API_URL;
 
@@ -35,7 +40,20 @@ export default function ApplicationsTable({setMode, callMassActionPopup, refresh
 			if (!prev) return id;
 			else if(prev === id) return null;
 			return id;
-		})
+		});
+	}
+
+	function selectComment(id: number, comment?: string){
+		setSelectedComment((prev) => {
+			if (!prev) return id;
+			else if(prev === id) return null;
+			return id;
+		});
+		if (comment) {
+			setCurrentCommentValue(comment);
+		} else {
+			setCurrentCommentValue('');
+		}
 	}
 
 	useEffect(() => {
@@ -81,6 +99,46 @@ export default function ApplicationsTable({setMode, callMassActionPopup, refresh
 			});
 	}
 
+	function closeCommentWindow(){
+		setSelectedComment(null);
+		setCommentError(null);
+	}
+
+	function saveComment(id: number) {
+		let value = {id: id, comment: ''};
+		
+		if (currentCommentValue) {
+			value.comment = currentCommentValue;
+		}
+		
+		if (value.comment.length > 500) {
+			setCommentError(t('applicationCommentError.tooLong'));
+		}
+
+		const editCommentRequestOptions = {
+			method: 'PATCH',
+			headers: { 'Content-Type': 'application/json'},
+			body: JSON.stringify(value)
+		};
+
+		try {
+			fetch(`${host}/api/application/edit-comment`, editCommentRequestOptions)
+				.then((response) => {
+						if (!response.ok) throw new Error(`request failed with status ${response.status}`);
+
+						closeCommentWindow();
+						//TODO: do i need to increase refreshToken?
+					})
+					.catch((error) => {
+						console.log(JSON.stringify(error));
+						setCommentError(t('applicationCommentError.wrongResponse'));
+					});
+		} catch (error) {
+				console.error(error);
+		}		
+	}
+
+
 	return (
 		<div className={styles.applicationsTable}>
 
@@ -89,6 +147,8 @@ export default function ApplicationsTable({setMode, callMassActionPopup, refresh
 				<h4>{t('company')} - {t('position')}</h4>
 				<h4>{t('status')}</h4>
 				<h4>{t('appliedAt')}</h4>
+				<h4>{t('nextStep')}</h4>
+				<h4>{t('comment')}</h4>
 			</div>
 
 			{applications.length === 0 ? (<p>{t('noApplicationsFound')} - <span className={styles.createOne} onClick={() => setMode('JobOffer')}>{t('applyToOne')}</span>!</p>) : 
@@ -119,6 +179,25 @@ export default function ApplicationsTable({setMode, callMassActionPopup, refresh
 
 					<p className={`${styles.applicationStatus} ${applicationStylesMap[element.status]}`}>{t(element.status)}</p>
 					<p>{new Date(element.appliedAt).toLocaleDateString('pl-PL')}</p>
+					<p>{element.nextStepDate ? new Date(element.nextStepDate).toLocaleDateString('pl-PL') : '-'}</p>
+					<div className={styles.commentBox}>
+						{
+							element.id === selectedComment && (
+								<div className={styles.commentWindow}>
+									<textarea name='commentContent' placeholder={t('comment')} value={currentCommentValue}/>
+									<div className={styles.errorSlot}>
+										{commentError && <ErrorBox message={commentError}/>}
+									</div>
+									<div className={styles.commentButtons}>
+										<button type='button' onClick={() => closeCommentWindow()}>{t('close')}</button>
+										<button type='button' onClick={() => saveComment(element.id)}>{t('save')}</button>
+									</div>
+
+								</div>
+							)
+						}
+						<button type='button' className={styles.commentButton} onClick={() => selectComment(element.id, element.comment)}><PencilSquareIcon className={styles.commentIcon}/></button>
+					</div>
 				</div>
 			))}
 

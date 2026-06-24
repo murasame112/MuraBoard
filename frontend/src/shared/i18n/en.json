@@ -34,6 +34,8 @@
 	"currency": "currency",
 	"date": "date",
 	"appliedAt": "applied at",
+	"nextStep": "next step",
+	"comment": "comment",
 	"noJobOffersFound": "no job offers found",
 	"noApplicationsFound": "no applications found",
 	"createOne": "create one",
@@ -77,6 +79,8 @@
 	"formError.companyWebsiteTooShort": "company website is too short",
 	"formError.companyWebsiteTooLong": "company website is too long",
 	"formError.companyWebsiteInvalid": "company website is invalid",
+	"applicationCommentError.tooLong": "comment is too long",
+	"applicationCommentError.wrongResponse": "wrong response, try again later",
 
 	"goToPage": "go to page",
 	"go": "go",
