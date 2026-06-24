@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import type { DashboardFormType } from '../../DashboardFormWrapper/DashboardFormWrapper';
 import type { QueryState } from '../../models/queryState';
 import { buildQueryParams } from '../../../../shared/lib/buildQueryParams';
+import { PaperAirplaneIcon } from '@heroicons/react/24/outline';
 
 
 type JobOffersTableProps = {
@@ -72,6 +73,10 @@ export default function JobOffersTable({callForm, callMassActionPopup, refreshTo
 			});
 	}
 
+	function apply(id: number) {
+		//TODO: implement
+	}
+
 	return(
 		<div className={styles.jobOffersTable}>
 
@@ -83,6 +88,7 @@ export default function JobOffersTable({callForm, callMassActionPopup, refreshTo
 				<h4>{t('salary')}</h4>
 				<h4>{t('currency')}</h4>
 				<h4>{t('date')}</h4>
+				<h4>{t('apply')}</h4>
 			</div>
 
 			{jobOffers.length === 0 ? (<p>{t('noJobOffersFound')} - <span className={styles.createOne} onClick={() => callForm('add')}>{t('createOne')}</span>!</p>) : 
@@ -111,6 +117,7 @@ export default function JobOffersTable({callForm, callMassActionPopup, refreshTo
 					<p>{element.salaryMin} - {element.salaryMax}</p>
 					<p>{element.currency}</p>
 					<p>{new Date(element.createdAt).toLocaleDateString('pl-PL')}</p>
+					<button type='button' className={styles.applyButton} onClick={() => apply(element.id)} disabled={element.application ? true : false}><PaperAirplaneIcon className={styles.applyIcon}/></button>
 				</div>
 			))}
 			

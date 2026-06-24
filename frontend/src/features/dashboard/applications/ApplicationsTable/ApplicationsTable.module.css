@@ -9,6 +9,7 @@
 	display: grid;
 	grid-template-columns: 10% 45% 15% 10% 10% 10%;
 	border-top: 1px solid var(--additional-text);
+	align-items: center;
 }
 
 .applicationItem p {
