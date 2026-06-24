@@ -8,14 +8,14 @@ import { Currency } from '../../../../shared/enums/enums';
 import type { Company } from '../../../../shared/models/models';
 import type { DashboardFormType } from '../../DashboardFormWrapper/DashboardFormWrapper';
 
-type JobOffersForm = {
+type JobOffersFormProps = {
 	onClose: () => void;
 	onSubmit: () => void;
 	type: DashboardFormType;
 	selectedId?: number;
 }
 
-export default function JobOffersForm({onClose, onSubmit, type, selectedId}: JobOffersForm){
+export default function JobOffersForm({onClose, onSubmit, type, selectedId}: JobOffersFormProps){
 	const { t } = useTranslation();
 	const host = import.meta.env.VITE_API_URL;
 	const [selectedCompany, setSelectedCompany] = useState<Company>();
