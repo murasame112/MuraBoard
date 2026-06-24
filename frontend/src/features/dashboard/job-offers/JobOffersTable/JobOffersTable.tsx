@@ -74,7 +74,22 @@ export default function JobOffersTable({callForm, callMassActionPopup, refreshTo
 	}
 
 	function apply(id: number) {
-		//TODO: implement
+		fetch(`${host}/api/application/applications-apply?id=${id}`, {method: 'POST'})
+			.then((response) => response.json())
+			.then((data) => {
+				setJobOffers((prev) => {
+					return prev.map((element) => {
+						if (element.id === id) {
+							return {...element, application: data};
+						} else {
+							return element;
+						}
+					});
+				});
+			})
+			.catch((error) => {
+				console.log(JSON.stringify(error));
+			});
 	}
 
 	return(

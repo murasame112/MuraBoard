@@ -92,7 +92,34 @@ export async function patchApplication(id: number, values: ApplicationPatchValue
 	});
 }
 
-export async function deleteApplications(ids: number[]){
+export async function apply(id: number) {
+	const offer = await prisma.jobOffer.findUnique({
+		where: {id: id}
+	});
+
+	if (!offer) {
+		return 'offer_not_found';
+	};
+
+	const existingApplication = await prisma.application.findUnique({
+		where: {jobOfferId: id}
+	});
+
+	if (existingApplication) {
+		return 'application already exists';
+	}
+
+	const result = prisma.application.create({
+		data: {
+			jobOfferId: id,
+			userId: 4, //TODO: userId shouldn't be 4, it's just for development
+			status: 'APPLIED'
+		}
+	});
+	return result;
+}
+
+export async function deleteApplications(ids: number[]) {
 	const result = await prisma.application.deleteMany({
 			where: {
 				id: {in: ids}

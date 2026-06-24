@@ -142,10 +142,10 @@ export default function ApplicationsTable({setMode, callMassActionPopup, refresh
 							return prev;
 						})
 					})
-					.catch((error) => {
-						console.log(JSON.stringify(error));
-						setCommentError(t('applicationCommentError.wrongResponse'));
-					});
+				.catch((error) => {
+					console.log(JSON.stringify(error));
+					setCommentError(t('applicationCommentError.wrongResponse'));
+				});
 		} catch (error) {
 				console.error(error);
 		}		

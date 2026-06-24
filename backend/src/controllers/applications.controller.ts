@@ -77,6 +77,37 @@ export async function editApplicationComment(req: Request<{}, {}, editApplicatio
 	}
 }
 
+export async function apply(req: Request, res: Response) {
+	try {
+		const { id } = req.query as {
+			id?: string; 
+		}
+
+		if (!id || Number.isNaN(id)) {
+			return res.status(400).json({ message: 'Invalid id' });
+		}
+
+		const result = await applicationsService.apply(Number(id));
+
+		if (result === 'offer_not_found') {
+			return res.status(404).json({
+				message: "Offer not found"
+			});
+		}
+
+		if (result === 'application already exists') {
+			return res.status(409).json({
+				message: "Application already exists"
+			});
+		}
+
+		return res.status(201).json(result);
+
+	} catch (error) {
+		return res.status(500).json({message: 'Something went wrong'});
+	}
+}
+
 type DeleteApplicationBody = {
 	ids: number[];
 }
