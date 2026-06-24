@@ -51,6 +51,32 @@ export async function getApplicationsStats(req: Request<{}, {}, {}, RequestQuery
 	}
 }
 
+type editApplicationCommentBody = {
+	id: number;
+	comment: string;
+}
+export async function editApplicationComment(req: Request<{}, {}, editApplicationCommentBody>, res: Response){
+	try {
+		const { 
+			id,
+			comment
+		} = req.body as {
+			id: number;
+			comment: string;
+		};
+
+		if (!id || !comment) {
+			return res.status(400).json({ message: 'Invalid data' });
+		}
+
+		const result = await applicationsService.patchApplication(id, {comment});
+
+		return res.status(201).json(result)
+	} catch (error) {
+		return res.status(500).json({message: 'Something went wrong'});
+	}
+}
+
 type DeleteApplicationBody = {
 	ids: number[];
 }

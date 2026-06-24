@@ -1,4 +1,5 @@
 import { prisma } from '../db/prisma.js';
+import { Prisma, ApplicationStatus } from '../generated/prisma/client.js';
 import type { ParsedQuery } from '../shared/lib/applicationDashboardQueryParser.js';
 import { buildApplicationWhere } from '../shared/lib/buildApplicationWhere.js';
 
@@ -70,6 +71,25 @@ export async function getApplicationsStats(query: ParsedQuery) {
 
 	return {summaryCount, stats: {applied, inProgress, interview, offer, rejected}};
 
+}
+
+type ApplicationPatchValues = {
+	status?: ApplicationStatus;
+	nextStepDate?: Date | null;
+	comment?: string | null;
+};
+export async function patchApplication(id: number, values: ApplicationPatchValues ) {
+
+	const data: Prisma.ApplicationUpdateInput = {
+		...(values.status !== undefined && { status: values.status }),
+		...(values.nextStepDate !== undefined && { nextStepDate: values.nextStepDate }),
+		...(values.comment !== undefined && { comment: values.comment })
+	};
+
+	return prisma.application.update({
+		where: { id },
+		data,
+	});
 }
 
 export async function deleteApplications(ids: number[]){
