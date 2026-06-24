@@ -92,7 +92,13 @@ export default function JobOffersTable({callForm, callMassActionPopup, refreshTo
 			</div>
 
 			{jobOffers.length === 0 ? (<p>{t('noJobOffersFound')} - <span className={styles.createOne} onClick={() => callForm('add')}>{t('createOne')}</span>!</p>) : 
-			jobOffers.map((element) => (
+			jobOffers.map((element) => {
+				const isApplied = element.application !== null;
+				const statusLabel = isApplied
+					? t('applied')
+					: t('notApplied');
+
+				return (
 				<div key={element.id} className={styles.jobOfferItem}>
 					<div className={styles.select}><input type='checkbox' name='selectItem' checked={selectedCheckboxes.has(element.id)} onChange={(e) => {handleCheckboxChange(e, element.id)}}/></div>
 
@@ -112,14 +118,19 @@ export default function JobOffersTable({callForm, callMassActionPopup, refreshTo
 					<span>{element.company.name}</span>
 				</div>
 
-					<p className={`${styles.offerStatus} ${element.application ? styles.applied : styles.notApplied }`}>{element.application ? t('applied'): t('notApplied') }</p>
+					<p className={`${styles.offerStatus} ${isApplied ? styles.applied : styles.notApplied }`}>
+						{statusLabel}
+					</p>
 					<p>{element.position}</p>
 					<p>{element.salaryMin} - {element.salaryMax}</p>
 					<p>{element.currency}</p>
 					<p>{new Date(element.createdAt).toLocaleDateString('pl-PL')}</p>
-					<button type='button' className={styles.applyButton} onClick={() => apply(element.id)} disabled={element.application ? true : false}><PaperAirplaneIcon className={styles.applyIcon}/></button>
+					
+					<button type='button' className={styles.applyButton} onClick={() => apply(element.id)} disabled={element.application ? true : false}>
+						<PaperAirplaneIcon className={styles.applyIcon}/>
+					</button>
 				</div>
-			))}
+			)})}
 			
 		</div>
 	);
