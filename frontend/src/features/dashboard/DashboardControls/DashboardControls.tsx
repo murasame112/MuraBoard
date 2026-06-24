@@ -80,9 +80,9 @@ export default function DashboardControls({className, mode, callForm, filters, s
 			{isFilterBoxDisplayed ? <FilterBox mode={mode} filters={filters} setFilter={setFilter} onUnsetFilter={onUnsetFilter}/> : ''}
 			</div>
 			
-			
-			
-			<button type='button' className={styles.addButton} onClick={() => callForm('add')}><PlusIcon className={styles.plusIcon}/>{t('add')} {t(mode)}</button>
+			{mode === 'JobOffer' && 
+			(<button type='button' className={styles.addButton} onClick={() => callForm('add')}><PlusIcon className={styles.plusIcon}/>{t('add')} {t(mode)}</button>)
+			}		
 		</div>
 	);
 }
