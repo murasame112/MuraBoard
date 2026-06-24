@@ -78,6 +78,11 @@ export default function ApplicationsTable({setMode, callMassActionPopup, refresh
 		});
 	}
 
+	function handleCommentChange(e: React.ChangeEvent<HTMLTextAreaElement>) {
+		let val = e.currentTarget.value;
+		setCurrentCommentValue(val);
+	}
+
 	function fetchData() {
 		//TODO: userId shouldn't be 4, it's just for development
 		const userId = 4;
@@ -122,12 +127,20 @@ export default function ApplicationsTable({setMode, callMassActionPopup, refresh
 		};
 
 		try {
-			fetch(`${host}/api/application/edit-comment`, editCommentRequestOptions)
+			fetch(`${host}/api/application/applications-edit-comment`, editCommentRequestOptions)
 				.then((response) => {
 						if (!response.ok) throw new Error(`request failed with status ${response.status}`);
 
 						closeCommentWindow();
-						//TODO: do i need to increase refreshToken?
+						
+						setApplications((prev) => {
+							prev.map((element) => {
+								if (element.id === value.id) {
+									element.comment = value.comment;
+								}
+							});
+							return prev;
+						})
 					})
 					.catch((error) => {
 						console.log(JSON.stringify(error));
@@ -184,7 +197,7 @@ export default function ApplicationsTable({setMode, callMassActionPopup, refresh
 						{
 							element.id === selectedComment && (
 								<div className={styles.commentWindow}>
-									<textarea name='commentContent' placeholder={t('comment')} value={currentCommentValue}/>
+									<textarea name='commentContent' placeholder={t('comment')} onChange={handleCommentChange} value={currentCommentValue}/>
 									<div className={styles.errorSlot}>
 										{commentError && <ErrorBox message={commentError}/>}
 									</div>
