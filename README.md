@@ -99,6 +99,18 @@ npm run dev
 
 ---
 
+## Screenshots
+
+#### Job Offers Dashboard
+
+![JobOffersDashboard](docs/screenshots/JobOffersDashboard.png)
+
+#### Applications Dashboard
+
+![ApplicationsDashboard](docs/screenshots/ApplicationsDashboard.png)
+
+---
+
 ## Architecture
 The project follows a separated frontend/backend architecture.
 
