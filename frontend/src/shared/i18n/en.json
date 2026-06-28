@@ -62,6 +62,7 @@
 	"noWebsiteProvided": "no website provided",
 	"withoutHttps": "without https://",
 	"submitJobOffer": "submit job offer",
+	"submitApplication": "submit application",
 
 	"formError.positionRequired": "position is required",
 	"formError.positionTooShort": "position is too short",

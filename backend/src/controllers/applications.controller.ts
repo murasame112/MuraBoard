@@ -51,6 +51,24 @@ export async function getApplicationsStats(req: Request<{}, {}, {}, RequestQuery
 	}
 }
 
+export async function getApplicationById(req: Request, res: Response) {
+	try {
+		const { id } = req.query as {
+			id?: string; 
+		}
+
+		if (!id || Number.isNaN(id)) {
+			return res.status(400).json({ message: 'Invalid id'});
+		}
+
+		const data = await applicationsService.getApplicationById(Number(id));
+		return res.status(200).json(data);
+
+	} catch (error) {
+		return res.status(500).json({message: 'Something went wrong'});
+	}
+}
+
 type editApplicationCommentBody = {
 	id: number;
 	comment: string;

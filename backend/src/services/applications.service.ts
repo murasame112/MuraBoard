@@ -73,6 +73,20 @@ export async function getApplicationsStats(query: ParsedQuery) {
 
 }
 
+export async function getApplicationById(id: number) { 
+	const result = await prisma.application.findFirst({
+		where: { id },
+		include: {
+			jobOffer: {
+				include: {
+					company: true,
+				},
+			}
+		}
+	});
+	return result;
+}
+
 type ApplicationPatchValues = {
 	status?: ApplicationStatus;
 	nextStepDate?: Date | null;
