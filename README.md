@@ -32,9 +32,11 @@ The application emphasizes clean separation of concerns between frontend and bac
 * PostgreSQL
 * Prisma ORM
 
-**Development Tools:**
+**Development Tools & Deployment:**
 * Nodemon
 * dotenv
+* Docker
+* Docker Compose
 
 ---
 
@@ -79,23 +81,41 @@ The application emphasizes clean separation of concerns between frontend and bac
 ## Setup & Installation
 
 ### 1. Clone repository
-```
+
+```bash
 git clone https://github.com/murasame112/MuraBoard.git
 cd MuraBoard
 ```
 
 ### 2. Environment variables
-Create `.env` file inside the backend directory:
 
-```
+Create a `.env` file in the project root (or update the existing one) and configure the required environment variables:
+
+```text
 DATABASE_URL=
 ```
 
-### 3. Install dependencies and run project
+### 3. Build and run the application
+
+Start the application using Docker Compose:
+
+```bash
+docker compose up --build
 ```
-npm install
-npm run dev
+
+The command will:
+
+* build the frontend and backend images,
+* start the application containers,
+* initialize the PostgreSQL database,
+* make the application available locally.
+
+After the initial build, the project can be started with:
+
+```bash
+docker compose up
 ```
+
 
 ---
 
