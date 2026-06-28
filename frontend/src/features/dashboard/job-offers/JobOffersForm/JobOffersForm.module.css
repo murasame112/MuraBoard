@@ -111,6 +111,7 @@
 	top: 6px;
 	right: 6px;
 	color: var(--main-theme);
+	pointer-events: none;
 }
 
 .jobOfferFormSubmit {
