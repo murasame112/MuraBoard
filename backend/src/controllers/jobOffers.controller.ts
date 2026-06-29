@@ -64,6 +64,9 @@ export async function getJobOfferById(req: Request, res: Response) {
 		}
 
 		const data = await jobOffersService.getJobOfferById(Number(id));
+		if (!data) {
+   		return res.status(404).json({message: 'Job offer not found'});
+		}
 		return res.status(200).json(data);
 
 	} catch (error) {

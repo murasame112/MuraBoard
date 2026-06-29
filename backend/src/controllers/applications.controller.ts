@@ -64,6 +64,9 @@ export async function getApplicationById(req: Request, res: Response) {
 		}
 
 		const data = await applicationsService.getApplicationById(Number(id));
+		if (!data) {
+   		return res.status(404).json({message: 'Application not found'});
+		}
 		return res.status(200).json(data);
 
 	} catch (error) {
