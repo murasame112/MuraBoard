@@ -210,7 +210,7 @@ export default function ApplicationsForm({onClose, onSubmit, selectedId}: Applic
 	function validateNextStepDate() {
 		let value = new Date(values.nextStepDate);
 
-		if (Number.isNaN(value.getTime())) {
+		if (values.nextStepDate && Number.isNaN(value.getTime())) {
 			setErrors(prev => ({...prev, nextStepDate: t('formError.wrongNextStepDate')}));
 			return
 		}

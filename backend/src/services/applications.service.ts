@@ -87,7 +87,7 @@ export async function getApplicationById(id: number) {
 	return result;
 }
 
-type ApplicationPatchValues = {
+export type ApplicationPatchValues = {
 	status?: ApplicationStatus;
 	nextStepDate?: Date | null;
 	comment?: string | null;

@@ -9,6 +9,7 @@ router.get('/applications-stats', applicationsController.getApplicationsStats);
 router.get('/applications-by-id', applicationsController.getApplicationById);
 router.post('/applications-apply', applicationsController.apply);
 router.patch('/applications-edit-comment', applicationsController.editApplicationComment);
+router.patch('/applications-update', applicationsController.updateApplication);
 router.delete('/applications-delete', applicationsController.deleteApplications);
 
 export default router;
