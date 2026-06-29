@@ -50,12 +50,12 @@ export default function ApplicationsForm({onClose, onSubmit, selectedId}: Applic
 
 	useEffect(() => {
 		if (selectedId) {
-			fetch(`${host}/api/applications/applications-by-id?id=${selectedId}`)
+			fetch(`${host}/api/application/applications-by-id?id=${selectedId}`)
 				.then(response => response.json())
 				.then(data => {
 					setValues({
 						status: data.status,
-						nextStepDate: data.nextStepDate ?? '',
+						nextStepDate: data.nextStepDate.slice(0, 10) ?? '',
 						comment: data.comment ?? ''
 					});
 				})
@@ -283,7 +283,6 @@ export default function ApplicationsForm({onClose, onSubmit, selectedId}: Applic
 						<div className={styles.selectWrapper}>
 							<ChevronDownIcon className={styles.selectArrowIcon}/>
 							<select name='status' id='status' onChange={handleChange} onBlur={validate} value={values.status}>
-								<option value='unknown'>{t('unknown')}</option>
 								{Object.values(ApplicationStatus).map((element) => 
 									<option key={element} value={element}>{t(element)}</option>
 								)}
