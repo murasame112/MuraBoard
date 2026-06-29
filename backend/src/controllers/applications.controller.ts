@@ -59,7 +59,7 @@ export async function getApplicationById(req: Request, res: Response) {
 			id?: string; 
 		}
 
-		if (!id || Number.isNaN(id)) {
+		if (!id || Number.isNaN(Number(id))) {
 			return res.status(400).json({ message: 'Invalid id'});
 		}
 
@@ -85,7 +85,7 @@ export async function editApplicationComment(req: Request<{}, {}, editApplicatio
 			comment: string;
 		};
 		
-		if (!id || Number.isNaN(id)) {
+		if (!id || Number.isNaN(Number(id))) {
 			return res.status(400).json({ message: 'Invalid id'});
 		}
 
@@ -121,7 +121,7 @@ export async function updateApplication(req: Request<{}, {}, updateApplicationBo
 			comment?: string
 		}
 
-		if (!id || Number.isNaN(id)) {
+		if (!id || Number.isNaN(Number(id))) {
 			return res.status(400).json({ message: 'Invalid id'});
 		}
 
@@ -160,7 +160,7 @@ export async function apply(req: Request, res: Response) {
 			id?: string; 
 		}
 
-		if (!id || Number.isNaN(id)) {
+		if (!id || Number.isNaN(Number(id))) {
 			return res.status(400).json({ message: 'Invalid id' });
 		}
 

@@ -59,7 +59,7 @@ export async function getJobOfferById(req: Request, res: Response) {
 			id?: string; 
 		}
 
-		if (!id || Number.isNaN(id)) {
+		if (!id || Number.isNaN(Number(id))) {
 			return res.status(400).json({ message: 'Invalid id'});
 		}
 
@@ -86,7 +86,7 @@ export async function upsertJobOffer(req: Request<{}, {}, UpsertJobOfferBody>, r
 			userId?: string;
 		}
 		
-		if (!userId || Number.isNaN(userId)) {
+		if (!userId || Number.isNaN(Number(userId))) {
 			return res.status(400).json({ message: 'Invalid user id' });
 		}
 
@@ -110,11 +110,11 @@ export async function upsertJobOffer(req: Request<{}, {}, UpsertJobOfferBody>, r
 			return res.status(400).json({message: 'Missing job offer data'});
 		}
 
-		if (Number.isNaN(salaryMin)) {
+		if (Number.isNaN(Number(salaryMin))) {
 			return res.status(400).json({ message: 'Invalid min salary' });
 		}
 
-		if (Number.isNaN(salaryMax)) {
+		if (Number.isNaN(Number(salaryMax))) {
 			return res.status(400).json({ message: 'Invalid max salary' });
 		}
 		
