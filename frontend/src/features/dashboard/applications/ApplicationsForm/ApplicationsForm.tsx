@@ -221,7 +221,7 @@ export default function ApplicationsForm({onClose, onSubmit, selectedId}: Applic
 			setErrors(prev => ({...prev, nextStepDate: t('formError.dateInThePast')}));
 			return;
 		}
-		
+
 		setErrors(prev => ({...prev, nextStepDate: null}));
 	}
 
@@ -237,32 +237,30 @@ export default function ApplicationsForm({onClose, onSubmit, selectedId}: Applic
 	}
 
 	function areRequiredFieldsFilled(): boolean {
+		if (
+			values.status
+		) { 
+			return true;
+		}
 		return false;
-		//TODO:
-		// if (
-		// 	values.position.trim().length > 0 &&
-		// 	values.company
-		// ) { 
-		// 	return true;
-		// }
-		// return false;
 	}
 
 	async	function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
 		e.preventDefault();
 		//TODO: userId shouldn't be 4, it's just for development
 		const userId = 4;
+		console.log('happens');
 
 		
 		const updateApplicationRequestOptions = {
-			method: 'PUT',
+			method: 'PATCH',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({id: selectedId, ...values}),
 		};
 	
 		try {
 			//TODO:
-			fetch(`${host}/api/application/offers-update?userId=${userId}`, updateApplicationRequestOptions)
+			fetch(`${host}/api/application/applications-update?userId=${userId}`, updateApplicationRequestOptions)
 				.then((response) => {
 					if (!response.ok) throw new Error(`request failed with status ${response.status}`);
 
@@ -282,49 +280,52 @@ export default function ApplicationsForm({onClose, onSubmit, selectedId}: Applic
 	return (
 			<div className={styles.applicationForm}>
 				<form onSubmit={handleSubmit}>
-					<div className={styles.closeButton}><button type='button' onClick={onClose}>X</button></div>
+					<div className={styles.formContent}>
+						<div className={styles.closeButton}><button type='button' onClick={onClose}>X</button></div>
 
-					<div className={styles.applicationFormElement}>
-						<label htmlFor='commentInput' className={styles.applicationFormLabel}>
-							{t('comment')}
-						</label>
-						<div className={styles.inputWrapper}>
-							<input className={styles.commentInput} id='commentInput' name='comment' type='text' onChange={handleChange} onBlur={validate} value={values.comment}/>
-							{errors.comment ? <ErrorBox message={errors.comment} className={styles.errorBox} /> : ''}
+						<div className={styles.applicationFormElement}>
+							<label htmlFor='commentInput' className={styles.applicationFormLabel}>
+								{t('comment')}
+							</label>
+							<div className={styles.inputWrapper}>
+								<input className={styles.commentInput} id='commentInput' name='comment' type='text' onChange={handleChange} onBlur={validate} value={values.comment}/>
+								{errors.comment ? <ErrorBox message={errors.comment} className={styles.errorBox} /> : ''}
+							</div>
 						</div>
-					</div>
 
-					<div className={styles.applicationFormElement}>
-						<label htmlFor='nextStepDateInput' className={styles.applicationFormLabel}>
-							{t('nextStepDate')}
-						</label>
-						<div className={styles.inputWrapper}>
-							<input className={styles.nextStepDateInput} id='nextStepDateInput' name='nextStepDate' type='date' onChange={handleChange} onBlur={validate} value={values.nextStepDate}/>
-							{errors.nextStepDate ? <ErrorBox message={errors.nextStepDate} className={styles.errorBox} /> : ''}
+						<div className={styles.applicationFormElement}>
+							<label htmlFor='nextStepDateInput' className={styles.applicationFormLabel}>
+								{t('nextStepDate')}
+							</label>
+							<div className={styles.inputWrapper}>
+								<input className={styles.nextStepDateInput} id='nextStepDateInput' name='nextStepDate' type='date' onChange={handleChange} onBlur={validate} value={values.nextStepDate}/>
+								{errors.nextStepDate ? <ErrorBox message={errors.nextStepDate} className={styles.errorBox} /> : ''}
+							</div>
+						</div>
+						
+						<div className={styles.applicationFormElement}>
+							<label className={styles.applicationFormLabel}>
+								{t('status')}
+							</label>
+							<div className={styles.selectWrapper}>
+								<ChevronDownIcon className={styles.selectArrowIcon}/>
+								<select name='status' id='status' onChange={handleChange} onBlur={validate} value={values.status}>
+									{Object.values(ApplicationStatus).map((element) => 
+										<option key={element} value={element}>{t(element)}</option>
+									)}
+								</select>
+							</div>					
 						</div>
 					</div>
 					
-					<div className={styles.applicationFormElement}>
-						<label className={styles.applicationFormLabel}>
-							{t('status')}
-						</label>
-						<div className={styles.selectWrapper}>
-							<ChevronDownIcon className={styles.selectArrowIcon}/>
-							<select name='status' id='status' onChange={handleChange} onBlur={validate} value={values.status}>
-								{Object.values(ApplicationStatus).map((element) => 
-									<option key={element} value={element}>{t(element)}</option>
-								)}
-							</select>
-						</div>					
+
+
+
+					<div className={styles.applicationFormSubmit}>
+						<button type='submit' disabled={Object.values(errors).some((error) => error !== null) || !areRequiredFieldsFilled()}>{t('submitApplication')}</button>
 					</div>
-
-
-
-
 				</form>
-				<div className={styles.applicationFormSubmit}>
-					<button type='submit' disabled={Object.values(errors).some((error) => error !== null) || !areRequiredFieldsFilled()}>{t('submitApplication')}</button>
-				</div>
+				
 			</div>
 	);
 }
