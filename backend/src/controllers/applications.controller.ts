@@ -95,7 +95,7 @@ export async function editApplicationComment(req: Request<{}, {}, editApplicatio
 
 		const result = await applicationsService.patchApplication(id, {comment});
 
-		return res.status(201).json(result);
+		return res.status(200).json(result);
 	} catch (error) {
 		return res.status(500).json({message: 'Something went wrong'});
 	}
@@ -178,7 +178,7 @@ export async function apply(req: Request, res: Response) {
 			});
 		}
 
-		return res.status(201).json(result);
+		return res.status(200).json(result);
 
 	} catch (error) {
 		return res.status(500).json({message: 'Something went wrong'});
