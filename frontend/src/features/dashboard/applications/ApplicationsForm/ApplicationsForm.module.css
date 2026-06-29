@@ -79,6 +79,17 @@
 	margin-top: 3px;
 }
 
+.commentInput {
+	width: 90%;
+	max-width: 90%;
+	height: 90px;
+	resize: none;
+	accent-color: var(--secondary-theme);
+	margin: 2px auto 0 auto;
+	border-radius: 5px;
+	border: 1px solid var(--additional-theme);
+}
+
 .selectWrapper {
 	height: 100%;
 	position: relative;

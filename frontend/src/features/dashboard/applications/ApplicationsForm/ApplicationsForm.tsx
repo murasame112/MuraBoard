@@ -63,7 +63,7 @@ export default function ApplicationsForm({onClose, onSubmit, selectedId}: Applic
 		}		
 	}, [selectedId]);
 
-	function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) {
+	function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) {
 		let value = e.currentTarget.value;
 		let name = e.currentTarget.name;
 
@@ -84,117 +84,12 @@ export default function ApplicationsForm({onClose, onSubmit, selectedId}: Applic
 		setValues(prev => ({...prev, [name]: value}));
 	}
 
-	function validate(e: React.FocusEvent<HTMLInputElement | HTMLSelectElement>) {
+	function validate(e: React.FocusEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) {
 		const currentValidation = validationRegister[e.currentTarget.name as Exclude<FormFields, 'company'>];
 		if (currentValidation){
 			currentValidation();
 		}
 	}
-
-	/*
-	function validatePosition() {
-		let value = values.position.trim();
-
-		if (value.length === 0) {
-			setErrors(prev => ({...prev, position: t('formError.positionRequired')}));
-			return;
-		}
-
-		if (value.length < 5) {
-			setErrors(prev => ({...prev, position: t('formError.positionTooShort')}));
-			return;
-		}
-
-		if (value.length > 80){
-			setErrors(prev => ({...prev, position: t('formError.positionTooLong')}));
-			return;
-		}
-
-		setErrors(prev => ({...prev, position: null}));
-	}
-
-	function validateSalaryMin() {
-		let value = Number(values.salaryMin);
-
-		if (isNaN(value) || value === 0) {
-			setErrors(prev => ({...prev, salaryMin: null}));
-			return;
-		}
-
-		if (value < 0) {
-			setErrors(prev => ({...prev, salaryMin: t('formError.salaryNegative')}));
-			return;
-		}
-
-		if (value > 999999999) {
-			setErrors(prev => ({...prev, salaryMin: t('formError.salaryTooHigh')}));
-			return;
-		}
-
-		if (
-			!isNaN(Number(values.salaryMax)) &&
-			Number(values.salaryMax) !== 0 &&
-			Number(values.salaryMax) < value
-		) {
-			setErrors(prev => ({...prev, salaryMax: t('formError.salaryMinMustBeLower')}));
-			return;
-		}
-
-		setErrors(prev => ({...prev, salaryMin: null}));
-	}
-
-	function validateSalaryMax() {
-		let value = Number(values.salaryMax);
-
-		if (isNaN(value) || value === 0) {
-			setErrors(prev => ({...prev, salaryMax: null}));
-			return;
-		}
-
-		if (value < 0) {
-			setErrors(prev => ({...prev, salaryMax: t('formError.salaryNegative')}));
-			return;
-		}
-
-		if (value > 999999999) {
-			setErrors(prev => ({...prev, salaryMax: t('formError.salaryTooHigh')}));
-			return;
-		}
-
-		if (
-			!isNaN(Number(values.salaryMin)) &&
-			Number(values.salaryMin) !== 0 &&
-			Number(values.salaryMin) > value
-		) {
-			setErrors(prev => ({...prev, salaryMax: t('formError.salaryMinMustBeLower')}));
-			return;
-		}
-
-		setErrors(prev => ({...prev, salaryMax: null}));
-	}
-
-	function validateCurrency() {
-		let value = values.currency;
-
-		if (
-			value !== 'unknown' &&
-			!Object.values(Currency).includes(value as Currency)
-		) {
-			setErrors(prev => ({...prev, currency: t('formError.wrongCurrency')}));
-			return;
-		}
-		setErrors(prev => ({...prev, currency: null}));
-	}
-
-	function validateCompany(company: Company | null) { 
-		let value = company;
-		if (!value) {
-			setErrors(prev => ({...prev, company: t('formError.companyRequired')}));
-			return
-		}
-		setErrors(prev => ({...prev, company: null}));
-	}
-	*/
 
 	function validateStatus() {
 		let value = values.status;
@@ -288,7 +183,7 @@ export default function ApplicationsForm({onClose, onSubmit, selectedId}: Applic
 								{t('comment')}
 							</label>
 							<div className={styles.inputWrapper}>
-								<input className={styles.commentInput} id='commentInput' name='comment' type='text' onChange={handleChange} onBlur={validate} value={values.comment}/>
+								<textarea className={styles.commentInput} id='commentInput' name='comment' onChange={handleChange} onBlur={validate} value={values.comment}/>
 								{errors.comment ? <ErrorBox message={errors.comment} className={styles.errorBox} /> : ''}
 							</div>
 						</div>
