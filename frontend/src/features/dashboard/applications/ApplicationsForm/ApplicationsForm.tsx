@@ -198,19 +198,42 @@ export default function ApplicationsForm({onClose, onSubmit, selectedId}: Applic
 
 	function validateStatus() {
 		let value = values.status;
+
 		if (!Object.values(ApplicationStatus).includes(value as ApplicationStatus)) {
 			setErrors(prev => ({...prev, status: t('formError.wrongStatus')}));
 			return;
 		}
+
 		setErrors(prev => ({...prev, status: null}));
 	}
 
 	function validateNextStepDate() {
+		let value = new Date(values.nextStepDate);
 
+		if (Number.isNaN(value.getTime())) {
+			setErrors(prev => ({...prev, nextStepDate: t('formError.wrongNextStepDate')}));
+			return
+		}
+
+		const today = new Date();
+		today.setHours(0, 0, 0, 0);
+		if (value < today) {
+			setErrors(prev => ({...prev, nextStepDate: t('formError.dateInThePast')}));
+			return;
+		}
+		
+		setErrors(prev => ({...prev, nextStepDate: null}));
 	}
 
 	function validateComment() {
+		let value = values.comment.trim();
 
+		if (value.length > 500){
+			setErrors(prev => ({...prev, comment: t('formError.positionTooLong')}));
+			return;
+		}
+
+		setErrors(prev => ({...prev, comment: null}));
 	}
 
 	function areRequiredFieldsFilled(): boolean {

@@ -81,6 +81,9 @@
 	"formError.companyWebsiteTooShort": "company website is too short",
 	"formError.companyWebsiteTooLong": "company website is too long",
 	"formError.companyWebsiteInvalid": "company website is invalid",
+	"formError.wrongStatus": "wrong status",
+	"formError.wrongNextStepDate": "step date is invalid",
+	"formError.dateInThePast": "date cannot be in the past",
 	"applicationCommentError.tooLong": "comment is too long",
 	"applicationCommentError.wrongResponse": "wrong response, try again later",
 
