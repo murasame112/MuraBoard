@@ -55,7 +55,7 @@ export default function ApplicationsForm({onClose, onSubmit, selectedId}: Applic
 				.then(data => {
 					setValues({
 						status: data.status,
-						nextStepDate: data.nextStepDate.slice(0, 10) ?? '',
+						nextStepDate: data.nextStepDate ? data.nextStepDate.slice(0, 10) : '',
 						comment: data.comment ?? ''
 					});
 				})
@@ -197,7 +197,12 @@ export default function ApplicationsForm({onClose, onSubmit, selectedId}: Applic
 	*/
 
 	function validateStatus() {
-
+		let value = values.status;
+		if (!Object.values(ApplicationStatus).includes(value as ApplicationStatus)) {
+			setErrors(prev => ({...prev, status: t('formError.wrongStatus')}));
+			return;
+		}
+		setErrors(prev => ({...prev, status: null}));
 	}
 
 	function validateNextStepDate() {
