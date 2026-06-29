@@ -89,7 +89,7 @@ export async function editApplicationComment(req: Request<{}, {}, editApplicatio
 			return res.status(400).json({ message: 'Invalid id'});
 		}
 
-		if (!comment) {
+		if (typeof comment !== 'string') {
 			return res.status(400).json({ message: 'Invalid comment' });
 		}
 
