@@ -67,20 +67,6 @@ export default function ApplicationsForm({onClose, onSubmit, selectedId}: Applic
 		let value = e.currentTarget.value;
 		let name = e.currentTarget.name;
 
-		switch (name) {
-			case 'status':
-				//TODO:	
-			//value = value.replace(/[^a-zA-ZÀ-ÿąĄćĆęĘłŁńŃóÓśŚżŻźŹ\s\-+.#()/]/g, '');
-				break;
-			case 'nextStepDate':
-				//TODO:
-				break;
-			case 'comment':
-				//TODO:
-//				value = value.replace(/\D/g, '');
-				break;
-		}
-
 		setValues(prev => ({...prev, [name]: value}));
 	}
 
@@ -154,7 +140,6 @@ export default function ApplicationsForm({onClose, onSubmit, selectedId}: Applic
 		};
 	
 		try {
-			//TODO:
 			fetch(`${host}/api/application/applications-update?userId=${userId}`, updateApplicationRequestOptions)
 				.then((response) => {
 					if (!response.ok) throw new Error(`request failed with status ${response.status}`);
@@ -166,12 +151,8 @@ export default function ApplicationsForm({onClose, onSubmit, selectedId}: Applic
 		} catch (error) {
 			console.error(error);
 		}
-		
-
 	}
 
-
-	//TODO: v - class names, form design etc
 	return (
 			<div className={styles.applicationForm}>
 				<form onSubmit={handleSubmit}>
