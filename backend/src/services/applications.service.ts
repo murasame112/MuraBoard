@@ -73,7 +73,21 @@ export async function getApplicationsStats(query: ParsedQuery) {
 
 }
 
-type ApplicationPatchValues = {
+export async function getApplicationById(id: number) { 
+	const result = await prisma.application.findFirst({
+		where: { id },
+		include: {
+			jobOffer: {
+				include: {
+					company: true,
+				},
+			}
+		}
+	});
+	return result;
+}
+
+export type ApplicationPatchValues = {
 	status?: ApplicationStatus;
 	nextStepDate?: Date | null;
 	comment?: string | null;

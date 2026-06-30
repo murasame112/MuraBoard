@@ -30,6 +30,13 @@
 	"company": "company",
 	"status": "status",
 	"position": "position",
+	"companyName": "company name",
+	"jobOfferStatus": "status",
+	"applicationStatus": "status",
+	"salaryMin": "salary above",
+	"salaryMax": "salary below",
+	"applicationDateFrom": "applied from",
+	"applicationDateTo": "applied to",
 	"salary": "salary",
 	"currency": "currency",
 	"date": "date",
@@ -62,6 +69,7 @@
 	"noWebsiteProvided": "no website provided",
 	"withoutHttps": "without https://",
 	"submitJobOffer": "submit job offer",
+	"submitApplication": "submit application",
 
 	"formError.positionRequired": "position is required",
 	"formError.positionTooShort": "position is too short",
@@ -80,6 +88,9 @@
 	"formError.companyWebsiteTooShort": "company website is too short",
 	"formError.companyWebsiteTooLong": "company website is too long",
 	"formError.companyWebsiteInvalid": "company website is invalid",
+	"formError.wrongStatus": "wrong status",
+	"formError.wrongNextStepDate": "step date is invalid",
+	"formError.dateInThePast": "date cannot be in the past",
 	"applicationCommentError.tooLong": "comment is too long",
 	"applicationCommentError.wrongResponse": "wrong response, try again later",
 
@@ -93,6 +104,8 @@
 	"filter.applicationStatus": "status",
 	"filter.salaryMin": "salary above",
 	"filter.salaryMax": "salary below",
+	"filter.applicationDateFrom": "applied from",
+	"filter.applicationDateTo": "applied to",
 
 	"activeFilters": "active filters",
 	"clearAllFilters": "clear all filters"

@@ -1,3 +1,5 @@
+import { ApplicationStatus } from "../../enums/enums.js";
+
 export type RequestQuery = {
 	userId?: string;
 	currentPage?: string;
@@ -20,17 +22,10 @@ type CompanyNameFilter = {
 	value: string
 };
 
-type ApplicationStatusValue = 'applied' | 'inProgress' | 'interview' | 'offer' | 'rejected';
-
 type ApplicationStatusFilter = {
 	filterName: 'applicationStatus',
-	value: ApplicationStatusValue;
+	value: ApplicationStatus;
 };
-
-function isApplicationStatusValue(value: string): value is ApplicationStatusValue {
-	return value === 'applied' || value === 'inProgress' || value === 'interview' || value === 'offer' || value === 'rejected' ;
-}
-
 type ApplicationDateFromFilter = {
 	filterName: 'applicationDateFrom',
 	value: Date;
@@ -86,10 +81,10 @@ export function parse(query: RequestQuery): ParsedQuery | ParseError{
 	}
 
 	if ( query.applicationStatus !== undefined ) {
-		if (!isApplicationStatusValue(query.applicationStatus)) {
+		if (!Object.values(ApplicationStatus).includes(query.applicationStatus as ApplicationStatus)) {
 			return { ok: false, error: 'Invalid application status' };
 		}
-		filters.push({filterName: 'applicationStatus', value: query.applicationStatus});
+		filters.push({filterName: 'applicationStatus', value: query.applicationStatus as ApplicationStatus});
 	}
 
 	if ( query.applicationDateFrom !== undefined) {

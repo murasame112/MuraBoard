@@ -3,6 +3,7 @@ import styles from './FilterPopover.module.css';
 import { useState, useEffect } from 'react';
 import { useTranslation } from '../../../../shared/i18n/useTranslation';
 import type { DashboardMode } from '../../../../layouts/main-layout/AppNavigation/AppNavigation';
+import { ApplicationStatus } from '../../../../shared/enums/enums';
 
 type FilterPopoverProps = {
 	mode: DashboardMode;
@@ -10,7 +11,7 @@ type FilterPopoverProps = {
 	setFilter: (filter: Filter) => void; 
 }
 
-export default function FilterPopover({mode, filterName, setFilter}: FilterPopoverProps){
+export default function FilterPopover({filterName, setFilter}: FilterPopoverProps){
 	const { t } = useTranslation();
 	const [popoverValue, setPopoverValue] = useState<string | number>('');
 	const [isPopoverDisabled, setIsPopoverDisabled] = useState<boolean>(true);
@@ -38,7 +39,7 @@ export default function FilterPopover({mode, filterName, setFilter}: FilterPopov
 	function submitFilter() {
 		if (!filterName || popoverValue === '') return;
 
-		if (filterName === 'position' || filterName === 'companyName') {
+		if (filterName === 'position' || filterName === 'companyName'||  filterName === 'applicationDateFrom' || filterName === 'applicationDateTo') {
 
 			setFilter({
 				filterName,
@@ -66,7 +67,7 @@ export default function FilterPopover({mode, filterName, setFilter}: FilterPopov
 
 			setFilter({
 				filterName,
-				value: popoverValue as 'applied' | 'rejected',
+				value: popoverValue as ApplicationStatus,
 			});
 
 		}
@@ -84,7 +85,23 @@ export default function FilterPopover({mode, filterName, setFilter}: FilterPopov
 									<option value='applied'>{t('applied')}</option>
 									<option value='notApplied'>{t('notApplied')}</option>
 								</select>
-            ) : (
+            ) : filterName === 'applicationStatus' ? 
+						(
+							<select onChange={handleChange} disabled={isPopoverDisabled}>
+								<option value=''></option>
+									{Object.values(ApplicationStatus).map((element) => 
+										<option key={element} value={element}>{t(element)}</option>
+									)}
+							</select>
+						)  : filterName === 'applicationDateFrom' || filterName === 'applicationDateTo' ? (
+							<input
+                    type='date'
+                    onChange={handleChange}
+                    value={popoverValue}
+                    disabled={isPopoverDisabled}
+                />
+						)
+							: (
                 <input
                     type='text'
                     onChange={handleChange}

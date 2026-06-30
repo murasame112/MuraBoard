@@ -21,7 +21,7 @@ export default function DashboardFormWrapper({mode, type, onFormClose, onFormSub
             {mode === 'JobOffer' ? (
                 <JobOffersForm type={type} selectedId={selectedId} onClose={onFormClose} onSubmit={onFormSubmit}/>
             ) : mode === 'Application' ? (
-                <ApplicationsForm />
+                <ApplicationsForm selectedId={selectedId} onClose={onFormClose} onSubmit={onFormSubmit}/>
             ) : (
                 ''
             )}

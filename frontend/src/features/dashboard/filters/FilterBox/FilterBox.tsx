@@ -1,7 +1,7 @@
 import type { DashboardMode } from '../../../../layouts/main-layout/AppNavigation/AppNavigation';
 import ApplicationsFilters from '../../applications/ApplicationsFilters/ApplicationsFilters';
 import JobOffersFilters from '../../job-offers/JobOffersFilters/JobOffersFilters';
-import type { Filter, FilterName, JobOfferFilter } from '../../models/queryState';
+import type { Filter, FilterName, JobOfferFilter, ApplicationFilter } from '../../models/queryState';
 import FilterPopover from '../shared/FilterPopover';
 import styles from './FilterBox.module.css';
 import { useState } from 'react';
@@ -33,7 +33,9 @@ export default function FilterBox({mode, filters,  setFilter, onUnsetFilter}: Fi
 
 	return (
 		<div className={styles.filterBox}>
-			{mode === 'JobOffer' ? <JobOffersFilters filters={filters as JobOfferFilter[]} onSetFilter={onSetFilter}/> : <ApplicationsFilters/>}
+			{mode === 'JobOffer' ? 
+					<JobOffersFilters filters={filters as JobOfferFilter[]} onSetFilter={onSetFilter}/> : 
+					<ApplicationsFilters filters={filters as ApplicationFilter[]} onSetFilter={onSetFilter}/>}
 			<FilterPopover mode={mode} filterName={chosenFilter} setFilter={handleSetFilter}/> 
 		</div>
 	);

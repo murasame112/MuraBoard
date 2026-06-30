@@ -7,14 +7,6 @@ export function buildApplicationWhere(query: ParsedQuery): Prisma.ApplicationWhe
 		searchPhrase,
 		filters
 	} = query;
-
-	const applicationStatusMap = {
-		applied: ApplicationStatus.APPLIED,
-		inProgress: ApplicationStatus.IN_PROGRESS,
-		interview: ApplicationStatus.INTERVIEW,
-		offer: ApplicationStatus.OFFER,
-		rejected: ApplicationStatus.REJECTED,
-	} as const;
 	
 	const andConditions: Prisma.ApplicationWhereInput[] = [];
 
@@ -61,7 +53,7 @@ export function buildApplicationWhere(query: ParsedQuery): Prisma.ApplicationWhe
 			case 'applicationStatus':
 				andConditions.push(
 					{
-						status: applicationStatusMap[element.value]
+						status: element.value
 					}
 				);
 				break;

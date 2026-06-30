@@ -39,7 +39,7 @@ export type JobOfferFilter = PositionFilter | CompanyNameFilter | JobOfferStatus
 
 export type ApplicationStatusFilter = {
 	filterName: 'applicationStatus',
-	value?: 'applied' | 'inProgress' | 'interview' | 'offer' | 'rejected';
+	value?: 'APPLIED' | 'IN_PROGRESS' | 'INTERVIEW' | 'OFFER' | 'REJECTED';
 }
 
 export type ApplicationDateFromFilter = {
