@@ -30,6 +30,13 @@
 	"company": "company",
 	"status": "status",
 	"position": "position",
+	"companyName": "company name",
+	"jobOfferStatus": "status",
+	"applicationStatus": "status",
+	"salaryMin": "salary above",
+	"salaryMax": "salary below",
+	"applicationDateFrom": "applied from",
+	"applicationDateTo": "applied to",
 	"salary": "salary",
 	"currency": "currency",
 	"date": "date",
@@ -97,6 +104,8 @@
 	"filter.applicationStatus": "status",
 	"filter.salaryMin": "salary above",
 	"filter.salaryMax": "salary below",
+	"filter.applicationDateFrom": "applied from",
+	"filter.applicationDateTo": "applied to",
 
 	"activeFilters": "active filters",
 	"clearAllFilters": "clear all filters"

@@ -16,7 +16,9 @@ export default function FilterPanel({filters, onUnsetFilter, onClearAllFilters}:
 		<div className={styles.filterPanel}>
 			{filters.map((element) => (
 				<div className={styles.filterElement} onClick={() => onUnsetFilter(element.filterName)} key={element.filterName}>
-					{ (element.filterName === 'jobOfferStatus' ||  element.filterName === 'applicationStatus') ? `${element.filterName}: ${t(element.value as string)}` : `${element.filterName}: ${element.value}` }
+					{ (element.filterName === 'jobOfferStatus' ||  element.filterName === 'applicationStatus') ? 
+						`${t(element.filterName)}: ${t(element.value as string)}` : 
+						`${t(element.filterName)}: ${element.value}` }
 				</div>
 			))}
 			<button type='button' className={styles.clearAll} onClick={onClearAllFilters}>{t('clearAllFilters')}</button>
