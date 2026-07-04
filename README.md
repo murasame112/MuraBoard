@@ -103,6 +103,15 @@ Start the application using Docker Compose:
 docker compose up --build
 ```
 
+### 3. Deploy migrations
+
+Start the application using Docker Compose:
+
+```bash
+cd backend
+npx prisma migrate deploy
+```
+
 The command will:
 
 * build the frontend and backend images,
