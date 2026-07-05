@@ -103,13 +103,18 @@ Start the application using Docker Compose:
 docker compose up --build
 ```
 
-### 3. Deploy migrations
+### 4. Deploy migrations
 
 Start the application using Docker Compose:
 
 ```bash
 cd backend
 npx prisma migrate deploy
+```
+
+### 5. Access the app
+```
+http://localhost:5173/dashboard/job-offers
 ```
 
 The command will:
