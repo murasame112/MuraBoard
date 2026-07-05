@@ -1,13 +1,8 @@
 import styles from './AppNavigation.module.css';
 import { useTranslation } from '../../../shared/i18n/useTranslation';
-export type DashboardMode = 'JobOffer' | 'Application';
+import { NavLink } from 'react-router';
 
-type AppNavigationProps = {
-	mode: DashboardMode;
-	setMode: React.Dispatch<React.SetStateAction<DashboardMode>>;
-}
-
-export default function AppNavigation({mode, setMode}: AppNavigationProps) {
+export default function AppNavigation() {
 	const {t} = useTranslation();
 
   return(
@@ -16,8 +11,8 @@ export default function AppNavigation({mode, setMode}: AppNavigationProps) {
 
 			<div className={styles.navElements}>
 				<div className={styles.navTitle}><p>{t('navigation')}</p></div>
-				<h3 className={mode === 'JobOffer' ? styles.active : ''} onClick={() => setMode('JobOffer')}>{t('jobOffers')}</h3>
-				<h3 className={mode === 'Application' ? styles.active : ''} onClick={() => setMode('Application')}>{t('applications')}</h3>
+				<NavLink to={'/dashboard/job-offers'}	className={({ isActive }) => `${styles.navLink} ${isActive ? styles.activeLink : ''}`}>{t('jobOffers')}</NavLink>
+				<NavLink to={'/dashboard/applications'}	className={({ isActive }) => `${styles.navLink} ${isActive ? styles.activeLink : ''}`}>{t('applications')}</NavLink>
 			</div>
 			<div className={styles.accountElements}>
 				<div className={styles.navTitle}><p>{t('account')}</p></div>

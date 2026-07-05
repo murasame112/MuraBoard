@@ -1,4 +1,4 @@
-import type { DashboardMode } from '../../../layouts/main-layout/AppNavigation/AppNavigation';
+import type { DashboardMode } from '../../../pages/DashboardPage';
 import ApplicationsForm from '../applications/ApplicationsForm/ApplicationsForm';
 import JobOffersForm from '../job-offers/JobOffersForm/JobOffersForm';
 import styles from './DashboardFormWrapper.module.css';

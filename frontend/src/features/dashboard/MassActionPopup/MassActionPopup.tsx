@@ -1,11 +1,12 @@
 import styles from './MassActionPopup.module.css';
 import { useTranslation } from '../../../shared/i18n/useTranslation';
 import { useState } from 'react';
-import type { DashboardMode } from '../../../layouts/main-layout/AppNavigation/AppNavigation';
+import type { DashboardMode } from '../../../pages/DashboardPage';
 import type { DashboardFormType } from '../DashboardFormWrapper/DashboardFormWrapper';
 
 type MassActionPopupProps = {
-	mode: DashboardMode
+	mode: DashboardMode;
+	apiQueryMap: Record<DashboardMode, string>;
 	selected: Set<number>;
 	callForm: (type: DashboardFormType, selectedId?: number) => void;
 	onFormClose: () => void;
@@ -14,7 +15,7 @@ type MassActionPopupProps = {
 
 type PopupType = 'edit' | 'delete' | null;
 
-export default function MassActionPopup({mode, selected, onDelete, onFormClose, callForm}: MassActionPopupProps) {
+export default function MassActionPopup({mode, apiQueryMap, selected, onDelete, onFormClose, callForm}: MassActionPopupProps) {
 	const host = import.meta.env.VITE_API_URL;
 	const { t } = useTranslation();
 	const [popupType, setPopupType] = useState<PopupType>(null);
@@ -42,16 +43,9 @@ export default function MassActionPopup({mode, selected, onDelete, onFormClose, 
   };
 
 	function handleDeletion(){
-		if (mode === 'JobOffer') {
-			fetch(`${host}/api/joboffer/offers-delete`, deletionOptions)
+			fetch(`${host}/api/${apiQueryMap[mode]}/offers-delete`, deletionOptions)
 				.then(() => onDelete())
 				.catch((error) => console.log(error));
-
-		} else if (mode === 'Application') {
-			fetch(`${host}/api/application/applications-delete`, deletionOptions)
-				.then(() => onDelete())
-				.catch((error) => console.log(error));
-		}
 	}
 	
 	let deletePopup = 

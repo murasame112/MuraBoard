@@ -25,26 +25,28 @@
 	margin-top: 35px;
 }
 
-.navElements h3 {
-	text-transform: uppercase;
-	color: var(--secondary-text);
+.navLink {
+	display: block;
 	margin: 0 8px 8px 8px;
+	padding: 10px;
 	border-radius: 5px;
-	cursor: pointer;
+
+	color: var(--secondary-text);
+	text-transform: uppercase;
 	font-size: var(--font-lg);
+	font-weight: bold;
+
+	text-decoration: none;
 }
 
-.active {
-	color: var(--secondary-theme) !important;
-	background-color: var(--additional-theme);
-}
-
-.active:hover {
-	cursor: default;
-}
-
-.navElements h3:hover, .accountElements h3:hover {
+.navLink:hover {
 	color: var(--secondary-theme);
+}
+
+.activeLink {
+	color: var(--secondary-theme);
+	background-color: var(--additional-theme);
+	cursor: default;
 }
 
 .accountElements {

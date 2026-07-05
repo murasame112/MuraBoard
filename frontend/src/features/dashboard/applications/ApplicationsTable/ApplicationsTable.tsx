@@ -2,22 +2,21 @@ import styles from './ApplicationsTable.module.css';
 import type { Application } from '../../../../shared/models/models';
 import { useTranslation } from '../../../../shared/i18n/useTranslation';
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router';
 import type { QueryState } from '../../models/queryState';
 import { buildQueryParams } from '../../../../shared/lib/buildQueryParams';
-import type { DashboardMode } from '../../../../layouts/main-layout/AppNavigation/AppNavigation';
 import type { ApplicationStatus } from '../../../../shared/enums/enums';
 import { PencilSquareIcon } from '@heroicons/react/24/outline';
 import ErrorBox from '../../../../shared/ui/ErrorBox/ErrorBox';
 
 type ApplicationsTableProps = {
-	setMode: React.Dispatch<React.SetStateAction<DashboardMode>>;
 	callMassActionPopup: (selected: Set<number>) => void;
 	refreshToken: number;
 	queryState: QueryState;
 }
 
 
-export default function ApplicationsTable({setMode, callMassActionPopup, refreshToken, queryState}: ApplicationsTableProps) {
+export default function ApplicationsTable({callMassActionPopup, refreshToken, queryState}: ApplicationsTableProps) {
 	const { t } = useTranslation();
 	const [selectedCheckboxes, setSelectedCheckboxes] = useState<Set<number>>(new Set<number>());
 	const [selectedOffer, setSelectedOffer] = useState<number | null>(null);
@@ -163,8 +162,8 @@ export default function ApplicationsTable({setMode, callMassActionPopup, refresh
 				<h4>{t('nextStep')}</h4>
 				<h4>{t('comment')}</h4>
 			</div>
-
-			{applications.length === 0 ? (<p>{t('noApplicationsFound')} - <span className={styles.createOne} onClick={() => setMode('JobOffer')}>{t('applyToOne')}</span>!</p>) : 
+			
+			{applications.length === 0 ? (<p>{t('noApplicationsFound')} - <Link to='/dashboard/job-offers' className={styles.createOne}>{t('applyToOne')}</Link>!</p>) : 
 			applications.map((element) => (
 				
 				<div key={element.id} className={styles.applicationItem}>

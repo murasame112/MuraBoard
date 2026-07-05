@@ -1,5 +1,5 @@
 import styles from './DashboardList.module.css';
-import type { DashboardMode } from '../../../layouts/main-layout/AppNavigation/AppNavigation';
+import type { DashboardMode } from '../../../pages/DashboardPage';
 import JobOffersTable from '../job-offers/JobOffersTable/JobOffersTable';
 import ApplicationsTable from '../applications/ApplicationsTable/ApplicationsTable';
 import DashboardPager from '../DashboardPager/DashboardPager';
@@ -8,7 +8,6 @@ import type { QueryState } from '../models/queryState';
 
 type DashboardListProps = {
 	mode: DashboardMode;
-	setMode: React.Dispatch<React.SetStateAction<DashboardMode>>;
 	callForm: (type: DashboardFormType, selectedId?: number) => void;
 	callMassActionPopup: (selected: Set<number>) => void;
 	refreshToken: number;
@@ -17,7 +16,7 @@ type DashboardListProps = {
 	onPageChange: (page: number) => void;
 }
 
-export default function DashboardList({mode, setMode, callForm, callMassActionPopup, refreshToken, recordCount, queryState, onPageChange}: DashboardListProps){
+export default function DashboardList({mode, callForm, callMassActionPopup, refreshToken, recordCount, queryState, onPageChange}: DashboardListProps){
 	return (
         <div className={styles.dashboardList}>
             {mode === 'JobOffer' ? (
@@ -29,7 +28,6 @@ export default function DashboardList({mode, setMode, callForm, callMassActionPo
                 />
             ) : (
                 <ApplicationsTable
-                    setMode={setMode}
                     callMassActionPopup={callMassActionPopup}
 										refreshToken={refreshToken}
 										queryState={queryState}

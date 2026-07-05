@@ -5,7 +5,7 @@ import type { DashboardFormType } from '../DashboardFormWrapper/DashboardFormWra
 import { useState, useEffect } from 'react';
 import type { Filter, FilterName } from '../models/queryState';
 import FilterBox from '../filters/FilterBox/FilterBox';
-import type { DashboardMode } from '../../../layouts/main-layout/AppNavigation/AppNavigation';
+import type { DashboardMode } from '../../../pages/DashboardPage';
 import FilterPanel from '../filters/FilterPanel/FilterPanel';
 
 type DashboardControlsProps = {
@@ -81,7 +81,7 @@ export default function DashboardControls({className, mode, callForm, filters, s
 			</div>
 			
 			{mode === 'JobOffer' && 
-			(<button type='button' className={styles.addButton} onClick={() => callForm('add')}><PlusIcon className={styles.plusIcon}/>{t('add')} {t(mode)}</button>)
+				(<button type='button' className={styles.addButton} onClick={() => callForm('add')}><PlusIcon className={styles.plusIcon}/>{t('add')} {t(mode)}</button>)
 			}		
 		</div>
 	);

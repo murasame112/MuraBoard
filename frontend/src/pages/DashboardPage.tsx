@@ -1,79 +1,92 @@
 import styles from './DashboardPage.module.css';
-import { useTranslation } from '../shared/i18n/useTranslation';
-import type { DashboardMode } from '../layouts/main-layout/AppNavigation/AppNavigation';
-import type { DashboardFormType } from '../features/dashboard/DashboardFormWrapper/DashboardFormWrapper';
+import {Routes, Route} from 'react-router';
+import ApplicationsDashboard from '../features/dashboard/applications/ApplicationsDashboard/ApplicationsDashboard';
+import JobOffersDashboard from '../features/dashboard/job-offers/JobOffersDashboard/JobOffersDashboard';
 import type { Filter, FilterName, QueryState } from '../features/dashboard/models/queryState';
-import { useState, useEffect, useCallback } from 'react';
-import DashboardStats from '../features/dashboard/DashboardStats/DashboardStats';
-import DashboardControls from '../features/dashboard/DashboardControls/DashboardControls';
-import DashboardList from '../features/dashboard/DashboardList/DashboardList';
-import DashboardFormWrapper from '../features/dashboard/DashboardFormWrapper/DashboardFormWrapper';
-import MassActionPopup from '../features/dashboard/MassActionPopup/MassActionPopup';
+import type { DashboardFormType } from '../features/dashboard/DashboardFormWrapper/DashboardFormWrapper';
+export type DashboardMode = 'JobOffer' | 'Application';
 import { buildQueryParams } from '../shared/lib/buildQueryParams';
+import { useState, useCallback } from 'react';
 
-
-type DashboardPageProps = {
-	mode: DashboardMode;
-	setMode: React.Dispatch<React.SetStateAction<DashboardMode>>;
+type MassActionPopupConfiguration = {
+	selected: Set<number>;
 }
 
-export default function DashboardPage({mode, setMode}: DashboardPageProps){
+type FormConfiguration = {
+	isDisplayed: boolean;
+	type: DashboardFormType;
+	selectedId?: number;
+}
+
+export type DashboardController = {
+	queryState: QueryState;
+	refreshToken: number;
+	apiQueryMap: Record<DashboardMode, string>;
+
+	fetchRecordCount: (mode: DashboardMode) => Promise<number>;
+
+	form: {
+		callForm: (type: DashboardFormType, selectedId?: number) => void;
+		onFormClose: () => void;
+		onFormSubmit: () => void;
+		formConfiguration: FormConfiguration;
+	};
+
+	filters: {
+		onSearch: (searchPhrase: string) => void;
+		setFilter: (filter: Filter) => void;
+		onUnsetFilter: (filterName: FilterName) => void;
+		onClearAllFilters: () => void;
+	};
+
+	pagination: {
+		onPageChange: (page: number) => void;
+	};
+
+	massActions: {
+		callMassActionPopup: (selected: Set<number>) => void;
+		onDelete: () => void;
+		massActionPopupConfiguration: MassActionPopupConfiguration;
+	};
+};
+
+export default function DashboardPage(){
 	const [formConfiguration, setFormConfiguration] = useState<{isDisplayed: boolean, type: DashboardFormType, selectedId?: number}>({isDisplayed: false, type: 'add', selectedId: undefined});
 	const [massActionPopupConfiguration, setMassActionPopupConfiguration] = useState<{selected: Set<number>}>({selected: new Set<number>()});
-	const [recordCount, setRecordCount] = useState<number>(0);
+	// TODO: const [recordCount, setRecordCount] = useState<number>(0);
 	const [refreshToken, setRefreshToken] = useState<number>(0);
 	const [queryState, setQueryState] = useState<QueryState>({searchPhrase: '', pageSize: 9, currentPage: 1, filters: []});
 
-	const { t } = useTranslation();
+	const apiQueryMap: Record<DashboardMode, string> = {
+		'JobOffer': 'joboffer',
+		'Application': 'application'
+	};
 
 	const host = import.meta.env.VITE_API_URL;
 
-	useEffect(() => {
-		fetchRecordCount();
-	}, [mode, refreshToken, queryState.filters, queryState.searchPhrase]);
+	//TODO: useEffect(() => {
+	// 	fetchRecordCount();
+	// }, [mode, refreshToken, queryState.filters, queryState.searchPhrase]);
 
-	function fetchRecordCount() {
+	async function fetchRecordCount(mode: DashboardMode): Promise<number> {
 		//TODO: userId shouldn't be 4, it's just for development
 		const userId = 4;
 		const query = buildQueryParams(userId, queryState);
 
-		if (mode === 'JobOffer') {
+		const response = await fetch(`${host}/api/${apiQueryMap[mode]}/offers-count?${query}`);
+		return response.json();
 
-			fetch(`${host}/api/joboffer/offers-count?${query}`)
-				.then((response) => response.json())
-				.then((data) => {
-					if (!data){
-						setRecordCount(0);
-						return;
-					}
-					setRecordCount(data);
-				})
-				.catch((error) => console.log(error));
-				
-		} else if (mode === 'Application') {
-			
-			fetch(`${host}/api/application/applications-count?${query}`)
-				.then((response) => response.json())
-				.then((data) => {
-					if (!data){
-						setRecordCount(0);
-						return;
-					}
-					setRecordCount(data);
-				})
-				.catch((error) => console.log(error));
-		}
 	}
 
-	function callForm(type: DashboardFormType, selectedId?: number){
+	function callForm(type: DashboardFormType, selectedId?: number): void{
 		setFormConfiguration({isDisplayed: true, type, selectedId});	
 	}
 
-	function onFormClose(){
+	function onFormClose(): void{
 		setFormConfiguration((prev) => ({ ...prev, isDisplayed: false}))
 	}
 
-	function onFormSubmit() {
+	function onFormSubmit(): void {
 		setRefreshToken((prev) => prev + 1);
 		setMassActionPopupConfiguration({ selected: new Set<number>() });
 	}
@@ -126,44 +139,37 @@ export default function DashboardPage({mode, setMode}: DashboardPageProps){
 		}));
 	}
 
+	const dashboardController: DashboardController = {
+		queryState,
+		refreshToken,
+		fetchRecordCount,
+		apiQueryMap,
+		form: {
+			callForm,
+			onFormClose,
+			onFormSubmit,
+			formConfiguration
+		},
+		filters: {
+			onSearch,
+			setFilter,
+			onUnsetFilter,
+			onClearAllFilters
+		},
+		pagination: {
+			onPageChange
+		},
+		massActions: {
+			callMassActionPopup,
+			onDelete,
+			massActionPopupConfiguration
+		}
+	};
+
   return(
-    <div className={styles.dashboardPage}>
-			<div className={`${styles.title} ${styles.dashboardSection}`}>
-					<h3>
-							{mode === 'JobOffer' ? t('jobOffers') : t('applications')}
-					</h3>
-			</div>
-			<DashboardStats
-					className={`${styles.stats} ${styles.dashboardSection}`}
-					mode={mode}
-					refreshToken={refreshToken}
-					queryState={queryState}
-					setFilter={setFilter}
-			/>
-			<DashboardControls
-					className={`${styles.dashboardControls} ${styles.dashboardSection}`}
-					mode={mode}
-					callForm={callForm}
-					filters={queryState.filters}
-					setFilter={setFilter}
-					onUnsetFilter={onUnsetFilter}
-					onClearAllFilters={onClearAllFilters}
-					onSearch={onSearch}
-			/>
-			<div className={`${styles.dashboardSection} ${styles.dashboardList}`}>
-				<DashboardList 
-						mode={mode}
-						setMode={setMode}
-						callForm={callForm}
-						callMassActionPopup={callMassActionPopup}
-						refreshToken={refreshToken}
-						recordCount={recordCount}
-						queryState={queryState}
-						onPageChange={onPageChange}
-				/>
-			</div>
-			{formConfiguration.isDisplayed ? <DashboardFormWrapper mode={mode} type={formConfiguration.type} selectedId={formConfiguration.selectedId} onFormClose={onFormClose} onFormSubmit={onFormSubmit}/> : ''}
-			{massActionPopupConfiguration.selected.size > 0 ? <MassActionPopup mode={mode} selected={massActionPopupConfiguration.selected} callForm={callForm} onFormClose={onFormClose} onDelete={onDelete} />: ''}
-		</div>
+    <Routes>
+        <Route path="job-offers/*" element={<JobOffersDashboard styles={styles} dashboardController={dashboardController}/>} />
+        <Route path="applications/*" element={<ApplicationsDashboard styles={styles} dashboardController={dashboardController}/>} />
+    </Routes>
   )
 }

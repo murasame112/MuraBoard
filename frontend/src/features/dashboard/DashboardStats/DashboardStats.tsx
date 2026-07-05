@@ -1,5 +1,5 @@
 import styles from './DashboardStats.module.css';
-import type { DashboardMode } from '../../../layouts/main-layout/AppNavigation/AppNavigation';
+import type { DashboardMode } from '../../../pages/DashboardPage';
 import { useState, useEffect } from 'react';
 import { CheckCircleIcon, ClockIcon, ArrowPathIcon, ChatBubbleLeftRightIcon, HandRaisedIcon, XCircleIcon } from '@heroicons/react/24/outline';
 import { useTranslation } from '../../../shared/i18n/useTranslation';
