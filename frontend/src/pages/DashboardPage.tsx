@@ -53,7 +53,6 @@ export type DashboardController = {
 export default function DashboardPage(){
 	const [formConfiguration, setFormConfiguration] = useState<{isDisplayed: boolean, type: DashboardFormType, selectedId?: number}>({isDisplayed: false, type: 'add', selectedId: undefined});
 	const [massActionPopupConfiguration, setMassActionPopupConfiguration] = useState<{selected: Set<number>}>({selected: new Set<number>()});
-	// TODO: const [recordCount, setRecordCount] = useState<number>(0);
 	const [refreshToken, setRefreshToken] = useState<number>(0);
 	const [queryState, setQueryState] = useState<QueryState>({searchPhrase: '', pageSize: 9, currentPage: 1, filters: []});
 
@@ -63,10 +62,6 @@ export default function DashboardPage(){
 	};
 
 	const host = import.meta.env.VITE_API_URL;
-
-	//TODO: useEffect(() => {
-	// 	fetchRecordCount();
-	// }, [mode, refreshToken, queryState.filters, queryState.searchPhrase]);
 
 	async function fetchRecordCount(mode: DashboardMode): Promise<number> {
 		//TODO: userId shouldn't be 4, it's just for development
