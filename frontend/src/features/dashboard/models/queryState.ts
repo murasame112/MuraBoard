@@ -8,8 +8,6 @@ export type FilterName =
 	| 'applicationDateFrom'
 	| 'applicationDateTo';
 
-export type ApplicationsFilterNames = 'status'; //TODO:
-
 export type PositionFilter = {
 	filterName: 'position',
 	value?: string
