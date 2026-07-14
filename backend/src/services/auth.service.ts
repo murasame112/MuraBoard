@@ -1,13 +1,3 @@
-/*
-login()  
-  
-verifyToken()  
-  
-hashPassword()  
-  
-comparePassword()
-*/
-
 import { prisma } from '../db/prisma.js';
 import * as usersService from './users.service.js';
 import bcrypt from 'bcrypt';
