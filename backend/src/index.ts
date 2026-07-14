@@ -3,6 +3,7 @@ import 'dotenv/config';
 import jobOffersRouter from './routes/jobOffers.routes.js';
 import applicationsRouter from './routes/applications.routes.js';
 import companiesRouter from './routes/companies.routes.js';
+import authRouter from './routes/auth.routes.js';
 import cors from 'cors';
 
 const app = express();
@@ -17,6 +18,7 @@ app.get('/api/health', (req, res) => {
 app.use('/api/joboffer', jobOffersRouter);
 app.use('/api/application', applicationsRouter);
 app.use('/api/company', companiesRouter);
+app.use('/api/auth', authRouter);
 
 app.listen(process.env.PORT, () => {
 	console.log(`server on: http://localhost:${process.env.PORT}`);

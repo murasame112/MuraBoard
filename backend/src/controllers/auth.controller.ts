@@ -1,0 +1,114 @@
+import type { Request, Response } from 'express';
+import * as authService from '../services/auth.service.js';
+import type { User } from '../generated/prisma/index.js';
+
+type RegisterRequestBody = {
+	username: string;
+	email: string;
+	password: string;
+}
+
+export async function register(req: Request<{}, {}, {}, RegisterRequestBody>, res: Response) {
+	try {
+		const { 
+			username,
+			email,
+			password
+		} = req.body as {
+			username: string;
+			email: string;
+			password: string
+		};
+
+		if (!username || !email || !password) {
+			return res.status(400).json({ message: 'Missing user data' });
+		}
+
+		if (typeof email !== 'string') {
+				return res.status(400).json({ message: 'Invalid email' });
+		}
+
+		if (email.length > 254) {
+				return res.status(400).json({ message: 'Email is too long' });
+		}
+
+		const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+		if (!emailRegex.test(email)) {
+				return res.status(400).json({ message: 'Invalid email' });
+		}
+
+		if (typeof username !== 'string') {
+				return res.status(400).json({ message: 'Invalid username' });
+		}
+
+		if (username.length < 3 || username.length > 30) {
+				return res.status(400).json({ message: 'Invalid username length' });
+		}
+
+		const usernameRegex = /^[A-Za-z0-9_-]+$/;
+
+		if (!usernameRegex.test(username)) {
+				return res.status(400).json({ message: 'Invalid username' });
+		}
+
+		if (typeof password !== 'string') {
+				return res.status(400).json({ message: 'Invalid password' });
+		}
+
+		if (password.length < 8 || password.length > 128) {
+				return res.status(400).json({ message: 'Invalid password length' });
+		}
+
+		const result = await authService.register({username, email, password});
+		if (typeof result === 'string') {
+			if (result === 'username_exists') {
+				return res.status(409).json({
+					message: "User with that username already exists"
+				});
+			}
+
+			if (result === 'email_exists') {
+				return res.status(409).json({
+					message: "User with that email already exists"
+				});
+			}
+			
+			//below shouldn't happen
+			return res.status(400).json({
+				message: result
+			});
+		}
+		
+		const token = authService.generateToken(result.id, result.role);
+
+		res.cookie('token', token, {
+			httpOnly: true,
+			sameSite: 'lax',
+			secure: process.env.NODE_ENV === 'production',
+			maxAge: 1000 * 60 * 60 * 24 * 7
+		});
+
+		return res.status(201).json({
+			message: 'user created'
+		});
+
+	} catch (error) {
+		return res.status(500).json({message: 'Something went wrong'});
+	}
+}
+
+type LoginRequestQuery = {
+	username?: string;
+	email?: string;
+	password: string;
+}
+
+export async function login(req: Request<{}, {}, {}, LoginRequestQuery>, res: Response) {
+	try {
+	
+
+	} catch (error) {
+		return res.status(500).json({message: 'Something went wrong'});
+	}
+}
