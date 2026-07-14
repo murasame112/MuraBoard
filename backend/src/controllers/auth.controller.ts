@@ -106,7 +106,40 @@ type LoginRequestQuery = {
 
 export async function login(req: Request<{}, {}, {}, LoginRequestQuery>, res: Response) {
 	try {
-	
+		const { 
+			username,
+			email,
+			password
+		} = req.body as {
+			username: string;
+			email: string;
+			password: string
+		};
+
+		if (!username && !email) {
+			return res.status(400).json({message: 'Missing login data'});
+		}
+
+		if (!password) {
+			return res.status(400).json({ message: 'Missing password' });
+		}
+
+		const result = await authService.login({username, email, password});
+
+		if (result === 'user_not_found' || result === 'wrong_password') {
+			return res.status(401).json({ message: 'Incorrect login or password' });
+		}
+
+		res.cookie('token', result, {
+			httpOnly: true,
+			sameSite: 'lax',
+			secure: process.env.NODE_ENV === 'production',
+			maxAge: 1000 * 60 * 60 * 24 * 7
+		});
+
+		return res.status(201).json({
+			message: 'user logged in'
+		});
 
 	} catch (error) {
 		return res.status(500).json({message: 'Something went wrong'});

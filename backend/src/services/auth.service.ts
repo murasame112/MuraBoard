@@ -14,7 +14,7 @@ import bcrypt from 'bcrypt';
 import type { User, UserRole } from '../generated/prisma/index.js';
 import jwt from 'jsonwebtoken';
 
-export type RegisterValues = {
+type RegisterValues = {
 	username: string;
 	email: string;
 	password: string;
@@ -54,4 +54,37 @@ export async function generateToken(id: number, role: UserRole) {
 		}
 	);
 	return token;
+}
+
+type LoginValues = {
+	username?: string;
+	email?: string;
+	password: string;
+};
+export async function login({username, email, password}: LoginValues): Promise<string> {
+
+	const user = 	username ? await usersService.getUserByUsername(username) : 
+								email ? await usersService.getUserByEmail(email) 
+								: undefined;
+	if (!user) return 'user_not_found';
+
+	if (!verifyPassword(password, user.passwordHash)) {
+		return 'wrong_password';
+	}
+
+	const token = jwt.sign(
+		{
+			id: user.id,
+			role: user.role
+		},
+		process.env.JWT_SECRET!,
+		{
+			expiresIn: '7d'
+		}
+	)
+	return token;
+}
+
+async function verifyPassword(password: string, hash: string): Promise<boolean> {
+	return bcrypt.compare(password, hash);
 }
