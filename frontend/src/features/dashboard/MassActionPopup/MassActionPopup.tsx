@@ -36,10 +36,11 @@ export default function MassActionPopup({mode, apiQueryMap, selected, onDelete, 
 		
 	}
 
-	const deletionOptions = {
+	const deletionOptions: RequestInit = {
 		method: 'DELETE',
 		headers: { 'Content-Type': 'application/json' },
 		body: JSON.stringify({ids: [...selected]}),
+		credentials: 'include'
   };
 
 	function handleDeletion(){

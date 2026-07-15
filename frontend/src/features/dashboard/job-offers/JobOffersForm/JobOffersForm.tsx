@@ -66,7 +66,7 @@ export default function JobOffersForm({onClose, onSubmit, type, selectedId}: Job
 
 	useEffect(() => {
 		if (selectedId) {
-			fetch(`${host}/api/joboffer/offers-by-id?id=${selectedId}`)
+			fetch(`${host}/api/joboffer/offers-by-id?id=${selectedId}`, {credentials: 'include'})
 				.then(response => response.json())
 				.then(data => {
 					setValues({
@@ -230,10 +230,11 @@ export default function JobOffersForm({onClose, onSubmit, type, selectedId}: Job
 		const userId = 4;
 
 		if (type === 'add') {
-			const insertJobOfferRequestOptions = {
+			const insertJobOfferRequestOptions: RequestInit = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(values),
+				credentials: 'include'
     	};
 		
 			try {
@@ -250,10 +251,11 @@ export default function JobOffersForm({onClose, onSubmit, type, selectedId}: Job
 			}
 
 		} else if (type === 'edit') {
-			const updateJobOfferRequestOptions = {
+			const updateJobOfferRequestOptions: RequestInit = {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({id: selectedId, ...values}),
+				credentials: 'include'
     	};
 		
 			try {

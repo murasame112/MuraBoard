@@ -57,7 +57,7 @@ export default function JobOffersTable({callForm, callMassActionPopup, refreshTo
 		const userId = 4;
 		const query = buildQueryParams(userId, queryState);
 		
-		fetch(`${host}/api/joboffer/offers-for-dashboard?${query}`)
+		fetch(`${host}/api/joboffer/offers-for-dashboard?${query}`, {credentials: 'include'})
 			.then((response) => response.json())
 			.then((data) => {
 				if (!data || data.length == 0){
@@ -74,7 +74,7 @@ export default function JobOffersTable({callForm, callMassActionPopup, refreshTo
 	}
 
 	function apply(id: number) {
-		fetch(`${host}/api/application/applications-apply?id=${id}`, {method: 'POST'})
+		fetch(`${host}/api/application/applications-apply?id=${id}`, {method: 'POST', credentials: 'include'})
 			.then((response) => response.json())
 			.then((data) => {
 				setJobOffers((prev) => {

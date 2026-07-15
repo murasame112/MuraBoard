@@ -87,7 +87,7 @@ export default function ApplicationsTable({callMassActionPopup, refreshToken, qu
 		const userId = 4;
 		const query = buildQueryParams(userId, queryState);
 		
-		fetch(`${host}/api/application/applications-for-dashboard?${query}`)
+		fetch(`${host}/api/application/applications-for-dashboard?${query}`, {credentials: 'include'})
 			.then((response) => response.json())
 			.then((data) => {
 				if (!data || data.length == 0){
@@ -119,10 +119,11 @@ export default function ApplicationsTable({callMassActionPopup, refreshToken, qu
 			setCommentError(t('applicationCommentError.tooLong'));
 		}
 
-		const editCommentRequestOptions = {
+		const editCommentRequestOptions: RequestInit = {
 			method: 'PATCH',
 			headers: { 'Content-Type': 'application/json'},
-			body: JSON.stringify(value)
+			body: JSON.stringify(value),
+			credentials: 'include'
 		};
 
 		try {

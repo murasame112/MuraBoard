@@ -68,7 +68,7 @@ export default function DashboardPage(){
 		const userId = 4;
 		const query = buildQueryParams(userId, queryState);
 
-		const response = await fetch(`${host}/api/${apiQueryMap[mode]}/offers-count?${query}`);
+		const response = await fetch(`${host}/api/${apiQueryMap[mode]}/offers-count?${query}`, {credentials: 'include'});
 		return response.json();
 
 	}

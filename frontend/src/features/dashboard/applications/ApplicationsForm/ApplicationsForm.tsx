@@ -50,7 +50,7 @@ export default function ApplicationsForm({onClose, onSubmit, selectedId}: Applic
 
 	useEffect(() => {
 		if (selectedId) {
-			fetch(`${host}/api/application/applications-by-id?id=${selectedId}`)
+			fetch(`${host}/api/application/applications-by-id?id=${selectedId}`, {credentials: 'include'})
 				.then(response => response.json())
 				.then(data => {
 					setValues({
@@ -133,10 +133,11 @@ export default function ApplicationsForm({onClose, onSubmit, selectedId}: Applic
 		console.log('happens');
 
 		
-		const updateApplicationRequestOptions = {
+		const updateApplicationRequestOptions: RequestInit = {
 			method: 'PATCH',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({id: selectedId, ...values}),
+			credentials: 'include'
 		};
 	
 		try {
