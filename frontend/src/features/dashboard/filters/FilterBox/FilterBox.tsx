@@ -1,4 +1,4 @@
-import type { DashboardMode } from '../../../../pages/DashboardPage';
+import type { DashboardMode } from '../../../../pages/DashboardPage/DashboardPage';
 import ApplicationsFilters from '../../applications/ApplicationsFilters/ApplicationsFilters';
 import JobOffersFilters from '../../job-offers/JobOffersFilters/JobOffersFilters';
 import type { Filter, FilterName, JobOfferFilter, ApplicationFilter } from '../../models/queryState';

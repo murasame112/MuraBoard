@@ -2,7 +2,7 @@ import styles from './DashboardPager.module.css';
 import { ChevronDoubleLeftIcon, ChevronDoubleRightIcon, ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
 import { useTranslation } from '../../../shared/i18n/useTranslation';
 import { useState } from 'react';
-import type { QueryState } from '../../../pages/DashboardPage';
+import type { QueryState } from '../../../features/dashboard/models/queryState';
 
 type DashboardPagerType = {
 	recordCount: number;

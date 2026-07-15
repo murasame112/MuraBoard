@@ -1,5 +1,5 @@
 import styles from './DashboardList.module.css';
-import type { DashboardMode } from '../../../pages/DashboardPage';
+import type { DashboardMode } from '../../../pages/DashboardPage/DashboardPage';
 import JobOffersTable from '../job-offers/JobOffersTable/JobOffersTable';
 import ApplicationsTable from '../applications/ApplicationsTable/ApplicationsTable';
 import DashboardPager from '../DashboardPager/DashboardPager';

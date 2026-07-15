@@ -5,7 +5,7 @@ import DashboardControls from '../../DashboardControls/DashboardControls';
 import DashboardList from '../../DashboardList/DashboardList';
 import DashboardFormWrapper from '../../DashboardFormWrapper/DashboardFormWrapper';
 import MassActionPopup from '../../MassActionPopup/MassActionPopup';
-import type { DashboardController, DashboardMode } from '../../../../pages/DashboardPage';
+import type { DashboardController, DashboardMode } from '../../../../pages/DashboardPage/DashboardPage';
 
 type JobOffersDashboardProps = {
   styles: Record<string, string>;

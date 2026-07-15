@@ -5,7 +5,7 @@ import type { DashboardFormType } from '../DashboardFormWrapper/DashboardFormWra
 import { useState, useEffect } from 'react';
 import type { Filter, FilterName } from '../models/queryState';
 import FilterBox from '../filters/FilterBox/FilterBox';
-import type { DashboardMode } from '../../../pages/DashboardPage';
+import type { DashboardMode } from '../../../pages/DashboardPage/DashboardPage';
 import FilterPanel from '../filters/FilterPanel/FilterPanel';
 
 type DashboardControlsProps = {

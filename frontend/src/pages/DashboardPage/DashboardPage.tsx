@@ -1,11 +1,11 @@
 import styles from './DashboardPage.module.css';
 import {Routes, Route} from 'react-router';
-import ApplicationsDashboard from '../features/dashboard/applications/ApplicationsDashboard/ApplicationsDashboard';
-import JobOffersDashboard from '../features/dashboard/job-offers/JobOffersDashboard/JobOffersDashboard';
-import type { Filter, FilterName, QueryState } from '../features/dashboard/models/queryState';
-import type { DashboardFormType } from '../features/dashboard/DashboardFormWrapper/DashboardFormWrapper';
+import ApplicationsDashboard from '../../features/dashboard/applications/ApplicationsDashboard/ApplicationsDashboard';
+import JobOffersDashboard from '../../features/dashboard/job-offers/JobOffersDashboard/JobOffersDashboard';
+import type { Filter, FilterName, QueryState } from '../../features/dashboard/models/queryState';
+import type { DashboardFormType } from '../../features/dashboard/DashboardFormWrapper/DashboardFormWrapper';
 export type DashboardMode = 'JobOffer' | 'Application';
-import { buildQueryParams } from '../shared/lib/buildQueryParams';
+import { buildQueryParams } from '../../shared/lib/buildQueryParams';
 import { useState, useCallback } from 'react';
 
 type MassActionPopupConfiguration = {

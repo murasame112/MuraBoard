@@ -1,7 +1,7 @@
 import styles from './MassActionPopup.module.css';
 import { useTranslation } from '../../../shared/i18n/useTranslation';
 import { useState } from 'react';
-import type { DashboardMode } from '../../../pages/DashboardPage';
+import type { DashboardMode } from '../../../pages/DashboardPage/DashboardPage';
 import type { DashboardFormType } from '../DashboardFormWrapper/DashboardFormWrapper';
 
 type MassActionPopupProps = {
