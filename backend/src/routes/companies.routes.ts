@@ -1,7 +1,9 @@
 import { Router } from 'express';
 import * as companiesController from '../controllers/companies.controller.js';
+import { authenticate } from '../middleware/authenticate.js';
 
 const router = Router();
+router.use(authenticate);
 
 router.get('/companies', companiesController.getCompanies);
 router.post('/companies-upsert', companiesController.upsertCompany);

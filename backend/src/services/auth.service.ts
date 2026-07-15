@@ -1,8 +1,15 @@
 import { prisma } from '../db/prisma.js';
 import * as usersService from './users.service.js';
 import bcrypt from 'bcrypt';
-import type { User, UserRole } from '../generated/prisma/index.js';
+import type { UserRole } from '../generated/prisma/index.js';
 import jwt from 'jsonwebtoken';
+
+export async function me(id: number) {
+	const user = 	await usersService.getUserById(id);
+	if (!user) return 'user_not_found';
+	const { passwordHash, ...safeUser } = user;
+	return safeUser;
+}
 
 type RegisterValues = {
 	username: string;

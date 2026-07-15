@@ -1,7 +1,9 @@
 import { Router } from "express";
 import * as applicationsController from '../controllers/applications.controller.js';
+import { authenticate } from "../middleware/authenticate.js";
 
 const router = Router();
+router.use(authenticate);
 
 router.get('/applications-for-dashboard', applicationsController.getApplicationsForDashboard);
 router.get('/applications-count', applicationsController.getApplicationsCount);
