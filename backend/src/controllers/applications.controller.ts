@@ -7,7 +7,12 @@ import type { ApplicationPatchValues } from '../services/applications.service.js
 
 export async function getApplicationsForDashboard(req: Request<{}, {}, {}, RequestQuery>, res: Response) {
 	try {
-		const query = applicationDashboardQueryParser.parse(req.query);
+		const userId = req.auth!.id;
+		if (!userId || Number.isNaN(Number(userId))) {
+			return res.status(400).json({ message: 'Invalid user id' });
+		}
+
+		const query = applicationDashboardQueryParser.parse(userId, req.query);
 
 		if (!query.ok) {
 			return res.status(400).json({message: query.error});
@@ -23,7 +28,12 @@ export async function getApplicationsForDashboard(req: Request<{}, {}, {}, Reque
 
 export async function getApplicationsCount(req: Request<{}, {}, {}, RequestQuery>, res: Response) {
 	try {
-		const query = applicationDashboardQueryParser.parse(req.query);
+		const userId = req.auth!.id;
+		if (!userId || Number.isNaN(Number(userId))) {
+			return res.status(400).json({ message: 'Invalid user id' });
+		}
+
+		const query = applicationDashboardQueryParser.parse(userId, req.query);
 
 		if (!query.ok) {
 			return res.status(400).json({message: query.error});
@@ -39,7 +49,12 @@ export async function getApplicationsCount(req: Request<{}, {}, {}, RequestQuery
 
 export async function getApplicationsStats(req: Request<{}, {}, {}, RequestQuery>, res: Response) {
 	try {
-		const query = applicationDashboardQueryParser.parse(req.query);
+		const userId = req.auth!.id;
+		if (!userId || Number.isNaN(Number(userId))) {
+			return res.status(400).json({ message: 'Invalid user id' });
+		}
+
+		const query = applicationDashboardQueryParser.parse(userId, req.query);
 
 		if (!query.ok) {
 			return res.status(400).json({message: query.error});

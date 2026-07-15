@@ -128,10 +128,6 @@ export default function ApplicationsForm({onClose, onSubmit, selectedId}: Applic
 
 	async	function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
 		e.preventDefault();
-		//TODO: userId shouldn't be 4, it's just for development
-		const userId = 4;
-		console.log('happens');
-
 		
 		const updateApplicationRequestOptions: RequestInit = {
 			method: 'PATCH',
@@ -141,7 +137,7 @@ export default function ApplicationsForm({onClose, onSubmit, selectedId}: Applic
 		};
 	
 		try {
-			fetch(`${host}/api/application/applications-update?userId=${userId}`, updateApplicationRequestOptions)
+			fetch(`${host}/api/application/applications-update`, updateApplicationRequestOptions)
 				.then((response) => {
 					if (!response.ok) throw new Error(`request failed with status ${response.status}`);
 

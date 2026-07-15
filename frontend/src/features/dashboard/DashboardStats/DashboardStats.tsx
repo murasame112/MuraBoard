@@ -52,9 +52,7 @@ export default function DashboardStats({className, mode, refreshToken, queryStat
 	const host = import.meta.env.VITE_API_URL;
 	
 	function fetchStatsData() {
-		//TODO: userId shouldn't be 4, it's just for development
-		const userId = 4;
-		const query = buildQueryParams(userId, queryState);
+		const query = buildQueryParams(queryState);
 
 		if (mode === 'JobOffer') {
 

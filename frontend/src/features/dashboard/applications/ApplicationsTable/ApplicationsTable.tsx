@@ -83,9 +83,8 @@ export default function ApplicationsTable({callMassActionPopup, refreshToken, qu
 	}
 
 	function fetchData() {
-		//TODO: userId shouldn't be 4, it's just for development
-		const userId = 4;
-		const query = buildQueryParams(userId, queryState);
+
+		const query = buildQueryParams(queryState);
 		
 		fetch(`${host}/api/application/applications-for-dashboard?${query}`, {credentials: 'include'})
 			.then((response) => response.json())

@@ -64,9 +64,7 @@ export default function DashboardPage(){
 	const host = import.meta.env.VITE_API_URL;
 
 	async function fetchRecordCount(mode: DashboardMode): Promise<number> {
-		//TODO: userId shouldn't be 4, it's just for development
-		const userId = 4;
-		const query = buildQueryParams(userId, queryState);
+		const query = buildQueryParams(queryState);
 
 		const response = await fetch(`${host}/api/${apiQueryMap[mode]}/offers-count?${query}`, {credentials: 'include'});
 		return response.json();

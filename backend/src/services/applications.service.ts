@@ -119,6 +119,8 @@ export async function apply(id: number) {
 		where: {jobOfferId: id}
 	});
 
+	
+
 	if (existingApplication) {
 		return 'application already exists';
 	}
@@ -126,7 +128,7 @@ export async function apply(id: number) {
 	const result = prisma.application.create({
 		data: {
 			jobOfferId: id,
-			userId: 4, //TODO: userId shouldn't be 4, it's just for development
+			userId: offer.userId,
 			status: 'APPLIED'
 		}
 	});

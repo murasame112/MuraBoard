@@ -226,8 +226,6 @@ export default function JobOffersForm({onClose, onSubmit, type, selectedId}: Job
 
 	async	function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
 		e.preventDefault();
-		//TODO: userId shouldn't be 4, it's just for development
-		const userId = 4;
 
 		if (type === 'add') {
 			const insertJobOfferRequestOptions: RequestInit = {
@@ -238,7 +236,7 @@ export default function JobOffersForm({onClose, onSubmit, type, selectedId}: Job
     	};
 		
 			try {
-				fetch(`${host}/api/joboffer/offers-insert?userId=${userId}`, insertJobOfferRequestOptions)
+				fetch(`${host}/api/joboffer/offers-insert`, insertJobOfferRequestOptions)
 					.then((response) => {
 						if (!response.ok) throw new Error(`request failed with status ${response.status}`);
 
@@ -259,7 +257,7 @@ export default function JobOffersForm({onClose, onSubmit, type, selectedId}: Job
     	};
 		
 			try {
-				fetch(`${host}/api/joboffer/offers-update?userId=${userId}`, updateJobOfferRequestOptions)
+				fetch(`${host}/api/joboffer/offers-update`, updateJobOfferRequestOptions)
 					.then((response) => {
 						if (!response.ok) throw new Error(`request failed with status ${response.status}`);
 
