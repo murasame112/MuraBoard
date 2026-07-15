@@ -36,7 +36,7 @@ export async function register({username, email, password}: RegisterValues): Pro
 }
 
 async function hashPassword(password: string){
-	return bcrypt.hash(password, 10);
+	return bcrypt.hash(password, 12);
 }
 
 export async function generateToken(id: number, role: UserRole) {
