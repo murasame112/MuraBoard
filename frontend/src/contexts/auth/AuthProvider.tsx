@@ -1,13 +1,9 @@
 import { useEffect, useState, useContext, createContext } from "react";
 import type { AuthContextType, SafeUser } from "./Auth"
 
-export const AuthContext = createContext<AuthContextType | null>(null);
+const AuthContext = createContext<AuthContextType | null>(null);
 
-type Props = {
-    children: React.ReactNode;
-};
-
-export default function AuthProvider({ children }: Props) {
+export function AuthProvider({ children }: {children: React.ReactNode}) {
 
     const host = import.meta.env.VITE_API_URL;
 
@@ -19,9 +15,7 @@ export default function AuthProvider({ children }: Props) {
     }, []);
 
     async function refreshUser() {
-
         try {
-
             const response = await fetch(`${host}/api/auth/me`, {
                 credentials: "include",
             });
@@ -32,7 +26,6 @@ export default function AuthProvider({ children }: Props) {
             }
 
             const data = await response.json();
-
             setUser(data);
 
         } finally {
@@ -58,9 +51,7 @@ export default function AuthProvider({ children }: Props) {
             return false;
         }
 
-        const user = await response.json();
-
-        setUser(user);
+        refreshUser();
 
         return true;
     }
@@ -88,9 +79,7 @@ export default function AuthProvider({ children }: Props) {
             return false;
         }
 
-        const user = await response.json();
-
-        setUser(user);
+        refreshUser();
 
         return true;
     }
@@ -125,10 +114,6 @@ export default function AuthProvider({ children }: Props) {
 
 export function useAuth() {
     const context = useContext(AuthContext);
-
-    if (!context) {
-        throw new Error("useAuth must be used inside AuthProvider");
-    }
-
+    if (!context) throw new Error("useAuth should be used inside AuthProvider");
     return context;
 }
