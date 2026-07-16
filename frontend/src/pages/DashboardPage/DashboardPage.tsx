@@ -1,11 +1,11 @@
 import styles from './DashboardPage.module.css';
 import {Routes, Route} from 'react-router';
-import ApplicationsDashboard from '../features/dashboard/applications/ApplicationsDashboard/ApplicationsDashboard';
-import JobOffersDashboard from '../features/dashboard/job-offers/JobOffersDashboard/JobOffersDashboard';
-import type { Filter, FilterName, QueryState } from '../features/dashboard/models/queryState';
-import type { DashboardFormType } from '../features/dashboard/DashboardFormWrapper/DashboardFormWrapper';
+import ApplicationsDashboard from '../../features/dashboard/applications/ApplicationsDashboard/ApplicationsDashboard';
+import JobOffersDashboard from '../../features/dashboard/job-offers/JobOffersDashboard/JobOffersDashboard';
+import type { Filter, FilterName, QueryState } from '../../features/dashboard/models/queryState';
+import type { DashboardFormType } from '../../features/dashboard/DashboardFormWrapper/DashboardFormWrapper';
 export type DashboardMode = 'JobOffer' | 'Application';
-import { buildQueryParams } from '../shared/lib/buildQueryParams';
+import { buildQueryParams } from '../../shared/lib/buildQueryParams';
 import { useState, useCallback } from 'react';
 
 type MassActionPopupConfiguration = {
@@ -64,11 +64,9 @@ export default function DashboardPage(){
 	const host = import.meta.env.VITE_API_URL;
 
 	async function fetchRecordCount(mode: DashboardMode): Promise<number> {
-		//TODO: userId shouldn't be 4, it's just for development
-		const userId = 4;
-		const query = buildQueryParams(userId, queryState);
+		const query = buildQueryParams(queryState);
 
-		const response = await fetch(`${host}/api/${apiQueryMap[mode]}/offers-count?${query}`);
+		const response = await fetch(`${host}/api/${apiQueryMap[mode]}/offers-count?${query}`, {credentials: 'include'});
 		return response.json();
 
 	}

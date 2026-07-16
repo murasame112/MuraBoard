@@ -1,7 +1,6 @@
 import { ApplicationStatus } from "../../enums/enums.js";
 
 export type RequestQuery = {
-	userId?: string;
 	currentPage?: string;
 	pageSize?: string;
 	searchPhrase?: string;
@@ -53,12 +52,11 @@ type ParseError = {
 	error: string;
 }
 
-export function parse(query: RequestQuery): ParsedQuery | ParseError{
+export function parse(userId: number, query: RequestQuery): ParsedQuery | ParseError{
 
-	if (!query.userId || Number.isNaN(Number(query.userId))) {
+	if (!userId || Number.isNaN(Number(userId))) {
 		return { ok: false, error: 'Invalid user id' };
 	}
-	const userId = Number(query.userId);
 
 	if (!query.currentPage || Number.isNaN(Number(query.currentPage))) {
 		return { ok: false, error: 'Invalid page' };

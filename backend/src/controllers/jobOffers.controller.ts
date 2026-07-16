@@ -7,7 +7,11 @@ import * as jobOfferDashboardQueryParser from '../shared/lib/jobOfferDashboardQu
 
 export async function getJobOffersForDashboard(req: Request<{}, {}, {}, RequestQuery>, res: Response) {
 	try {
-		const query = jobOfferDashboardQueryParser.parse(req.query);
+		const userId = req.auth!.id;
+		if (!userId || Number.isNaN(Number(userId))) {
+			return res.status(400).json({ message: 'Invalid user id' });
+		}
+		const query = jobOfferDashboardQueryParser.parse(userId, req.query);
 
 		if (!query.ok) {
 			return res.status(400).json({message: query.error});
@@ -23,7 +27,12 @@ export async function getJobOffersForDashboard(req: Request<{}, {}, {}, RequestQ
 
 export async function getJobOffersCount(req: Request, res: Response) {
 	try {
-		const query = jobOfferDashboardQueryParser.parse(req.query);
+		const userId = req.auth!.id;
+		if (!userId || Number.isNaN(Number(userId))) {
+			return res.status(400).json({ message: 'Invalid user id' });
+		}
+
+		const query = jobOfferDashboardQueryParser.parse(userId, req.query);
 
 		if (!query.ok) {
 			return res.status(400).json({message: query.error});
@@ -39,7 +48,12 @@ export async function getJobOffersCount(req: Request, res: Response) {
 
 export async function getJobOffersStats(req: Request, res: Response) {
 	try {
-		const query = jobOfferDashboardQueryParser.parse(req.query);
+		const userId = req.auth!.id;
+		if (!userId || Number.isNaN(Number(userId))) {
+			return res.status(400).json({ message: 'Invalid user id' });
+		}
+
+		const query = jobOfferDashboardQueryParser.parse(userId, req.query);
 
 		if (!query.ok) {
 			return res.status(400).json({message: query.error});
@@ -85,9 +99,7 @@ type UpsertJobOfferBody = {
 
 export async function upsertJobOffer(req: Request<{}, {}, UpsertJobOfferBody>, res: Response) {
 	try {
-		const { userId } = req.query as {
-			userId?: string;
-		}
+		const userId = req.auth!.id;
 		
 		if (!userId || Number.isNaN(Number(userId))) {
 			return res.status(400).json({ message: 'Invalid user id' });

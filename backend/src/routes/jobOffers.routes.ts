@@ -1,7 +1,9 @@
 import { Router } from "express";
 import * as jobOffersController from '../controllers/jobOffers.controller.js';
+import { authenticate } from "../middleware/authenticate.js";
 
 const router = Router();
+router.use(authenticate);
 
 router.get('/offers-for-dashboard', jobOffersController.getJobOffersForDashboard);
 router.get('/offers-count', jobOffersController.getJobOffersCount);

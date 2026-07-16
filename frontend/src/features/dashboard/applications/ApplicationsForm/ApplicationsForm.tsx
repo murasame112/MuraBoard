@@ -50,7 +50,7 @@ export default function ApplicationsForm({onClose, onSubmit, selectedId}: Applic
 
 	useEffect(() => {
 		if (selectedId) {
-			fetch(`${host}/api/application/applications-by-id?id=${selectedId}`)
+			fetch(`${host}/api/application/applications-by-id?id=${selectedId}`, {credentials: 'include'})
 				.then(response => response.json())
 				.then(data => {
 					setValues({
@@ -128,19 +128,16 @@ export default function ApplicationsForm({onClose, onSubmit, selectedId}: Applic
 
 	async	function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
 		e.preventDefault();
-		//TODO: userId shouldn't be 4, it's just for development
-		const userId = 4;
-		console.log('happens');
-
 		
-		const updateApplicationRequestOptions = {
+		const updateApplicationRequestOptions: RequestInit = {
 			method: 'PATCH',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({id: selectedId, ...values}),
+			credentials: 'include'
 		};
 	
 		try {
-			fetch(`${host}/api/application/applications-update?userId=${userId}`, updateApplicationRequestOptions)
+			fetch(`${host}/api/application/applications-update`, updateApplicationRequestOptions)
 				.then((response) => {
 					if (!response.ok) throw new Error(`request failed with status ${response.status}`);
 

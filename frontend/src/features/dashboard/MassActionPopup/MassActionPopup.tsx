@@ -1,7 +1,7 @@
 import styles from './MassActionPopup.module.css';
 import { useTranslation } from '../../../shared/i18n/useTranslation';
 import { useState } from 'react';
-import type { DashboardMode } from '../../../pages/DashboardPage';
+import type { DashboardMode } from '../../../pages/DashboardPage/DashboardPage';
 import type { DashboardFormType } from '../DashboardFormWrapper/DashboardFormWrapper';
 
 type MassActionPopupProps = {
@@ -36,10 +36,11 @@ export default function MassActionPopup({mode, apiQueryMap, selected, onDelete, 
 		
 	}
 
-	const deletionOptions = {
+	const deletionOptions: RequestInit = {
 		method: 'DELETE',
 		headers: { 'Content-Type': 'application/json' },
 		body: JSON.stringify({ids: [...selected]}),
+		credentials: 'include'
   };
 
 	function handleDeletion(){

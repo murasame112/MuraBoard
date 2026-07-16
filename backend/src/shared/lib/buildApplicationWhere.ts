@@ -1,4 +1,4 @@
-import { Prisma, ApplicationStatus } from '../../generated/prisma/client.js';
+import { Prisma } from '../../generated/prisma/client.js';
 import type { ParsedQuery } from './applicationDashboardQueryParser.js';
 
 export function buildApplicationWhere(query: ParsedQuery): Prisma.ApplicationWhereInput { 

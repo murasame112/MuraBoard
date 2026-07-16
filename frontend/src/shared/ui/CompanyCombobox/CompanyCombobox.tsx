@@ -137,7 +137,7 @@ export default function CompanyCombobox({labelClass, additionalFormTextClass, ge
 	}
 	
 	useEffect(() => {
-		fetch(`${host}/api/company/companies`)
+		fetch(`${host}/api/company/companies`, {credentials: 'include'})
 			.then((response) => response.json())
 			.then((data) => {
 				if (data.length === 0|| !data) {
@@ -203,10 +203,11 @@ export default function CompanyCombobox({labelClass, additionalFormTextClass, ge
 	}
 
 	function handleAddingCompany() {
-		const upsertCompanyRequestOptions = {
+		const upsertCompanyRequestOptions: RequestInit = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newCompanyValues),
+				credentials: 'include'
     };
 
 		fetch(`${host}/api/company/companies-upsert`, upsertCompanyRequestOptions)

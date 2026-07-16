@@ -1,5 +1,5 @@
 import styles from './DashboardStats.module.css';
-import type { DashboardMode } from '../../../pages/DashboardPage';
+import type { DashboardMode } from '../../../pages/DashboardPage/DashboardPage';
 import { useState, useEffect } from 'react';
 import { CheckCircleIcon, ClockIcon, ArrowPathIcon, ChatBubbleLeftRightIcon, HandRaisedIcon, XCircleIcon } from '@heroicons/react/24/outline';
 import { useTranslation } from '../../../shared/i18n/useTranslation';
@@ -52,13 +52,11 @@ export default function DashboardStats({className, mode, refreshToken, queryStat
 	const host = import.meta.env.VITE_API_URL;
 	
 	function fetchStatsData() {
-		//TODO: userId shouldn't be 4, it's just for development
-		const userId = 4;
-		const query = buildQueryParams(userId, queryState);
+		const query = buildQueryParams(queryState);
 
 		if (mode === 'JobOffer') {
 
-			fetch(`${host}/api/joboffer/offers-stats?${query}`)
+			fetch(`${host}/api/joboffer/offers-stats?${query}`, {credentials: 'include'})
 				.then((response) => response.json())
 				.then((data) => {
 					if (!data){
@@ -78,7 +76,7 @@ export default function DashboardStats({className, mode, refreshToken, queryStat
 
 		} else if (mode === 'Application') {
 			
-			fetch(`${host}/api/application/applications-stats?${query}`)
+			fetch(`${host}/api/application/applications-stats?${query}`, {credentials: 'include'})
 				.then((response) => response.json())
 				.then((data) => {
 					if (!data){

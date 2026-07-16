@@ -91,8 +91,30 @@
 	"formError.wrongStatus": "wrong status",
 	"formError.wrongNextStepDate": "step date is invalid",
 	"formError.dateInThePast": "date cannot be in the past",
+	"formError.identifierRequired": "email or username is required",
+	"formError.identifierTooShort": "email or username is too short",
+	"formError.identifierTooLong": "email or username is too long",
+	"formError.passwordRequired": "password is required",
+	"formError.passwordTooShort": "password is too short",
+	"formError.passwordTooLong": "password is too long",
+	"formError.usernameRequired": "username is required",
+	"formError.usernameTooShort": "username is too short",
+	"formError.usernameTooLong": "username is too long",
+	"formError.emailRequired": "email is required",
+	"formError.emailTooShort": "email is too short",
+	"formError.emailTooLong": "email is too long",
+	"formError.wrongLoginOrPassword": "wrong username, email or password",
+	"formError.registerError": "something went wrong, refresh page and try again",
 	"applicationCommentError.tooLong": "comment is too long",
 	"applicationCommentError.wrongResponse": "wrong response, try again later",
+	"signIn": "sign in",
+	"signUp": "sign up",
+	"noAcc": "don't have an account",
+	"haveAcc": "already have an account",
+	"usernameOrEmail": "username or email",
+	"username": "username",
+	"email": "email",
+	"password": "password",
 
 	"goToPage": "go to page",
 	"go": "go",
@@ -108,6 +130,9 @@
 	"filter.applicationDateTo": "applied to",
 
 	"activeFilters": "active filters",
-	"clearAllFilters": "clear all filters"
+	"clearAllFilters": "clear all filters",
+
+	"loading": "loading",
+	"pageNotFound": "page not found"
 
 }
