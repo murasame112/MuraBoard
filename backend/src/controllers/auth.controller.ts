@@ -115,24 +115,21 @@ export async function register(req: Request<{}, {}, {}, RegisterRequestBody>, re
 }
 
 type LoginRequestQuery = {
-	username?: string;
-	email?: string;
+	identifier: string;
 	password: string;
 }
 
 export async function login(req: Request<{}, {}, {}, LoginRequestQuery>, res: Response) {
 	try {
 		const { 
-			username,
-			email,
+			identifier,
 			password
 		} = req.body as {
-			username: string;
-			email: string;
+			identifier: string
 			password: string
 		};
 
-		if (!username && !email) {
+		if (!identifier) {
 			return res.status(400).json({message: 'Missing login data'});
 		}
 
@@ -140,7 +137,7 @@ export async function login(req: Request<{}, {}, {}, LoginRequestQuery>, res: Re
 			return res.status(400).json({ message: 'Missing password' });
 		}
 
-		const result = await authService.login({username, email, password});
+		const result = await authService.login({identifier, password});
 
 		if (result === 'user_not_found' || result === 'wrong_password') {
 			return res.status(401).json({ message: 'Incorrect login or password' });

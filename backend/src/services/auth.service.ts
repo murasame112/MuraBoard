@@ -54,15 +54,12 @@ export async function generateToken(id: number, role: UserRole) {
 }
 
 type LoginValues = {
-	username?: string;
-	email?: string;
+	identifier: string;
 	password: string;
 };
-export async function login({username, email, password}: LoginValues): Promise<string> {
+export async function login({identifier, password}: LoginValues): Promise<string> {
 
-	const user = 	username ? await usersService.getUserByUsername(username) : 
-								email ? await usersService.getUserByEmail(email) 
-								: undefined;
+	const user = await usersService.getUserByUsernameOrEmail(identifier);
 	if (!user) return 'user_not_found';
 
 	if (!verifyPassword(password, user.passwordHash)) {

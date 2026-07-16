@@ -14,54 +14,53 @@ export function AuthProvider({ children }: {children: React.ReactNode}) {
         refreshUser();
     }, []);
 
-    async function refreshUser() {
-        try {
-            const response = await fetch(`${host}/api/auth/me`, {
-                credentials: "include",
-            });
+		async function refreshUser() {
+				try {
+						const response = await fetch(`${host}/api/auth/me`, {
+								credentials: "include",
+						});
 
-            if (!response.ok) {
-                setUser(null);
-                return;
-            }
+						if (!response.ok) {
+								setUser(null);
+								return;
+						}
 
-            const data = await response.json();
-            setUser(data);
+						const data = await response.json();
+						setUser(data);
+				} catch {
+						setUser(null);
+				} finally {
+						setLoading(false);
+				}
+		}
 
-        } finally {
-            setLoading(false);
-        }
-    }
+		async function login(identifier: string, password: string) {
+			try{
+				const response = await fetch(`${host}/api/auth/login`, {
+				method: "POST",
+				credentials: "include",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({ identifier, password }),
+			});
 
-    async function login(username: string, password: string) {
-
-        const response = await fetch(`${host}/api/auth/login`, {
-            method: "POST",
-            credentials: "include",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                username,
-                password,
-            }),
-        });
-
-        if (!response.ok) {
-            return false;
-        }
-
-        refreshUser();
-
-        return true;
-    }
+			if (!response.ok) {
+				return false;
+			}
+			await refreshUser();
+			return true;
+			} catch {
+        return false;
+   	 	}	
+		}
 
     async function register(
         username: string,
         email: string,
         password: string
     ) {
-
+			try {
         const response = await fetch(`${host}/api/auth/register`, {
             method: "POST",
             credentials: "include",
@@ -79,20 +78,24 @@ export function AuthProvider({ children }: {children: React.ReactNode}) {
             return false;
         }
 
-        refreshUser();
+        await refreshUser();
 
         return true;
+			} catch {
+        return false;
+   	 	}
     }
 
-    async function logout() {
-
-        await fetch(`${host}/api/auth/logout`, {
-            method: "POST",
-            credentials: "include",
-        });
-
-        setUser(null);
-    }
+		async function logout() {
+				try {
+						await fetch(`${host}/api/auth/logout`, {
+								method: "POST",
+								credentials: "include",
+						});
+				} finally {
+						setUser(null);
+				}
+		}
 
     return (
         <AuthContext.Provider

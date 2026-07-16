@@ -26,6 +26,16 @@ export async function getUserByUsername(username: string) {
 	return user;
 }
 
+export async function getUserByUsernameOrEmail(identifier: string) {
+	const user = await prisma.user.findFirst({
+		where: {
+			OR: [{username: identifier}, {email: identifier} ]
+		}
+	});
+
+	return user;
+}
+
 type CreateUserValues = {
   username: string;
   email: string;
