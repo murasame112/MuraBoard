@@ -4,6 +4,7 @@
 	"applications": "applications",
 	"Application": "application",
 
+	"home": "home",
 	"navigation": "navigation",
 	"account": "account",
 	"logout": "log out",
