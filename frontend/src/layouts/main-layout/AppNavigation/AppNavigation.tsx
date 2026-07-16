@@ -1,9 +1,11 @@
 import styles from './AppNavigation.module.css';
 import { useTranslation } from '../../../shared/i18n/useTranslation';
+import { useAuth } from '../../../contexts/auth/AuthProvider';
 import { NavLink } from 'react-router';
 
 export default function AppNavigation() {
-	const {t} = useTranslation();
+	const { t } = useTranslation();
+	const { logout } = useAuth();
 
   return(
     <div className={styles.appNavigation}>
@@ -16,7 +18,7 @@ export default function AppNavigation() {
 			</div>
 			<div className={styles.accountElements}>
 				<div className={styles.navTitle}><p>{t('account')}</p></div>
-				<h3>{t('logout')}</h3>
+				<h3 className={styles.navLink} onClick={logout}>{t('logout')}</h3>
 			</div>
     </div>
   )
