@@ -111,7 +111,10 @@ export default function LoginPage() {
 		setValues(prev => ({...prev, password: ''}));
 		const logged = await login(values.identifier, password);
 		
-		if ( !logged ) setErrors(prev => ({...prev, submit: t('formError.wrongLoginOrPassword')}))
+		if ( !logged ) setErrors(prev => ({...prev, submit: t('formError.wrongLoginOrPassword')}));
+		setTimeout(() => {
+        setErrors(prev => ({ ...prev, submit: null }));
+    }, 2000);
 	}
 
 	return (
