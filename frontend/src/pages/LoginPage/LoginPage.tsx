@@ -2,6 +2,7 @@ import styles from './LoginPage.module.css';
 import { useAuth } from '../../contexts/auth/AuthProvider';
 import { useTranslation } from '../../shared/i18n/useTranslation';
 import { useState } from 'react';
+import { NavLink } from 'react-router';
 import ErrorBox from '../../shared/ui/ErrorBox/ErrorBox';
 
 
@@ -152,6 +153,10 @@ export default function LoginPage() {
 					<div className={styles.loginFormElement}>
 						<button type='submit' disabled={Object.values(errors).some((error) => error !== null) || !areRequiredFieldsFilled()}>{t('signIn')}</button>
 						{errors.submit ? <ErrorBox message={errors.submit} className={styles.errorBox} /> : ''}
+					</div>
+
+					<div className={styles.registerFormElement}>
+						<p className={styles.additionalText}>{t('noAcc')}? <NavLink to={'/register'} className={styles.navlink}>{t('signUp')}</NavLink></p>
 					</div>
 
 				</form>
