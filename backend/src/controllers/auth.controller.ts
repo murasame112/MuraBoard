@@ -58,7 +58,7 @@ export async function register(req: Request<{}, {}, {}, RegisterRequestBody>, re
 				return res.status(400).json({ message: 'Invalid username' });
 		}
 
-		if (username.length < 3 || username.length > 30) {
+		if (username.length < 3 || username.length > 254) {
 				return res.status(400).json({ message: 'Invalid username length' });
 		}
 
