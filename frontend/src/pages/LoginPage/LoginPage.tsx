@@ -151,8 +151,10 @@ export default function LoginPage() {
 					</div>
 
 					<div className={styles.loginFormElement}>
-						<button type='submit' disabled={Object.values(errors).some((error) => error !== null) || !areRequiredFieldsFilled()}>{t('signIn')}</button>
-						{errors.submit ? <ErrorBox message={errors.submit} className={styles.errorBox} /> : ''}
+						<div className={styles.inputWrapper}>
+							<button type='submit' disabled={Object.values(errors).some((error) => error !== null) || !areRequiredFieldsFilled()}>{t('signIn')}</button>
+							{errors.submit ? <ErrorBox message={errors.submit} className={styles.errorBox} /> : ''}
+						</div>
 					</div>
 
 					<div className={styles.registerFormElement}>
