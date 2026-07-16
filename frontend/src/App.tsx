@@ -6,21 +6,29 @@ import DashboardPage from "./pages/DashboardPage/DashboardPage";
 import AuthLayout from "./layouts/auth-layout/AuthLayout/AuthLayout";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import RegisterPage from "./pages/RegisterPage/RegisterPage";
-
+import ProtectedRoute from "./features/auth/ProtectedRoute/ProtectedRoute";
+import GuestRoute from "./features/auth/GuestRoute/GuestRoute";
+import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
 function App() {
 
   return (
   <LanguageProvider>
     <AuthProvider>
       <Routes>
-        <Route element={<AuthLayout />}>
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/register" element={<RegisterPage />} />
-        </Route>
+				<Route element={<GuestRoute/>}>
+					<Route element={<AuthLayout />}>
+						<Route path="/login" element={<LoginPage />} />
+						<Route path="/register" element={<RegisterPage />} />
+					</Route>
+				</Route>
 
-        <Route element={<MainLayout />}>
-          <Route path="/dashboard/*" element={<DashboardPage />} />
-        </Route>
+				<Route element={<ProtectedRoute/>}>
+					<Route element={<MainLayout />}>
+						<Route path="/dashboard/*" element={<DashboardPage />} />
+					</Route>
+				</Route>
+
+				<Route path="*" element={<NotFoundPage />} />
       </Routes>
     </AuthProvider>
 	</LanguageProvider>

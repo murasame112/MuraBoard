@@ -1,0 +1,11 @@
+.authLayout {
+  width: 45%;
+	/* TODO: min width */
+  height: 70%;
+		/* TODO: min height */
+  background-color: var(--foreground);
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 0;
+  display: flex;
+}

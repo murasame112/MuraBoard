@@ -108,6 +108,9 @@
 	"filter.applicationDateTo": "applied to",
 
 	"activeFilters": "active filters",
-	"clearAllFilters": "clear all filters"
+	"clearAllFilters": "clear all filters",
+
+	"loading": "loading",
+	"pageNotFound": "page not found"
 
 }
