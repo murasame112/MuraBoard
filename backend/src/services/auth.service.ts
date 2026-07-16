@@ -62,7 +62,7 @@ export async function login({identifier, password}: LoginValues): Promise<string
 	const user = await usersService.getUserByUsernameOrEmail(identifier);
 	if (!user) return 'user_not_found';
 
-	if (!verifyPassword(password, user.passwordHash)) {
+	if (!(await verifyPassword(password, user.passwordHash))) {
 		return 'wrong_password';
 	}
 
