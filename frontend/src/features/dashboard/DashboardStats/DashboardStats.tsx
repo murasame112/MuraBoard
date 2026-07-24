@@ -16,6 +16,7 @@ type DashboardStatsProps = {
 
 type CardsData = {
 	label: string;
+	status: string;
 	count: number;
 	color: string;
 	icon: React.ElementType;
@@ -107,6 +108,7 @@ export default function DashboardStats({className, mode, refreshToken, queryStat
 			return [
 					{
 						label: 'applied',
+						status: 'applied',
 						count: statsState.stats.applied,
 						color: '--alert-lightblue',
 						icon: CheckCircleIcon,
@@ -114,6 +116,7 @@ export default function DashboardStats({className, mode, refreshToken, queryStat
 					},
 					{
 						label: 'notApplied',
+						status: 'notApplied',
 						count: statsState.stats.notApplied,
 						color: '--alert-burgund',
 						icon: ClockIcon,
@@ -124,6 +127,7 @@ export default function DashboardStats({className, mode, refreshToken, queryStat
 			return [
 					{
 						label: 'applied',
+						status: 'APPLIED',
 						count: statsState.stats.applied,
 						color: '--alert-lightblue',
 						icon: CheckCircleIcon,
@@ -131,6 +135,7 @@ export default function DashboardStats({className, mode, refreshToken, queryStat
 					},
 					{
 						label: 'inProgress',
+						status: 'IN_PROGRESS',
 						count: statsState.stats.inProgress,
 						color: '--alert-yellow',
 						icon: ArrowPathIcon,
@@ -138,6 +143,7 @@ export default function DashboardStats({className, mode, refreshToken, queryStat
 					},
 					{
 						label: 'interview',
+						status: 'INTERVIEW',
 						count: statsState.stats.interview,
 						color: '--alert-purple',
 						icon: ChatBubbleLeftRightIcon,
@@ -145,6 +151,7 @@ export default function DashboardStats({className, mode, refreshToken, queryStat
 					},
 					{
 						label: 'offer',
+						status: 'OFFER',
 						count: statsState.stats.offer,
 						color: '--alert-green',
 						icon: HandRaisedIcon,
@@ -152,6 +159,7 @@ export default function DashboardStats({className, mode, refreshToken, queryStat
 					},
 					{
 						label: 'rejected',
+						status: 'REJECTED',
 						count: statsState.stats.rejected,
 						color: '--alert-burgund',
 						icon: XCircleIcon,
@@ -175,7 +183,7 @@ export default function DashboardStats({className, mode, refreshToken, queryStat
 				{cardsData.map((element: CardsData) => {
 					const Icon = element.icon;
 					return (
-						<div key={element.label} className={styles.card} style={{borderBottom: `6px solid var(${element.color})`}} onClick={() => setFilter({filterName: element.filterName, value: element.label as any})}>
+						<div key={element.label} className={styles.card} style={{borderBottom: `6px solid var(${element.color})`}} onClick={() => setFilter({filterName: element.filterName, value: element.status as any})}>
 							<div className={styles.cardText}>
 								<Icon style={{color: `var(${element.color})`}} className={styles.icon}/><p>{t(element.label)}</p>
 							</div>
