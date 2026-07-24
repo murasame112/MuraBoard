@@ -27,6 +27,7 @@ The application emphasizes clean separation of concerns between frontend and bac
 * Express
 * TypeScript
 * REST API
+* JWT (HttpOnly Cookies)
 
 **Database:**
 * PostgreSQL
@@ -75,6 +76,7 @@ The application emphasizes clean separation of concerns between frontend and bac
 * Query parsing and validation
 * Dynamic filtering
 * Environment-based configuration
+* Authentication
 
 ---
 
@@ -89,32 +91,17 @@ cd MuraBoard
 
 ### 2. Environment variables
 
-Create a `.env` file in the project root (or update the existing one) and configure the required environment variables:
-
-```text
-DATABASE_URL=
-```
+Create a `.env` files in the /backend and /frontend and configure the required environment variables based on `.env.example`
 
 ### 3. Build and run the application
-
-Start the application using Docker Compose:
 
 ```bash
 docker compose up --build
 ```
 
-### 4. Deploy migrations
-
-Start the application using Docker Compose:
-
-```bash
-cd backend
-npx prisma migrate deploy
+### 4. Access the app
 ```
-
-### 5. Access the app
-```
-http://localhost:5173/dashboard/job-offers
+http://localhost:5173/register
 ```
 
 The command will:
