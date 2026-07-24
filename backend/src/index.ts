@@ -7,7 +7,6 @@ import authRouter from './routes/auth.routes.js';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import helmet from 'helmet';
-import rateLimit from 'express-rate-limit';
 
 const app = express();
 
@@ -20,15 +19,6 @@ app.use(cookieParser());
 app.use(helmet());
 app.get('/api/health', (req, res) => {
 	res.json({status: 'ok', message: 'api is running'});
-});
-
-export const loginLimiter = rateLimit({
-    windowMs: 15 * 60 * 1000,
-    limit: 5,
-    standardHeaders: true,
-    legacyHeaders: false,
-    message: { message: 'Too many login attempts, please try again later' },
-    skipSuccessfulRequests: true,
 });
 
 app.use('/api/joboffer', jobOffersRouter);
