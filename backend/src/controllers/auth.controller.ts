@@ -100,7 +100,7 @@ export async function register(req: Request<{}, {}, {}, RegisterRequestBody>, re
 
 		res.cookie('token', token, {
 			httpOnly: true,
-			sameSite: 'lax',
+			sameSite: 'none',
 			secure: process.env.NODE_ENV === 'production',
 			maxAge: 1000 * 60 * 60 * 24 * 7
 		});
@@ -145,7 +145,7 @@ export async function login(req: Request<{}, {}, {}, LoginRequestQuery>, res: Re
 
 		res.cookie('token', result, {
 			httpOnly: true,
-			sameSite: 'lax',
+			sameSite: 'none',
 			secure: process.env.NODE_ENV === 'production',
 			maxAge: 1000 * 60 * 60 * 24 * 7
 		});
@@ -162,7 +162,7 @@ export async function login(req: Request<{}, {}, {}, LoginRequestQuery>, res: Re
 export function logout(req: Request, res: Response) {
 	res.clearCookie('token', {
 		httpOnly: true,
-    sameSite: 'lax',
+    sameSite: 'none',
     secure: process.env.NODE_ENV === 'production'
 	});
   res.status(200).json({ message: 'Logged out' });
