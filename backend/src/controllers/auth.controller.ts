@@ -1,6 +1,8 @@
 import type { Request, Response } from 'express';
 import * as authService from '../services/auth.service.js';
 
+const isProduction = process.env.NODE_ENV === "production";
+
 export async function me(req: Request, res: Response) {
 	try {
 		const user = await authService.me(req.auth!.id);
@@ -100,8 +102,8 @@ export async function register(req: Request<{}, {}, {}, RegisterRequestBody>, re
 
 		res.cookie('token', token, {
 			httpOnly: true,
-			sameSite: 'none',
-			secure: process.env.NODE_ENV === 'production',
+			sameSite: isProduction ? "none" : "lax",
+			secure: isProduction,
 			maxAge: 1000 * 60 * 60 * 24 * 7
 		});
 
@@ -145,8 +147,8 @@ export async function login(req: Request<{}, {}, {}, LoginRequestQuery>, res: Re
 
 		res.cookie('token', result, {
 			httpOnly: true,
-			sameSite: 'none',
-			secure: process.env.NODE_ENV === 'production',
+			sameSite: isProduction ? "none" : "lax",
+			secure: isProduction,
 			maxAge: 1000 * 60 * 60 * 24 * 7
 		});
 
@@ -162,8 +164,8 @@ export async function login(req: Request<{}, {}, {}, LoginRequestQuery>, res: Re
 export function logout(req: Request, res: Response) {
 	res.clearCookie('token', {
 		httpOnly: true,
-    sameSite: 'none',
-    secure: process.env.NODE_ENV === 'production'
+		sameSite: isProduction ? "none" : "lax",
+		secure: isProduction,
 	});
   res.status(200).json({ message: 'Logged out' });
 }
