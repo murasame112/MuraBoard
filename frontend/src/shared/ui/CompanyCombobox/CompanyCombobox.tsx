@@ -180,7 +180,7 @@ export default function CompanyCombobox({labelClass, additionalFormTextClass, ge
 		});
 	}
 
-	function handleChangeCheckbox(e: React.ChangeEvent<HTMLInputElement>) {
+	function handleChangeCheckbox() {
 		setAddingCompany((prev) => !prev);
 		setNewCompanyValues(emptyNewCompany);
 		setCompanyValues(null);

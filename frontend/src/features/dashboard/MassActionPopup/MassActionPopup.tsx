@@ -20,7 +20,7 @@ export default function MassActionPopup({mode, apiQueryMap, selected, onDelete, 
 	const { t } = useTranslation();
 	const [popupType, setPopupType] = useState<PopupType>(null);
 
-	function handleMassActionButton(e: React.MouseEvent<HTMLButtonElement>, type: PopupType){
+	function handleMassActionButton(type: PopupType){
 		if (popupType === type) {
 			setPopupType(null);
 		} else {
@@ -67,8 +67,8 @@ export default function MassActionPopup({mode, apiQueryMap, selected, onDelete, 
 			<h4>{selected.size} {selected.size === 1 ? t('itemSelected') : t('itemsSelected')}</h4>
 			<h6>{t('selectAction')}</h6>
 			<div className={styles.buttons}>
-				<button type='button' className={styles.editButton} onClick={(e) => {handleMassActionButton(e, 'edit')}} disabled={selected.size === 1 ? false : true}>{t('edit')}</button>
-				<button type='button' className={styles.deleteButton} onClick={(e) => {handleMassActionButton(e, 'delete')}}>{t('delete')}</button>
+				<button type='button' className={styles.editButton} onClick={() => {handleMassActionButton('edit')}} disabled={selected.size === 1 ? false : true}>{t('edit')}</button>
+				<button type='button' className={styles.deleteButton} onClick={() => {handleMassActionButton('delete')}}>{t('delete')}</button>
 			</div>
 		</div>
 		
