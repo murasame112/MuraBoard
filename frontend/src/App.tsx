@@ -1,7 +1,7 @@
 import { LanguageProvider } from "./contexts/language/LanguageProvider";
 import { AuthProvider } from "./contexts/auth/AuthProvider";
 import MainLayout from "./layouts/main-layout/MainLayout/MainLayout";
-import {Routes, Route} from 'react-router';
+import {Routes, Route, Navigate} from 'react-router';
 import DashboardPage from "./pages/DashboardPage/DashboardPage";
 import AuthLayout from "./layouts/auth-layout/AuthLayout/AuthLayout";
 import LoginPage from "./pages/LoginPage/LoginPage";
@@ -25,9 +25,9 @@ function App() {
 				<Route element={<ProtectedRoute/>}>
 					<Route element={<MainLayout />}>
 						<Route path="/dashboard/*" element={<DashboardPage />} />
-					</Route>
+					</Route> 
 				</Route>
-
+				<Route path="/" element={<Navigate to="/login" replace />} />
 				<Route path="*" element={<NotFoundPage />} />
       </Routes>
     </AuthProvider>
