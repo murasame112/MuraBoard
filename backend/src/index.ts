@@ -20,6 +20,7 @@ app.use(helmet());
 app.get('/api/health', (req, res) => {
 	res.json({status: 'ok', message: 'api is running'});
 });
+app.set('trust proxy', 1);
 
 app.use('/api/joboffer', jobOffersRouter);
 app.use('/api/application', applicationsRouter);
