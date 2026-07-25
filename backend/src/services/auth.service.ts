@@ -30,7 +30,7 @@ export async function register({username, email, password}: RegisterValues): Pro
 
 	const passwordHash = await hashPassword(password);
 
-	const result = usersService.createUser({username, email, passwordHash});
+	const result = await usersService.createUser({username, email, passwordHash});
 
 	return result;
 }

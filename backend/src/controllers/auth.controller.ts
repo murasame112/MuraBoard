@@ -98,7 +98,7 @@ export async function register(req: Request<{}, {}, {}, RegisterRequestBody>, re
 			});
 		}
 		
-		const token = authService.generateToken(result.id, result.role);
+		const token = await authService.generateToken(result.id, result.role);
 
 		res.cookie('token', token, {
 			httpOnly: true,
