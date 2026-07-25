@@ -134,6 +134,7 @@
 	"clearAllFilters": "clear all filters",
 
 	"loading": "loading",
+	"mayTakeAMinOrTwo": "server is starting up, this may take a minute or two",
 	"pageNotFound": "page not found"
 
 }
