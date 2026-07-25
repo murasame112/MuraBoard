@@ -9,6 +9,7 @@ export default function RegisterPage() {
 	const { register } = useAuth();
 	const { t } = useTranslation();
 	const navigate = useNavigate();
+	const [isSubmitting, setIsSubmitting] = useState(false);
 	
 		type FormFields =
 			| 'username'
@@ -146,6 +147,7 @@ export default function RegisterPage() {
 
 	async	function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
 		e.preventDefault();
+		setIsSubmitting(true);
 		const registered = await register(values.username, values.email, values.password);
 		
 		if ( !registered ){
@@ -158,7 +160,7 @@ export default function RegisterPage() {
 		} else {
 			navigate("/dashboard"); 
 		}
-		
+		setIsSubmitting(false);
 	}
 
 	return (
@@ -215,7 +217,13 @@ export default function RegisterPage() {
 
 					<div className={styles.registerFormElement}>
 						<div className={styles.inputWrapper}>
-							<button type='submit' disabled={Object.values(errors).some((error) => error !== null) || !areRequiredFieldsFilled()}>{t('signUp')}</button>
+							<button 
+									type='submit' 
+									disabled={
+												Object.values(errors).some((error) => error !== null) 
+										|| 	!areRequiredFieldsFilled()
+										||	isSubmitting
+										}>{isSubmitting ? t('loading') : t('signUp')}</button>
 							{errors.submit ? <ErrorBox message={errors.submit} className={styles.errorBox} /> : ''}
 						</div>
 					</div>

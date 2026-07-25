@@ -9,6 +9,7 @@ import ErrorBox from '../../shared/ui/ErrorBox/ErrorBox';
 export default function LoginPage() {
 	const { login } = useAuth();
 	const { t } = useTranslation();
+	const [isSubmitting, setIsSubmitting] = useState(false);
 
 		type FormFields =
 			| 'identifier'
@@ -107,6 +108,7 @@ export default function LoginPage() {
 
 	async	function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
 		e.preventDefault();
+		setIsSubmitting(true);
 		const password = values.password;
 		setValues(prev => ({...prev, password: ''}));
 		const logged = await login(values.identifier, password);
@@ -115,6 +117,7 @@ export default function LoginPage() {
 		setTimeout(() => {
         setErrors(prev => ({ ...prev, submit: null }));
     }, 2000);
+		setIsSubmitting(false);
 	}
 
 	return (
@@ -155,7 +158,13 @@ export default function LoginPage() {
 
 					<div className={styles.loginFormElement}>
 						<div className={styles.inputWrapper}>
-							<button type='submit' disabled={Object.values(errors).some((error) => error !== null) || !areRequiredFieldsFilled()}>{t('signIn')}</button>
+							<button 
+									type='submit' 
+									disabled={
+													Object.values(errors).some((error) => error !== null) 
+											|| 	!areRequiredFieldsFilled()
+											||	isSubmitting
+											}>{isSubmitting ? t('loading') : t('signIn')}</button>
 							{errors.submit ? <ErrorBox message={errors.submit} className={styles.errorBox} /> : ''}
 						</div>
 					</div>
