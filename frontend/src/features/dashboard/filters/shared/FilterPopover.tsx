@@ -2,7 +2,7 @@ import type { Filter, FilterName } from '../../models/queryState';
 import styles from './FilterPopover.module.css';
 import { useState, useEffect } from 'react';
 import { useTranslation } from '../../../../shared/i18n/useTranslation';
-import type { DashboardMode } from '../../../../layouts/main-layout/AppNavigation/AppNavigation';
+import type { DashboardMode } from '../../../../pages/DashboardPage/DashboardPage';
 import { ApplicationStatus } from '../../../../shared/enums/enums';
 
 type FilterPopoverProps = {
