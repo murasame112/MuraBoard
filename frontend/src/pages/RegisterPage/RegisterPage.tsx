@@ -168,22 +168,6 @@ export default function RegisterPage() {
 					<div className={styles.registerFormElement}>
 						<div className={styles.inputWrapper}>
 							<input 
-								className={styles.usernameInput} 
-								id='usernameInput' 
-								name='username' 
-								type='text' 
-								onChange={handleChange} 
-								onBlur={validate} 
-								value={values.username}
-								placeholder={t('username')}
-							/>
-							{errors.username ? <ErrorBox message={errors.username} className={styles.errorBox} /> : ''}
-						</div>
-					</div>
-
-					<div className={styles.registerFormElement}>
-						<div className={styles.inputWrapper}>
-							<input 
 								className={styles.emailInput} 
 								id='emailInput' 
 								name='email' 
@@ -194,6 +178,22 @@ export default function RegisterPage() {
 								placeholder={t('email')}
 							/>
 							{errors.email ? <ErrorBox message={errors.email} className={styles.errorBox} /> : ''}
+						</div>
+					</div>
+
+					<div className={styles.registerFormElement}>
+						<div className={styles.inputWrapper}>
+							<input 
+								className={styles.usernameInput} 
+								id='usernameInput' 
+								name='username' 
+								type='text' 
+								onChange={handleChange} 
+								onBlur={validate} 
+								value={values.username}
+								placeholder={t('username')}
+							/>
+							{errors.username ? <ErrorBox message={errors.username} className={styles.errorBox} /> : ''}
 						</div>
 					</div>
 
