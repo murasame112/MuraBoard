@@ -1,4 +1,3 @@
-import { connect } from 'node:http2';
 import { prisma } from '../db/prisma.js';
 import type { Currency } from '../enums/enums.js';
 import type { Company } from '../models/models.js';

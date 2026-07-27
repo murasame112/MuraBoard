@@ -1,4 +1,3 @@
-import { prisma } from '../db/prisma.js';
 import * as usersService from './users.service.js';
 import bcrypt from 'bcrypt';
 import type { UserRole } from '../generated/prisma/index.js';
