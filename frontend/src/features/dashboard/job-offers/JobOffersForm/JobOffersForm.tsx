@@ -66,7 +66,7 @@ export default function JobOffersForm({onClose, onSubmit, type, selectedId}: Job
 
 	useEffect(() => {
 		if (selectedId) {
-			fetch(`${host}/api/joboffer/offers-by-id?id=${selectedId}`, {credentials: 'include'})
+			fetch(`${host}/api/job-offer/offers-by-id?id=${selectedId}`, {credentials: 'include'})
 				.then(response => response.json())
 				.then(data => {
 					setValues({
@@ -236,7 +236,7 @@ export default function JobOffersForm({onClose, onSubmit, type, selectedId}: Job
     	};
 		
 			try {
-				fetch(`${host}/api/joboffer/offers-insert`, insertJobOfferRequestOptions)
+				fetch(`${host}/api/job-offer/offers-insert`, insertJobOfferRequestOptions)
 					.then((response) => {
 						if (!response.ok) throw new Error(`request failed with status ${response.status}`);
 
@@ -257,7 +257,7 @@ export default function JobOffersForm({onClose, onSubmit, type, selectedId}: Job
     	};
 		
 			try {
-				fetch(`${host}/api/joboffer/offers-update`, updateJobOfferRequestOptions)
+				fetch(`${host}/api/job-offer/offers-update`, updateJobOfferRequestOptions)
 					.then((response) => {
 						if (!response.ok) throw new Error(`request failed with status ${response.status}`);
 

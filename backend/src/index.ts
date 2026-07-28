@@ -22,7 +22,7 @@ app.get('/api/health', (req, res) => {
 });
 app.set('trust proxy', 1);
 
-app.use('/api/joboffer', jobOffersRouter);
+app.use('/api/job-offer', jobOffersRouter);
 app.use('/api/application', applicationsRouter);
 app.use('/api/company', companiesRouter);
 app.use('/api/auth', authRouter);

@@ -57,7 +57,7 @@ export default function DashboardPage(){
 	const [queryState, setQueryState] = useState<QueryState>({searchPhrase: '', pageSize: 9, currentPage: 1, filters: []});
 
 	const apiQueryMap: Record<DashboardMode, string> = {
-		'JobOffer': 'joboffer',
+		'JobOffer': 'job-offer',
 		'Application': 'application'
 	};
 
