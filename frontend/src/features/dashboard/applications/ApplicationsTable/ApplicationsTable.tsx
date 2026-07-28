@@ -126,7 +126,7 @@ export default function ApplicationsTable({callMassActionPopup, refreshToken, qu
 		};
 
 		try {
-			fetch(`${host}/api/application/applications-edit-comment`, editCommentRequestOptions)
+			fetch(`${host}/api/application/edit-comment`, editCommentRequestOptions)
 				.then((response) => {
 						if (!response.ok) throw new Error(`request failed with status ${response.status}`);
 
