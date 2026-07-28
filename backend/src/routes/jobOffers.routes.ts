@@ -9,7 +9,7 @@ router.get('/', jobOffersController.getJobOffers);
 router.get('/offers-count', jobOffersController.getJobOffersCount);
 router.get('/offers-stats', jobOffersController.getJobOffersStats);
 router.get('/:id', jobOffersController.getJobOfferById);
-router.post('/offers-insert', jobOffersController.upsertJobOffer);
+router.post('/', jobOffersController.upsertJobOffer);
 router.put('/offers-update', jobOffersController.upsertJobOffer);
 router.delete('/offers-delete', jobOffersController.deleteJobOffers);
 

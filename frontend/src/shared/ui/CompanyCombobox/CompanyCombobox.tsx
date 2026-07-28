@@ -210,7 +210,7 @@ export default function CompanyCombobox({labelClass, additionalFormTextClass, ge
 				credentials: 'include'
     };
 
-		fetch(`${host}/api/company/companies-upsert`, upsertCompanyRequestOptions)
+		fetch(`${host}/api/company/`, upsertCompanyRequestOptions)
 			.then((response) => response.json())
 			.then((data: Company) => {
 				getCompany(data);

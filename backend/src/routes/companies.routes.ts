@@ -6,6 +6,6 @@ const router = Router();
 router.use(authenticate);
 
 router.get('/', companiesController.getCompanies);
-router.post('/companies-upsert', companiesController.upsertCompany);
+router.post('/', companiesController.upsertCompany);
 
 export default router;

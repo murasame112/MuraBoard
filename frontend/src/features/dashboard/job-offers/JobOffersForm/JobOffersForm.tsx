@@ -236,7 +236,7 @@ export default function JobOffersForm({onClose, onSubmit, type, selectedId}: Job
     	};
 		
 			try {
-				fetch(`${host}/api/job-offer/offers-insert`, insertJobOfferRequestOptions)
+				fetch(`${host}/api/job-offer/`, insertJobOfferRequestOptions)
 					.then((response) => {
 						if (!response.ok) throw new Error(`request failed with status ${response.status}`);
 
