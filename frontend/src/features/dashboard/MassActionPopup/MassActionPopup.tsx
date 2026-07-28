@@ -44,7 +44,7 @@ export default function MassActionPopup({mode, apiQueryMap, selected, onDelete, 
   };
 
 	function handleDeletion(){
-			fetch(`${host}/api/${apiQueryMap[mode]}/offers-delete`, deletionOptions)
+			fetch(`${host}/api/${apiQueryMap[mode]}`, deletionOptions)
 				.then(() => onDelete())
 				.catch((error) => console.log(error));
 	}

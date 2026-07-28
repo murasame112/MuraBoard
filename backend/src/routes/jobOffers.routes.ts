@@ -11,6 +11,6 @@ router.get('/stats', jobOffersController.getJobOffersStats);
 router.get('/:id', jobOffersController.getJobOfferById);
 router.post('/', jobOffersController.createJobOffer);
 router.put('/:id', jobOffersController.updateJobOffer);
-router.delete('/offers-delete', jobOffersController.deleteJobOffers);
+router.delete('/', jobOffersController.deleteJobOffers);
 
 export default router;
