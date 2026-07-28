@@ -177,7 +177,7 @@ export async function updateApplication(req: Request<{}, {}, updateApplicationBo
 
 export async function apply(req: Request, res: Response) {
 	try {
-		const { id } = req.query as {
+		const { id } = req.params as {
 			id?: string; 
 		}
 
