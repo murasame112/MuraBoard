@@ -137,7 +137,7 @@ export default function CompanyCombobox({labelClass, additionalFormTextClass, ge
 	}
 	
 	useEffect(() => {
-		fetch(`${host}/api/company/companies`, {credentials: 'include'})
+		fetch(`${host}/api/company`, {credentials: 'include'})
 			.then((response) => response.json())
 			.then((data) => {
 				if (data.length === 0|| !data) {
