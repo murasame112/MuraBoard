@@ -3,7 +3,7 @@ import { Prisma, ApplicationStatus } from '../generated/prisma/client.js';
 import type { ParsedQuery } from '../shared/lib/applicationDashboardQueryParser.js';
 import { buildApplicationWhere } from '../shared/lib/buildApplicationWhere.js';
 
-export async function getApplicationsDashboardData(query: ParsedQuery) {
+export async function getApplications(query: ParsedQuery) {
 	const {
 		currentPage,
 		pageSize

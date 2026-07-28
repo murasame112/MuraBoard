@@ -5,7 +5,7 @@ import { authenticate } from "../middleware/authenticate.js";
 const router = Router();
 router.use(authenticate);
 
-router.get('/applications-for-dashboard', applicationsController.getApplicationsForDashboard);
+router.get('/', applicationsController.getApplications);
 router.get('/applications-count', applicationsController.getApplicationsCount);
 router.get('/applications-stats', applicationsController.getApplicationsStats);
 router.get('/applications-by-id', applicationsController.getApplicationById);

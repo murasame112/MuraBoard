@@ -5,7 +5,7 @@ import * as applicationDashboardQueryParser from '../shared/lib/applicationDashb
 import { ApplicationStatus } from '../enums/enums.js';
 import type { ApplicationPatchValues } from '../services/applications.service.js';
 
-export async function getApplicationsForDashboard(req: Request<{}, {}, {}, RequestQuery>, res: Response) {
+export async function getApplications(req: Request<{}, {}, {}, RequestQuery>, res: Response) {
 	try {
 		const userId = req.auth!.id;
 		if (!userId || Number.isNaN(Number(userId))) {
@@ -18,7 +18,7 @@ export async function getApplicationsForDashboard(req: Request<{}, {}, {}, Reque
 			return res.status(400).json({message: query.error});
 		}
 
-		const data = await applicationsService.getApplicationsDashboardData(query);
+		const data = await applicationsService.getApplications(query);
 		return res.status(200).json(data);
 
 	} catch (error) {

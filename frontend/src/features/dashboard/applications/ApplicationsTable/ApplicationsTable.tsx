@@ -86,7 +86,7 @@ export default function ApplicationsTable({callMassActionPopup, refreshToken, qu
 
 		const query = buildQueryParams(queryState);
 		
-		fetch(`${host}/api/application/applications-for-dashboard?${query}`, {credentials: 'include'})
+		fetch(`${host}/api/application?${query}`, {credentials: 'include'})
 			.then((response) => response.json())
 			.then((data) => {
 				if (!data || data.length == 0){
