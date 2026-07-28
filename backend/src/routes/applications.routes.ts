@@ -11,7 +11,7 @@ router.get('/stats', applicationsController.getApplicationsStats);
 router.get('/:id', applicationsController.getApplicationById);
 router.post('/applications-apply', applicationsController.apply);
 router.patch('/edit-comment', applicationsController.editApplicationComment);
-router.patch('/applications-update', applicationsController.updateApplication);
+router.patch('/:id', applicationsController.updateApplication);
 router.delete('/', applicationsController.deleteApplications);
 
 export default router;

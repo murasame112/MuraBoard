@@ -127,20 +127,23 @@ type updateApplicationBody = {
 }
 export async function updateApplication(req: Request<{}, {}, updateApplicationBody>, res: Response) {
 	try {
-		const { 
-			id,
-			status,
-			nextStepDate,
-			comment
-		} = req.body as {
-			id: number,
-			status: string,
-			nextStepDate?: string,
-			comment?: string
+
+		const { id } = req.params as {
+			id: string; 
 		}
 
 		if (!id || Number.isNaN(Number(id))) {
 			return res.status(400).json({ message: 'Invalid id'});
+		}
+
+		const { 
+			status,
+			nextStepDate,
+			comment
+		} = req.body as {
+			status: string,
+			nextStepDate?: string,
+			comment?: string
 		}
 
 		const values: ApplicationPatchValues = {};
@@ -163,7 +166,7 @@ export async function updateApplication(req: Request<{}, {}, updateApplicationBo
 			return res.status(400).json({message: 'Invalid comment'});
 		}
 
-		const result = await applicationsService.patchApplication(id, values);
+		const result = await applicationsService.patchApplication(Number(id), values);
 		return res.status(201).json(result);
 
 

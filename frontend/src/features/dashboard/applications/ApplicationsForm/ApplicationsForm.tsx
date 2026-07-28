@@ -132,12 +132,12 @@ export default function ApplicationsForm({onClose, onSubmit, selectedId}: Applic
 		const updateApplicationRequestOptions: RequestInit = {
 			method: 'PATCH',
 			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({id: selectedId, ...values}),
+			body: JSON.stringify(values),
 			credentials: 'include'
 		};
 	
 		try {
-			fetch(`${host}/api/application/applications-update`, updateApplicationRequestOptions)
+			fetch(`${host}/api/application/${selectedId}`, updateApplicationRequestOptions)
 				.then((response) => {
 					if (!response.ok) throw new Error(`request failed with status ${response.status}`);
 
