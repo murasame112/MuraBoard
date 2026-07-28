@@ -6,8 +6,8 @@ const router = Router();
 router.use(authenticate);
 
 router.get('/', jobOffersController.getJobOffers);
-router.get('/offers-count', jobOffersController.getJobOffersCount);
-router.get('/offers-stats', jobOffersController.getJobOffersStats);
+router.get('/count', jobOffersController.getJobOffersCount);
+router.get('/stats', jobOffersController.getJobOffersStats);
 router.get('/:id', jobOffersController.getJobOfferById);
 router.post('/', jobOffersController.upsertJobOffer);
 router.put('/offers-update', jobOffersController.upsertJobOffer);

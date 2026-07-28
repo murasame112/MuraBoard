@@ -66,7 +66,7 @@ export default function DashboardPage(){
 	async function fetchRecordCount(mode: DashboardMode): Promise<number> {
 		const query = buildQueryParams(queryState);
 
-		const response = await fetch(`${host}/api/${apiQueryMap[mode]}/offers-count?${query}`, {credentials: 'include'});
+		const response = await fetch(`${host}/api/${apiQueryMap[mode]}/count?${query}`, {credentials: 'include'});
 		return response.json();
 
 	}

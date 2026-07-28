@@ -57,7 +57,7 @@ export default function DashboardStats({className, mode, refreshToken, queryStat
 
 		if (mode === 'JobOffer') {
 
-			fetch(`${host}/api/job-offer/offers-stats?${query}`, {credentials: 'include'})
+			fetch(`${host}/api/job-offer/stats?${query}`, {credentials: 'include'})
 				.then((response) => response.json())
 				.then((data) => {
 					if (!data){
@@ -77,7 +77,7 @@ export default function DashboardStats({className, mode, refreshToken, queryStat
 
 		} else if (mode === 'Application') {
 			
-			fetch(`${host}/api/application/applications-stats?${query}`, {credentials: 'include'})
+			fetch(`${host}/api/application/stats?${query}`, {credentials: 'include'})
 				.then((response) => response.json())
 				.then((data) => {
 					if (!data){
