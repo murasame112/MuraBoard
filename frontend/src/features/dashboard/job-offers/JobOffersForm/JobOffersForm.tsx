@@ -236,7 +236,7 @@ export default function JobOffersForm({onClose, onSubmit, type, selectedId}: Job
     	};
 		
 			try {
-				fetch(`${host}/api/job-offer/`, insertJobOfferRequestOptions)
+				fetch(`${host}/api/job-offer`, insertJobOfferRequestOptions)
 					.then((response) => {
 						if (!response.ok) throw new Error(`request failed with status ${response.status}`);
 
@@ -252,12 +252,12 @@ export default function JobOffersForm({onClose, onSubmit, type, selectedId}: Job
 			const updateJobOfferRequestOptions: RequestInit = {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({id: selectedId, ...values}),
+        body: JSON.stringify(values),
 				credentials: 'include'
     	};
 		
 			try {
-				fetch(`${host}/api/job-offer/offers-update`, updateJobOfferRequestOptions)
+				fetch(`${host}/api/job-offer/${selectedId}`, updateJobOfferRequestOptions)
 					.then((response) => {
 						if (!response.ok) throw new Error(`request failed with status ${response.status}`);
 

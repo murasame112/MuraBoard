@@ -88,8 +88,7 @@ export async function getJobOfferById(req: Request, res: Response) {
 	}
 }
 
-type UpsertJobOfferBody = {
-	id?: number;
+type CreateJobOfferBody = {
 	position: string;
 	salaryMin?: string;
 	salaryMax?: string;
@@ -97,7 +96,7 @@ type UpsertJobOfferBody = {
 	company: Company;
 }
 
-export async function upsertJobOffer(req: Request<{}, {}, UpsertJobOfferBody>, res: Response) {
+export async function createJobOffer(req: Request<{}, {}, CreateJobOfferBody>, res: Response) {
 	try {
 		const userId = req.auth!.id;
 		
@@ -106,14 +105,12 @@ export async function upsertJobOffer(req: Request<{}, {}, UpsertJobOfferBody>, r
 		}
 
 		const { 
-			id,
 			position,
 			salaryMin,
 			salaryMax,
 			currency,
 			company 
 		} = req.body as {
-			id?: number;
 			position: string;
 			salaryMin?: string;
 			salaryMax?: string;
@@ -137,7 +134,7 @@ export async function upsertJobOffer(req: Request<{}, {}, UpsertJobOfferBody>, r
             Number(userId),
             position,
             company,
-            id ?? undefined,
+            undefined,
             salaryMin ? Number(salaryMin) : undefined,
             salaryMax ? Number(salaryMax) :  undefined,
 						currency === 'unknown' ? undefined : (currency as Currency)
@@ -154,6 +151,79 @@ export async function upsertJobOffer(req: Request<{}, {}, UpsertJobOfferBody>, r
 		return res.status(500).json({message: 'Something went wrong'});
 	}
 }
+
+type UpdateJobOfferBody = {
+	position: string;
+	salaryMin?: string;
+	salaryMax?: string;
+	currency: Currency | string;
+	company: Company;
+}
+
+export async function updateJobOffer(req: Request<{}, {}, UpdateJobOfferBody>, res: Response) {
+	try {
+		const userId = req.auth!.id;
+		
+		if (!userId || Number.isNaN(Number(userId))) {
+			return res.status(400).json({ message: 'Invalid user id' });
+		}
+
+		const { id } = req.params as {
+			id: string; 
+		}
+
+		if (!id || Number.isNaN(Number(id))) {
+			return res.status(400).json({ message: 'Invalid id'});
+		}
+
+		const { 
+			position,
+			salaryMin,
+			salaryMax,
+			currency,
+			company 
+		} = req.body as {
+			position: string;
+			salaryMin?: string;
+			salaryMax?: string;
+			currency: Currency | string;
+			company: Company;
+		};
+
+		if (!position || !company || !currency) {
+			return res.status(400).json({message: 'Missing job offer data'});
+		}
+
+		if (Number.isNaN(Number(salaryMin))) {
+			return res.status(400).json({ message: 'Invalid min salary' });
+		}
+
+		if (Number.isNaN(Number(salaryMax))) {
+			return res.status(400).json({ message: 'Invalid max salary' });
+		}
+		
+		const result = await jobOffersService.upsertJobOffer(
+            Number(userId),
+            position,
+            company,
+            Number(id),
+            salaryMin ? Number(salaryMin) : undefined,
+            salaryMax ? Number(salaryMax) :  undefined,
+						currency === 'unknown' ? undefined : (currency as Currency)
+    );
+		if (result === 'user_not_found') {
+			return res.status(404).json({
+				message: "User not found"
+			});
+		}
+
+		return res.status(201).json(result);
+
+	} catch (error) {
+		return res.status(500).json({message: 'Something went wrong'});
+	}
+}
+
 
 type DeleteJobOfferBody = {
 	ids: number[];
