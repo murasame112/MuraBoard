@@ -70,7 +70,7 @@ export async function getApplicationsStats(req: Request<{}, {}, {}, RequestQuery
 
 export async function getApplicationById(req: Request, res: Response) {
 	try {
-		const { id } = req.query as {
+		const { id } = req.params as {
 			id?: string; 
 		}
 

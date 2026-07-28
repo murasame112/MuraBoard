@@ -66,7 +66,7 @@ export default function JobOffersForm({onClose, onSubmit, type, selectedId}: Job
 
 	useEffect(() => {
 		if (selectedId) {
-			fetch(`${host}/api/job-offer/offers-by-id?id=${selectedId}`, {credentials: 'include'})
+			fetch(`${host}/api/job-offer/${selectedId}`, {credentials: 'include'})
 				.then(response => response.json())
 				.then(data => {
 					setValues({

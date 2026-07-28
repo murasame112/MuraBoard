@@ -50,7 +50,7 @@ export default function ApplicationsForm({onClose, onSubmit, selectedId}: Applic
 
 	useEffect(() => {
 		if (selectedId) {
-			fetch(`${host}/api/application/applications-by-id?id=${selectedId}`, {credentials: 'include'})
+			fetch(`${host}/api/application/${selectedId}`, {credentials: 'include'})
 				.then(response => response.json())
 				.then(data => {
 					setValues({

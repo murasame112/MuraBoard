@@ -69,8 +69,8 @@ export async function getJobOffersStats(req: Request, res: Response) {
 
 export async function getJobOfferById(req: Request, res: Response) {
 	try {
-		const { id } = req.query as {
-			id?: string; 
+		const { id } = req.params as {
+			id: string; 
 		}
 
 		if (!id || Number.isNaN(Number(id))) {
