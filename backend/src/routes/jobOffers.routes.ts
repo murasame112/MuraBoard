@@ -11,7 +11,7 @@ router.get('/count', jobOffersController.getJobOffersCount);
 router.get('/stats', jobOffersController.getJobOffersStats);
 router.get('/:id', jobOffersController.getJobOfferById);
 router.post('/', jobOffersController.createJobOffer);
-router.post('/apply/:id', applicationsController.apply);
+router.post('/:id/apply', applicationsController.apply);
 router.put('/:id', jobOffersController.updateJobOffer);
 router.delete('/', jobOffersController.deleteJobOffers);
 

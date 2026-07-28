@@ -72,7 +72,7 @@ export default function JobOffersTable({callForm, callMassActionPopup, refreshTo
 	}
 
 	function apply(id: number) {
-		fetch(`${host}/api/job-offer/apply/${id}`, {method: 'POST', credentials: 'include'})
+		fetch(`${host}/api/job-offer/${id}/apply`, {method: 'POST', credentials: 'include'})
 			.then((response) => response.json())
 			.then((data) => {
 				setJobOffers((prev) => {
