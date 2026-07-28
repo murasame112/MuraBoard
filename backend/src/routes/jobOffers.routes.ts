@@ -5,7 +5,7 @@ import { authenticate } from "../middleware/authenticate.js";
 const router = Router();
 router.use(authenticate);
 
-router.get('/offers-for-dashboard', jobOffersController.getJobOffersForDashboard);
+router.get('/', jobOffersController.getJobOffers);
 router.get('/offers-count', jobOffersController.getJobOffersCount);
 router.get('/offers-stats', jobOffersController.getJobOffersStats);
 router.get('/offers-by-id', jobOffersController.getJobOfferById);

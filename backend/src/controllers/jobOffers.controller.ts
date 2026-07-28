@@ -5,7 +5,7 @@ import type { Company } from '../models/models.js';
 import type { RequestQuery } from '../shared/lib/jobOfferDashboardQueryParser.js';
 import * as jobOfferDashboardQueryParser from '../shared/lib/jobOfferDashboardQueryParser.js';
 
-export async function getJobOffersForDashboard(req: Request<{}, {}, {}, RequestQuery>, res: Response) {
+export async function getJobOffers(req: Request<{}, {}, {}, RequestQuery>, res: Response) {
 	try {
 		const userId = req.auth!.id;
 		if (!userId || Number.isNaN(Number(userId))) {
@@ -17,7 +17,7 @@ export async function getJobOffersForDashboard(req: Request<{}, {}, {}, RequestQ
 			return res.status(400).json({message: query.error});
 		}
 
-		const data = await jobOffersService.getJobOffersDashboardData(query);
+		const data = await jobOffersService.getJobOffers(query);
 		return res.status(200).json(data);
 
 	} catch (error) {

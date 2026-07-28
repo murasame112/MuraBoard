@@ -55,7 +55,7 @@ export default function JobOffersTable({callForm, callMassActionPopup, refreshTo
 	function fetchData() {
 		const query = buildQueryParams(queryState);
 		
-		fetch(`${host}/api/job-offer/offers-for-dashboard?${query}`, {credentials: 'include'})
+		fetch(`${host}/api/job-offer/?${query}`, {credentials: 'include'})
 			.then((response) => response.json())
 			.then((data) => {
 				if (!data || data.length == 0){
