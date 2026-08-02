@@ -93,6 +93,14 @@ export async function upsertJobOffer(userId: number, position: string, company: 
 			});
 			return jobOffer;
 		} else {
+			const existingJobOffer = await tx.jobOffer.findFirst({
+				where: { id, userId: user.id }
+			});
+
+			if (!existingJobOffer) {
+				return 'job_offer_not_found';
+			}
+
 			const jobOffer = await tx.jobOffer.update({
 				where: { id },
 				data: {
@@ -102,10 +110,7 @@ export async function upsertJobOffer(userId: number, position: string, company: 
 					currency: currency ?? null,
 					company: {
 						connect: { id: company.id }
-					},
-					user: {
-						connect: { id: user.id }
-					}		
+					}
 				}
 			});
 			return jobOffer;

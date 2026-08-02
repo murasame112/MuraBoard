@@ -217,6 +217,12 @@ export async function updateJobOffer(req: Request<{}, {}, UpdateJobOfferBody>, r
 			});
 		}
 
+		if (result === 'job_offer_not_found') {
+			return res.status(404).json({
+				message: "Job offer not found"
+			});
+		}
+
 		return res.status(201).json(result);
 
 	} catch (error) {
